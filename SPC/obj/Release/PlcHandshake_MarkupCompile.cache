@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\_TEST\SPC\SPC\obj\Release\
+E:\_PROJECT\vsproj\SPC\SPC\obj\Release\
 PlcHandshake
 none
 false
 TRACE
-D:\_TEST\SPC\SPC\App.xaml
+E:\_PROJECT\vsproj\SPC\SPC\App.xaml
 11151548125
 
 5-2017746502
-141765106063
+14212726182
 MainWindow.xaml;
 
 True

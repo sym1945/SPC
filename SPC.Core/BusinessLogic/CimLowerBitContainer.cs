@@ -8,12 +8,12 @@ namespace SPC.Core.BusinessLogic
 {
     public class CimLowerBitContainer : BitDeviceContainer
     {
-        //public bool HeartBeat
-        //{
-        //    get => GetBitDevice(nameof(HeartBeat)).Value;
-        //    set => SetBit(nameof(HeartBeat), value);
-        //}
+        public bool HeartBeat
+        {
+            get => GetDevice(nameof(HeartBeat)).Value;
+            set => SetValue(nameof(HeartBeat), value);
+        }
 
-        
+
     }
 }

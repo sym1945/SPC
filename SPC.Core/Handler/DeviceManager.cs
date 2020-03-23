@@ -15,7 +15,7 @@ namespace SPC.Core
         }
 
         public void OnPlcConnected()
-        { 
+        {
 
         }
 
@@ -26,7 +26,22 @@ namespace SPC.Core
 
         public void OnEndReadCycle(IReadOnlyList<PlcReadBlock> devBlocks)
         {
-            
+            // Loop All Managend Device Container
+            foreach (var devContainer in this)
+            {
+                // Find Target Device Block
+                var devBlock = devBlocks
+                    .Where(d => d.Device == devContainer.Device)
+                    .Where(d => d.StartAddress == devContainer.StartAddress)
+                    .FirstOrDefault();
+
+                if (devBlock == null)
+                    continue;
+
+                // Update Devices from Device's block raw Data
+
+
+            }
         }
 
     }

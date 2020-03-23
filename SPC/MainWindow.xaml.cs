@@ -32,20 +32,33 @@ namespace SPC
             // dev manager init (config load)
             var devManager = new DeviceManager
             {
-                new BitDeviceContainer()
+                new BitDeviceContainer(eDevice.B, 0x0000, "CIM_RECV_BITS")
                 {
                     new BitDevice() { Offset = 0, Desc = "HeartBit"},
                     new BitDevice() { Offset = 1, Desc = "RecvAble"},
                     new BitDevice() { Offset = 2, Desc = "RecvStart"},
                     new BitDevice() { Offset = 3, Desc = "RecvComplete"},
                 },
-                new BitDeviceContainer()
+                new BitDeviceContainer(eDevice.B, 0x0100, "CIM_SEND_BITS")
                 {
                     new BitDevice() { Offset = 0, Desc = "HeartBit"},
                     new BitDevice() { Offset = 1, Desc = "SendAble"},
                     new BitDevice() { Offset = 2, Desc = "SendStart"},
                     new BitDevice() { Offset = 3, Desc = "SendComplete"},
                 },
+                new WordDeviceContainer(eDevice.W, 0x0000, "CIM_RECV_WORDS")
+                {
+                    new WordDevice() { Offset = 0, Length = 12, Desc = "RecvGlassId"},
+                    new WordDevice() { Offset = 12, Length = 1, Desc = "RecvSlotNo"},
+                    new WordDevice() { Offset = 13, Length = 2, Desc = "RecvWorkState"},
+                },
+                new WordDeviceContainer(eDevice.W, 0x0100, "CIM_SEND_WORDS")
+                {
+                    new WordDevice() { Offset = 0, Length = 12, Desc = "SendGlassId"},
+                    new WordDevice() { Offset = 12, Length = 1, Desc = "SendSlotNo"},
+                    new WordDevice() { Offset = 13, Length = 2, Desc = "SendWorkState"},
+                },
+
             };
 
             // watcher <> manager connect
