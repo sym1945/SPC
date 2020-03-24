@@ -10,8 +10,15 @@ namespace SPC.Core
     {
         public BitDeviceContainer()
         {
-            
+            DeviceType = eDeviceType.Bit;
         }
+        public BitDeviceContainer(eDevice device, short startAddress, string desc = "") : this()
+        {
+            Device = device;
+            StartAddress = startAddress;
+            Description = desc;
+        }
+
 
         public bool SetValue(string key, bool value)
         {
@@ -19,6 +26,14 @@ namespace SPC.Core
             dev.Value = value;
 
             return true;
+        }
+
+        public void UpdateDeviceValue(short[] rawData)
+        {
+            foreach (BitDevice device in this)
+            {
+                device.Value = (rawData[0] & 0b0000001) == 1;
+            }
         }
 
     }

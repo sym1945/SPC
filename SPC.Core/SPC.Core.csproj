@@ -7,8 +7,8 @@
     <ProjectGuid>{99F6DDA7-2B9F-4A5A-A979-F6120CD5EE29}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlcHandshake.Core</RootNamespace>
-    <AssemblyName>PlcHandshake.Core</AssemblyName>
+    <RootNamespace>SPC.Core</RootNamespace>
+    <AssemblyName>SPC.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\BaseHandshake.cs" />
     <Compile Include="BusinessLogic\CimLowerBitContainer.cs" />
+    <Compile Include="BusinessLogic\CimLowerWordContainer.cs" />
     <Compile Include="BusinessLogic\HandshakeAlarmEvent.cs" />
+    <Compile Include="DataModel\WordDeviceContainer.cs" />
     <Compile Include="DataModel\BitDeviceContainer.cs" />
     <Compile Include="DataModel\DeviceContainer.cs" />
     <Compile Include="DataModel\DeviceContainerBase.cs" />
