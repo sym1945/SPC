@@ -41,16 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\BaseHandshake.cs" />
     <Compile Include="BusinessLogic\CimLowerBitContainer.cs" />
     <Compile Include="BusinessLogic\CimLowerWordContainer.cs" />
-    <Compile Include="BusinessLogic\HandshakeAlarmEvent.cs" />
+    <Compile Include="DataModel\DeviceBase.cs" />
     <Compile Include="DataModel\WordDeviceContainer.cs" />
     <Compile Include="DataModel\BitDeviceContainer.cs" />
     <Compile Include="DataModel\DeviceContainer.cs" />
     <Compile Include="DataModel\DeviceContainerBase.cs" />
     <Compile Include="DataModel\IDeviceContainer.cs" />
     <Compile Include="DataModel\WordDevice.cs" />
+    <Compile Include="DataModel\WordDeviceValue.cs" />
     <Compile Include="Flags.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Communication\IPlcComm.cs" />
@@ -58,16 +58,12 @@
     <Compile Include="Communication\MELSEC\SafeNativeMethod.cs" />
     <Compile Include="Communication\PlcComm.cs" />
     <Compile Include="DataModel\PlcReadBlock.cs" />
-    <Compile Include="Handler\DeviceHandler.cs" />
-    <Compile Include="DataModel\BaseDevices.cs" />
     <Compile Include="DataModel\BitDevice.cs" />
-    <Compile Include="DataModel\BitDevices.cs" />
-    <Compile Include="DataModel\Core.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="DataModel\IDevice.cs" />
     <Compile Include="DataModel\IPlcCommandModel.cs" />
     <Compile Include="DataModel\PlcCommandModel.cs" />
-    <Compile Include="DataModel\TestCommandModel.cs" />
-    <Compile Include="DataModel\WordDevices.cs" />
+    <Compile Include="BusinessLogic\TestCommandModel.cs" />
     <Compile Include="Handler\DeviceManager.cs" />
     <Compile Include="Handler\DeviceManagerBase.cs" />
     <Compile Include="Handler\PlcWatcher.cs" />

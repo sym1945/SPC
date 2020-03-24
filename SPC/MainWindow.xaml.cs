@@ -69,6 +69,12 @@ namespace SPC
             // watcher start
             plcWatcher.Start();
 
+
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

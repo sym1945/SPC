@@ -12,6 +12,8 @@ namespace SPC.Core
 
         eDeviceType DeviceType { get; set; }
 
+        string Key { get; set; }
+
         short Address { get; set; }
 
         short Offset { get; set; }

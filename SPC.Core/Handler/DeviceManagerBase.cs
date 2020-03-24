@@ -12,7 +12,7 @@ namespace SPC.Core
 
         public void Add(IDeviceContainer item)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Clear()

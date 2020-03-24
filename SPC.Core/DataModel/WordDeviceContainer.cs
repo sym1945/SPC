@@ -39,7 +39,7 @@ namespace SPC.Core
         {
             foreach (WordDevice device in this)
             {
-                Array.Copy(rawData, device.Offset, device.Values, device.Offset, device.Length);
+                Array.Copy(rawData, device.Offset, device.Value.RawData, device.Offset, device.Length);
                 // OnValueChanged
             }
         }

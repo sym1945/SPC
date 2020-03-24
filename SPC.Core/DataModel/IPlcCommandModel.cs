@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPC.Core.DataModel
+namespace SPC.Core
 {
     public interface IPlcCommandModel
     {

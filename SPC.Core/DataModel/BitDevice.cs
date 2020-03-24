@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SPC.Core
 {
-    public class BitDevice : IDevice
+    public class BitDevice : DeviceBase
     {
         #region Private Members
         private ManualResetEventSlim _ManualResetEvent = null;
@@ -17,13 +17,6 @@ namespace SPC.Core
 
 
         #region Public Properties
-        public eDevice Device { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public eDeviceType DeviceType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public short Address { get; set; }
-
-        public short Offset { get; set; }
-
-        public string Desc { get; set; }
 
         public bool Value
         {

@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel>
+            <TextBox Text="{Binding BindingProperty, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Text="{Binding BindingProperty}"></TextBlock>
+
+        </StackPanel>
     </Grid>
 </Window>

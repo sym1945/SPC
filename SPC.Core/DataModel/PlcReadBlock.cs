@@ -10,6 +10,8 @@ namespace SPC.Core
     {
 
         #region Public Properties
+        public int Key { get; set; }
+
         public eDevice Device { get; set; } = eDevice.B;
 
         public short StartAddress { get; set; } = 0;

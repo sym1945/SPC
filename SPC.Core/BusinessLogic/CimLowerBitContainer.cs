@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPC.Core.BusinessLogic
+namespace SPC.Core
 {
     public class CimLowerBitContainer : BitDeviceContainer
     {

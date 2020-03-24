@@ -9,28 +9,52 @@ namespace SPC.Core
 {
     public abstract class DeviceContainerBase : IDeviceContainer
     {
+        private Dictionary<string, IDevice> _Devices;
+
         public eDevice Device { get; set; }
         public eDeviceType DeviceType { get; set; }
         public short StartAddress { get; set; }
         public string Description { get; set; }
+        public int ReadBlockKey { get; set; }
 
         public int Count => throw new NotImplementedException();
 
         public bool IsReadOnly => throw new NotImplementedException();
 
+
+        public DeviceContainerBase()
+        {
+            _Devices = new Dictionary<string, IDevice>();
+        }
+
+
         public void Add(IDevice item)
         {
-            throw new NotImplementedException();
+            lock (_Devices)
+            {
+                _Devices.Add(item.Key, item);
+            }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            lock (_Devices)
+            {
+                _Devices.Clear();
+            }
         }
 
         public bool Contains(IDevice item)
         {
-            throw new NotImplementedException();
+            return Contains(item.Key);
+        }
+
+        public bool Contains(string key)
+        {
+            lock (_Devices)
+            {
+                return _Devices.ContainsKey(key);
+            }
         }
 
         public void CopyTo(IDevice[] array, int arrayIndex)
@@ -45,7 +69,18 @@ namespace SPC.Core
 
         public bool Remove(IDevice item)
         {
-            throw new NotImplementedException();
+            lock (_Devices)
+            {
+                var key = item.Key;
+                if (_Devices.ContainsKey(key))
+                {
+                    return _Devices.Remove(key);
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -13,5 +13,6 @@ namespace SPC.Core
 
         string Description { get; set; }
 
+        int ReadBlockKey { get; set; }
     }
 }
