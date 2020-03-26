@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{885B295E-FBB4-4EE1-99BB-C205B0FACC42}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SPC</RootNamespace>
-    <AssemblyName>SPC</AssemblyName>
+    <RootNamespace>SPC.WPF</RootNamespace>
+    <AssemblyName>SPC.WPF</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,6 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\TestDeviceViewModel.cs" />
+    <Compile Include="View\BitDeviceContainer.xaml.cs">
+      <DependentUpon>BitDeviceContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BitDeviceLabel.xaml.cs">
+      <DependentUpon>BitDeviceLabel.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +74,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\BitDeviceContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BitDeviceLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

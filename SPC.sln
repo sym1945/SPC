@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1022
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPC", "SPC\SPC.csproj", "{885B295E-FBB4-4EE1-99BB-C205B0FACC42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPC.WPF", "SPC.WPF\SPC.WPF.csproj", "{885B295E-FBB4-4EE1-99BB-C205B0FACC42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPC.Core", "SPC.Core\SPC.Core.csproj", "{99F6DDA7-2B9F-4A5A-A979-F6120CD5EE29}"
 EndProject

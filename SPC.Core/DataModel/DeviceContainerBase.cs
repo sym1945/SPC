@@ -17,9 +17,24 @@ namespace SPC.Core
         public string Description { get; set; }
         public int ReadBlockKey { get; set; }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => _Devices.Count;
 
         public bool IsReadOnly => throw new NotImplementedException();
+
+        protected IDevice this[string key]
+        {
+            get
+            {
+                try
+                {
+                    return _Devices[key];
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
 
 
         public DeviceContainerBase()
@@ -64,7 +79,7 @@ namespace SPC.Core
 
         public IEnumerator<IDevice> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _Devices.Values.GetEnumerator();
         }
 
         public bool Remove(IDevice item)
@@ -85,7 +100,24 @@ namespace SPC.Core
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
+
+
+        public virtual void PlcConnected()
+        {
+
+        }
+
+
+        public virtual void BeforeRead(PlcReadBlock devBlock)
+        {
+
+        }
+
+        public virtual void AfterRead(PlcReadBlock devBlock)
+        {
+        }
+
     }
 }

@@ -12,10 +12,11 @@ namespace SPC.Core
         {
             DeviceType = eDeviceType.Word;
         }
-        public WordDeviceContainer(eDevice device, short startAddress, string desc = "") : this()
+        public WordDeviceContainer(eDevice device, short startAddress, int readBlockKey, string desc = "") : this()
         {
             Device = device;
             StartAddress = startAddress;
+            ReadBlockKey = readBlockKey;
             Description = desc;
         }
 

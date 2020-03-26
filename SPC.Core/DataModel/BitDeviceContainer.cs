@@ -12,10 +12,11 @@ namespace SPC.Core
         {
             DeviceType = eDeviceType.Bit;
         }
-        public BitDeviceContainer(eDevice device, short startAddress, string desc = "") : this()
+        public BitDeviceContainer(eDevice device, short startAddress, int readBlockKey, string desc = "") : this()
         {
             Device = device;
             StartAddress = startAddress;
+            ReadBlockKey = readBlockKey;
             Description = desc;
         }
 
@@ -28,11 +29,12 @@ namespace SPC.Core
             return true;
         }
 
-        public void UpdateDeviceValue(short[] rawData)
+
+        public override void AfterRead(PlcReadBlock devBlock)
         {
             foreach (BitDevice device in this)
             {
-                device.Value = (rawData[0] & 0b0000001) == 1;
+                device.Value = (devBlock.Buffer[0] & 0b0000001) == 1;
             }
         }
 

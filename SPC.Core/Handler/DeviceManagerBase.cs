@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,43 +7,92 @@ namespace SPC.Core
 {
     public class DeviceManagerBase : ICollection<IDeviceContainer>
     {
-        public int Count => throw new NotImplementedException();
+        private List<IDeviceContainer> _DeviceContainers;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public int Count => _DeviceContainers.Count;
+
+        public bool IsReadOnly => false;
+
+
+        public DeviceManagerBase()
+        {
+            _DeviceContainers = new List<IDeviceContainer>();
+        }
+
+
 
         public void Add(IDeviceContainer item)
         {
-            //throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(IDeviceContainer item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(IDeviceContainer[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<IDeviceContainer> GetEnumerator()
-        {
-            throw new NotImplementedException();
+            lock (_DeviceContainers)
+            {
+                _DeviceContainers.Add(item);
+            }
         }
 
         public bool Remove(IDeviceContainer item)
         {
-            throw new NotImplementedException();
+            lock (_DeviceContainers)
+            {
+                if (_DeviceContainers.Contains(item))
+                {
+                    return _DeviceContainers.Remove(item);
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
+
+
+        public void Clear()
+        {
+            lock (_DeviceContainers)
+            {
+                _DeviceContainers.Clear();
+            }
+        }
+
+        public bool Contains(IDeviceContainer item)
+        {
+            lock (_DeviceContainers)
+            {
+                return _DeviceContainers.Contains(item);
+            }
+        }
+
+        public void CopyTo(IDeviceContainer[] array, int arrayIndex)
+        {
+            lock (_DeviceContainers)
+            {
+                _DeviceContainers.CopyTo(array, arrayIndex);
+            }
+        }
+
+        public IEnumerator<IDeviceContainer> GetEnumerator()
+        {
+            return _DeviceContainers.GetEnumerator();
+        }
+
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
+
+        public T GetDeviceContainer<T>(short readBlockKey)
+        {
+            var devContainer = GetDeviceContainer(readBlockKey);
+            if (devContainer != null)
+                return (T)devContainer;
+            else
+                return default(T);
+        }
+
+        public IDeviceContainer GetDeviceContainer(short readBlockKey)
+        {
+            return this.FirstOrDefault(container => container.ReadBlockKey == readBlockKey);
+        }
+
     }
 }

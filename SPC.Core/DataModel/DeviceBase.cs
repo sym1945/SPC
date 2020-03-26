@@ -2,6 +2,8 @@
 {
     public abstract class DeviceBase : IDevice
     {
+        public string FullAddress => $"{Device.ToString()}{Address:X4}";
+
         public eDevice Device { get; set; }
 
         public eDeviceType DeviceType { get; set; }

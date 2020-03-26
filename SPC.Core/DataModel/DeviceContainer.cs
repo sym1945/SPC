@@ -9,10 +9,7 @@ namespace SPC.Core
     public class DeviceContainer<T> : DeviceContainerBase
         where T : IDevice
     {
-        protected IDevice this[string key]
-        {
-            get => default(IDevice);
-        }
+        
 
         public T GetDevice(string key)
         {

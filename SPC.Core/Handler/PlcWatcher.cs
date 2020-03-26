@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace SPC.Core
 {
-    public class PlcWatcher
+    public class PlcWatcher : ICollection<PlcReadBlock>
     {
         #region Constant
-        private const int WATCH_DELAY = 100; 
+        private const int WATCH_DELAY = 100;
         #endregion
 
         #region Private Members
@@ -20,13 +22,20 @@ namespace SPC.Core
 
         #region Public Properties
         public bool IsRunning => _IsRunning;
+
+        public bool IsConnected => _Comm.IsOpen;
+
+        public int Count => _ReadBlocks.Count;
+
+        public bool IsReadOnly => true;
         #endregion
 
 
         #region Events
         public event Action PlcConnected;
-        public event Action<IReadOnlyList<PlcReadBlock>> BeginRead;
-        public event Action<IReadOnlyList<PlcReadBlock>> EndRead; 
+        public event Action PlcDisconnected;
+        //public event Action<IReadOnlyList<PlcReadBlock>> BeginRead;
+        //public event Action<IReadOnlyList<PlcReadBlock>> EndRead;
         #endregion
 
 
@@ -44,10 +53,41 @@ namespace SPC.Core
 
 
         #region Public Methods
-        public void Start()
+        public bool Connect()
         {
-            if (_IsRunning || _RunningThread != null)
-                return;
+            _Comm.Open();
+            var isConnected = _Comm.IsOpen;
+            if (isConnected)
+            {
+                PlcConnected?.Invoke();
+            }
+
+            return isConnected;
+        }
+
+        public bool Disconnect()
+        {
+            _Comm.Close();
+            var isDisconnected = !_Comm.IsOpen;
+            if (isDisconnected)
+            {
+                PlcDisconnected?.Invoke();
+            }
+
+            return isDisconnected;
+        }
+
+
+
+        public bool Start()
+        {
+            if (!IsConnected)
+                Connect();
+
+            if (_IsRunning 
+                || _RunningThread != null
+                || !IsConnected)
+                return false;
 
             _IsRunning = true;
             _RunningThread = new Thread(() =>
@@ -60,7 +100,7 @@ namespace SPC.Core
 
                     try
                     {
-                        BeginRead?.Invoke(_ReadBlocks);
+                        OnBeforeRead();
 
                         foreach (var block in _ReadBlocks)
                         {
@@ -75,7 +115,7 @@ namespace SPC.Core
                             }
                         }
 
-                        EndRead?.Invoke(_ReadBlocks);
+                        OnAfterRead();
                     }
                     catch (Exception ex)
                     {
@@ -87,6 +127,8 @@ namespace SPC.Core
             });
             _RunningThread.IsBackground = true;
             _RunningThread.Start();
+
+            return true;
         }
 
         public void Stop()
@@ -97,7 +139,88 @@ namespace SPC.Core
                 _RunningThread.Join();
                 _RunningThread = null;
             }
-        } 
+        }
+
+        public PlcReadBlock GetReadBlock(int key)
+        {
+            return _ReadBlocks.FirstOrDefault(block => block.Key == key);
+        }
+
+        private void OnBeforeRead()
+        {
+            foreach (var readBlock in _ReadBlocks)
+            {
+                readBlock.OnBeforeRead();
+            }
+        }
+
+        private void OnAfterRead()
+        {
+            foreach (var readBlock in _ReadBlocks)
+            {
+                readBlock.OnAfterRead();
+            }
+        }
+
+        public void Add(PlcReadBlock item)
+        {
+            lock (_ReadBlocks)
+            {
+                _ReadBlocks.Add(item);
+            }
+        }
+
+        public bool Remove(PlcReadBlock item)
+        {
+            lock (_ReadBlocks)
+            {
+                if (_ReadBlocks.Contains(item))
+                {
+                    return _ReadBlocks.Remove(item);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            lock (_ReadBlocks)
+            {
+                _ReadBlocks.Clear();
+            }
+        }
+
+        public bool Contains(PlcReadBlock item)
+        {
+            lock (_ReadBlocks)
+            {
+                return _ReadBlocks.Contains(item);
+            }
+        }
+
+        public void CopyTo(PlcReadBlock[] array, int arrayIndex)
+        {
+            lock (_ReadBlocks)
+            {
+                _ReadBlocks.CopyTo(array, arrayIndex);
+            }
+        }
+
+       
+
+        public IEnumerator<PlcReadBlock> GetEnumerator()
+        {
+            return _ReadBlocks.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         #endregion
 
     }

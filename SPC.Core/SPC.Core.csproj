@@ -68,6 +68,7 @@
     <Compile Include="Handler\DeviceManagerBase.cs" />
     <Compile Include="Handler\PlcWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SPC.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\" />

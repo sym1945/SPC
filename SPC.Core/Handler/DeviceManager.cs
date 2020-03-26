@@ -9,39 +9,25 @@ namespace SPC.Core
 {
     public class DeviceManager : DeviceManagerBase
     {
-        public IDeviceContainer GetDeviceContainer()
+        private bool _IsSetup = false;
+
+        public bool IsSetUp => _IsSetup;
+
+        public void SetUp()
         {
-            return null;
-        }
+            if (_IsSetup)
+                return;
 
-        public void OnPlcConnected()
-        {
-
-        }
-
-        public void OnBeginReadCycle(IReadOnlyList<PlcReadBlock> devBlocks)
-        {
-
-        }
-
-        public void OnEndReadCycle(IReadOnlyList<PlcReadBlock> devBlocks)
-        {
-            // Loop All Managend Device Container
-            foreach (var devContainer in this)
+            foreach (DeviceContainerBase devContainer in this)
             {
-                // Find Target Device Block
-                var devBlock = devBlocks
-                    .Where(d => d.Device == devContainer.Device)
-                    .Where(d => d.StartAddress == devContainer.StartAddress)
-                    .FirstOrDefault();
-
-                if (devBlock == null)
-                    continue;
-
-                // Update Devices from Device's block raw Data
-
-
+                foreach(var device in devContainer)
+                {
+                    device.Device = devContainer.Device;
+                    device.Address = (short)(devContainer.StartAddress + device.Offset);
+                }
             }
+
+            _IsSetup = true;
         }
 
     }
