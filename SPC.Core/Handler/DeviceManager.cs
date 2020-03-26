@@ -18,14 +18,14 @@ namespace SPC.Core
             if (_IsSetup)
                 return;
 
-            foreach (DeviceContainerBase devContainer in this)
-            {
-                foreach(var device in devContainer)
-                {
-                    device.Device = devContainer.Device;
-                    device.Address = (short)(devContainer.StartAddress + device.Offset);
-                }
-            }
+            //foreach (DeviceContainerBase devContainer in this)
+            //{
+            //    foreach(var device in devContainer)
+            //    {
+            //        device.Device = devContainer.Device;
+            //        device.Address = (short)(devContainer.StartAddress + device.Offset);
+            //    }
+            //}
 
             _IsSetup = true;
         }

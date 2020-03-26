@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SPC.Core
 {
@@ -21,12 +22,13 @@ namespace SPC.Core
         }
 
 
-        public bool SetValue(string key, bool value)
+        public void SetValue(string key, bool value)
         {
-            var dev = GetDevice(key);
-            dev.Value = value;
+            var dev = this[key];
+            if (dev == null)
+                return;
 
-            return true;
+            dev.WriteValue(value);
         }
 
 
@@ -34,7 +36,18 @@ namespace SPC.Core
         {
             foreach (BitDevice device in this)
             {
-                device.Value = (devBlock.Buffer[0] & 0b0000001) == 1;
+                try
+                {
+                    int offset = device.Offset;
+                    int i = offset / 16;
+                    int o = offset % 16;
+
+                    device.Value = ((devBlock.Buffer[i] >> o & 0b00000001) == 0b00000001);
+                }
+                catch
+                {
+                    // TODO: todo Something
+                }
             }
         }
 

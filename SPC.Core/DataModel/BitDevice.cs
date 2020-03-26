@@ -27,7 +27,10 @@ namespace SPC.Core
                 _Value = value;
 
                 if (IsOnTrigger || IsOffTrigger)
+                {
                     OnValueChanged();
+                    OnPropertyChanged(nameof(Value));
+                }
             }
         }
 
@@ -76,6 +79,17 @@ namespace SPC.Core
 
             return _Value == exceptedValue;
         }
+
+        public void WriteValue(bool value)
+        {
+            Execute(new BitWriteInfo
+            {
+                Device = Device,
+                Address = Address,
+                Value = value
+            });
+        }
+
         #endregion
 
 
@@ -83,7 +97,17 @@ namespace SPC.Core
         protected void OnValueChanged()
         {
             _ManualResetEvent.Set();
-        } 
+        }
+
+        protected override PlcWriteInfo MakeWriteInfo()
+        {
+            return new BitWriteInfo
+            {
+                Device = Device,
+                Address = Address,
+                Value = !Value
+            };
+        }
         #endregion
 
     }

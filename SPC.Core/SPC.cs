@@ -78,6 +78,8 @@ namespace SPC.Core
                     readBlock.BeforeRead += devContainer.BeforeRead;
                     readBlock.AfterRead += devContainer.AfterRead;
                 }
+
+                devContainer.WriteToPlc += _PlcWatcher.WriteToPlc;
             }
             
         }

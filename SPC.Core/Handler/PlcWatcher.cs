@@ -84,7 +84,7 @@ namespace SPC.Core
             if (!IsConnected)
                 Connect();
 
-            if (_IsRunning 
+            if (_IsRunning
                 || _RunningThread != null
                 || !IsConnected)
                 return false;
@@ -162,6 +162,19 @@ namespace SPC.Core
             }
         }
 
+        public bool WriteToPlc(PlcWriteInfo writeInfo)
+        {
+            switch (writeInfo)
+            {
+                default:
+                    return false;
+                case BitWriteInfo bInfo:
+                    return _Comm.SetBit(bInfo.Device, bInfo.Address, bInfo.Value) == 0;
+                case WordWriteInfo wInfo:
+                    return _Comm.BlockWrite(wInfo.Device, wInfo.Address, wInfo.Size, ref wInfo.Value) == 0;
+            }
+        }
+
         public void Add(PlcReadBlock item)
         {
             lock (_ReadBlocks)
@@ -209,7 +222,7 @@ namespace SPC.Core
             }
         }
 
-       
+
 
         public IEnumerator<PlcReadBlock> GetEnumerator()
         {

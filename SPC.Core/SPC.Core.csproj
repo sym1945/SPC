@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\CimLowerBitContainer.cs" />
     <Compile Include="BusinessLogic\CimLowerWordContainer.cs" />
+    <Compile Include="DataModel\BitWriteInfo.cs" />
     <Compile Include="DataModel\DeviceBase.cs" />
     <Compile Include="DataModel\WordDeviceContainer.cs" />
     <Compile Include="DataModel\BitDeviceContainer.cs" />
@@ -51,6 +52,8 @@
     <Compile Include="DataModel\IDeviceContainer.cs" />
     <Compile Include="DataModel\WordDevice.cs" />
     <Compile Include="DataModel\WordDeviceValue.cs" />
+    <Compile Include="DataModel\PlcWriteInfo.cs" />
+    <Compile Include="DataModel\WordWriteInfo.cs" />
     <Compile Include="Flags.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Communication\IPlcComm.cs" />

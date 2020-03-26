@@ -36,6 +36,24 @@ namespace SPC.Core
             }
         }
 
+        public event Func<PlcWriteInfo, bool> WriteToPlc
+        {
+            add
+            {
+                foreach (DeviceBase dev in this)
+                {
+                    dev.WriteToPlc += value;
+                }
+            }
+            remove
+            {
+                foreach (DeviceBase dev in this)
+                {
+                    dev.WriteToPlc -= value;
+                }
+            }
+        }
+
 
         public DeviceContainerBase()
         {
@@ -47,6 +65,9 @@ namespace SPC.Core
         {
             lock (_Devices)
             {
+                item.Device = Device;
+                item.Address = (short)(StartAddress + item.Offset);
+
                 _Devices.Add(item.Key, item);
             }
         }
@@ -118,6 +139,7 @@ namespace SPC.Core
         public virtual void AfterRead(PlcReadBlock devBlock)
         {
         }
+
 
     }
 }

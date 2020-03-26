@@ -11,9 +11,12 @@ namespace SPC.Core
     {
         
 
-        public T GetDevice(string key)
+        new public T this[string key]
         {
-            return (T)this[key];
+            get
+            {
+                return (T)base[key];
+            }
         }
 
 

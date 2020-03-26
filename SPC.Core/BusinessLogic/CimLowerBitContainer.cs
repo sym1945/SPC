@@ -10,8 +10,13 @@ namespace SPC.Core
     {
         public bool HeartBeat
         {
-            get => GetDevice(nameof(HeartBeat)).Value;
-            set => SetValue(nameof(HeartBeat), value);
+            get => this[nameof(HeartBeat)].Value;
+            set => this[nameof(HeartBeat)].Execute();
+        }
+
+        public BitDevice RecvAble
+        {
+            get => this[nameof(RecvAble)];
         }
 
 

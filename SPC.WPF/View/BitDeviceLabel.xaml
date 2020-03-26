@@ -12,10 +12,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock 
+        <Button 
             Padding="10 4"
             Background="LightGray"
-            Text="{Binding FullAddress, FallbackValue=X0000}"/>
+            Command="{Binding}"
+            Content="{Binding FullAddress, FallbackValue=X0000}"/>
         <TextBlock 
             Grid.Column="1"
             Padding="10 4"

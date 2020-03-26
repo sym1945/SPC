@@ -4,13 +4,13 @@
     {
         public string HPanelId
         {
-            get => GetDevice("HPanelId").Value.ToString();
+            get => this[nameof(HPanelId)].Value.ToString();
             set => SetValue("HPanelId", value);
         }
 
         public int SlotNo
         {
-            get => GetDevice("SlotNo").Value.ToInt32();
+            get => this[nameof(HPanelId)].Value.ToInt32();
             set => SetValue("SlotNo", value);
         }
     }

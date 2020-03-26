@@ -14,5 +14,16 @@ namespace SPC.Core
 
         public WordDeviceValue Value { get; set; }
 
+        protected override PlcWriteInfo MakeWriteInfo()
+        {
+            return new WordWriteInfo
+            {
+                Device = Device,
+                Address = Address,
+                Size = Length,
+                Value = new short[0]
+            };
+        }
+
     }
 }
