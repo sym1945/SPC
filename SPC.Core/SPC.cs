@@ -33,6 +33,7 @@ namespace SPC.Core
             _PlcWatcher = new PlcWatcher
             {
                 new PlcReadBlock() { Device = eDevice.B, StartAddress = 0, Size = 100, Key = 1},
+                new PlcReadBlock() { Device = eDevice.W, StartAddress = 0, Size = 100, Key = 3},
             };
 
             // dev manager init (config load)
@@ -54,9 +55,9 @@ namespace SPC.Core
                 },
                 new WordDeviceContainer(eDevice.W, 0x0000, 3, "CIM_RECV_WORDS")
                 {
-                    new WordDevice() { Offset = 0, Length = 12, Key = "RecvGlassId"},
-                    new WordDevice() { Offset = 12, Length = 1, Key = "RecvSlotNo"},
-                    new WordDevice() { Offset = 13, Length = 2, Key = "RecvWorkState"},
+                    new WordDevice() { Offset = 0, Length = 3, Key = "RecvGlassId"},
+                    new WordDevice() { Offset = 3, Length = 1, Key = "RecvSlotNo"},
+                    new WordDevice() { Offset = 4, Length = 2, Key = "RecvWorkState"},
                 },
                 new WordDeviceContainer(eDevice.W, 0x0100, 4, "CIM_SEND_WORDS")
                 {

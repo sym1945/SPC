@@ -13,17 +13,21 @@
         </Grid.ColumnDefinitions>
 
         <Button 
-            Padding="10 4"
+            Width="100"
+            Padding="0 4"
             Background="LightGray"
             Command="{Binding}"
             Content="{Binding FullAddress, FallbackValue=X0000}"/>
         <TextBlock 
             Grid.Column="1"
+            Width="100"
             Padding="10 4"
             Text="{Binding Key, FallbackValue=Description}"/>
         <TextBlock
             Grid.Column="2"
-            Padding="10 4"
+            Width="50"
+            TextAlignment="Center"
+            Padding="0 4"
             >
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">

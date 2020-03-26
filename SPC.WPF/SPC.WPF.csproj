@@ -62,6 +62,12 @@
     <Compile Include="View\BitDeviceLabel.xaml.cs">
       <DependentUpon>BitDeviceLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\WordDeviceContainer.xaml.cs">
+      <DependentUpon>WordDeviceContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WordDeviceLabel.xaml.cs">
+      <DependentUpon>WordDeviceLabel.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +85,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BitDeviceLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WordDeviceContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WordDeviceLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

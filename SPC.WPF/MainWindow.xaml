@@ -7,7 +7,14 @@
         xmlns:view="clr-namespace:SPC.WPF.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <view:BitDeviceContainer DataContext="{Binding TestDeviceViewModel}"/>
-    </Grid>
+    <StackPanel 
+        HorizontalAlignment="Left" 
+        VerticalAlignment="Top">
+        <view:BitDeviceContainer 
+            HorizontalAlignment="Left"
+            DataContext="{Binding TestDeviceViewModel}"/>
+        <view:WordDeviceContainer 
+            HorizontalAlignment="Left"
+            DataContext="{Binding TestDeviceViewModel}"/>
+    </StackPanel>
 </Window>

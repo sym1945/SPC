@@ -40,7 +40,8 @@ namespace SPC.WPF
             _Spc.Start();
 
             var bitDevContainer = _Spc.DeviceManager.GetDeviceContainer<BitDeviceContainer>(1);
-            TestDeviceViewModel = new TestDeviceViewModel(bitDevContainer);
+            var wordDevContainer = _Spc.DeviceManager.GetDeviceContainer<WordDeviceContainer>(3);
+            TestDeviceViewModel = new TestDeviceViewModel(bitDevContainer, wordDevContainer);
 
             DataContext = this;
         }

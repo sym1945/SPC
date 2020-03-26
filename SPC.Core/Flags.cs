@@ -112,4 +112,13 @@ namespace SPC.Core
         Ascii,
     }
 
+    public enum eValueDisplayMode
+    {
+        ASCII,
+        DEC,
+        HEX,
+    }
+
+
+
 }

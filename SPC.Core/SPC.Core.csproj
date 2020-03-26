@@ -31,8 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\CimLowerBitContainer.cs" />
     <Compile Include="BusinessLogic\CimLowerWordContainer.cs" />
+    <Compile Include="Converter\WordWriteValueConverter.cs" />
     <Compile Include="DataModel\BitWriteInfo.cs" />
     <Compile Include="DataModel\DeviceBase.cs" />
     <Compile Include="DataModel\WordDeviceContainer.cs" />

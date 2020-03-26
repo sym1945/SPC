@@ -21,27 +21,35 @@ namespace SPC.Core
         }
 
 
-        public void SetValue(string key, string value)
-        {
-            
-        }
-
-        public void SetValue(string key, short value)
-        {
-            
-        }
-
-        public void SetValue(string key, int value)
-        {
-
-        }
-
-        public void UpdateDeviceValue(short[] rawData)
+        public override void AfterRead(PlcReadBlock devBlock)
         {
             foreach (WordDevice device in this)
             {
-                Array.Copy(rawData, device.Offset, device.Value.RawData, device.Offset, device.Length);
-                // OnValueChanged
+                bool isChanged = false;
+                var offset = device.Offset;
+                var length = device.Length;
+
+                try
+                {
+                    for (int i = 0, j = offset; i < length; i++, j++)
+                    {
+                        if (devBlock.Buffer[j] != device.RawData[i])
+                        {
+                            Array.Copy(devBlock.Buffer, offset, device.RawData, 0, length);
+                            isChanged = true;
+                            break;
+                        }
+                    }
+
+                    if (isChanged)
+                    {
+                        device.OnRawDataChanged();
+                    }
+                }
+                catch
+                {
+                    //TODO: todo Something
+                }
             }
         }
 

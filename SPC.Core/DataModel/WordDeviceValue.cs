@@ -27,9 +27,40 @@ namespace SPC.Core
             return Functions.WordToInt32(_Buffer);
         }
 
-        public void Update(short[] values)
+        public string ToDec()
         {
+            var len = _Buffer.Length;
+            var sb = new StringBuilder();
 
+            for (int i = 0; i < len; i++)
+            {
+                sb.Append($"{_Buffer[i]} ");
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+
+            return sb.ToString();
+        }
+
+        public string ToHex()
+        {
+            var len = _Buffer.Length;
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < len; i++)
+            {
+                sb.Append($"{_Buffer[i]:X4} ");
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+
+            return sb.ToString();
         }
 
 

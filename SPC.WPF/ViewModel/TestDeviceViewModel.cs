@@ -9,11 +9,14 @@ namespace SPC.WPF
 {
     public class TestDeviceViewModel
     {
-        public BitDeviceContainer Devices { get; set; }
+        public BitDeviceContainer BitDevices { get; set; }
 
-        public TestDeviceViewModel(BitDeviceContainer bitDevContainer)
+        public WordDeviceContainer WordDevices { get; set; }
+
+        public TestDeviceViewModel(BitDeviceContainer bitDevContainer, WordDeviceContainer wordDeviceContainer)
         {
-            Devices = bitDevContainer;
+            BitDevices = bitDevContainer;
+            WordDevices = wordDeviceContainer;
         }
 
     }
