@@ -68,6 +68,11 @@ namespace SPC.Core
             }
         }
 
+        public void SetValue(string value)
+        {
+            SetValue(Functions.StringToWord_Swap(value));
+        }
+
         public void Clear()
         {
             Array.Clear(_Buffer, 0, _Buffer.Length);

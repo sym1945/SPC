@@ -36,10 +36,12 @@ namespace SPC.Core
             }
         }
 
+        private event Func<PlcWriteInfo, bool> _WriteToPlc;
         public event Func<PlcWriteInfo, bool> WriteToPlc
         {
             add
             {
+                _WriteToPlc += value;
                 foreach (DeviceBase dev in this)
                 {
                     dev.WriteToPlc += value;
@@ -47,6 +49,7 @@ namespace SPC.Core
             }
             remove
             {
+                _WriteToPlc -= value;
                 foreach (DeviceBase dev in this)
                 {
                     dev.WriteToPlc -= value;
@@ -138,6 +141,11 @@ namespace SPC.Core
 
         public virtual void AfterRead(PlcReadBlock devBlock)
         {
+        }
+
+        protected void OnWriteToPlc(PlcWriteInfo writeInfo)
+        {
+            _WriteToPlc?.Invoke(writeInfo);
         }
 
 

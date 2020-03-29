@@ -32,14 +32,6 @@ namespace SPC.Core
 
         public virtual void Execute(object parameter = null)
         {
-            //if (WriteToPlc == null)
-            //    return;
-
-            //if (parameter is PlcWriteInfo writeInfo)
-            //    WriteToPlc(writeInfo);
-            //else
-            //    WriteToPlc(MakeWriteInfo(parameter));
-            //OnWriteToPlc(MakeWriteInfo(parameter));
         }
 
         protected void OnPropertyChanged(string propertyName)

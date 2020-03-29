@@ -94,5 +94,15 @@ namespace SPC.Core
             return this.FirstOrDefault(container => container.ReadBlockKey == readBlockKey);
         }
 
+        public BitDeviceContainer B(string key)
+        {
+            return this.OfType<BitDeviceContainer>().FirstOrDefault(d => d.Description == key);
+        }
+
+        public WordDeviceContainer W(string key)
+        {
+            return this.OfType<WordDeviceContainer>().FirstOrDefault(d => d.Description == key);
+        }
+
     }
 }

@@ -132,7 +132,7 @@ namespace SPC.Core
         {
             _WriteValue.SetValue(value);
 
-            Execute(new WordWriteInfo
+            OnWriteToPlc(new WordWriteInfo
             {
                 Device = Device,
                 Address = Address,

@@ -44,12 +44,6 @@ namespace SPC.WPF
             TestDeviceViewModel = new TestDeviceViewModel(bitDevContainer, wordDevContainer);
 
             DataContext = this;
-
-            short[] arr1 = new short[2] { 1, 2 };
-            short[] arr2 = new short[5];
-
-            Array.Copy(arr1, arr2, arr2.Length);
-
         }
     }
 }

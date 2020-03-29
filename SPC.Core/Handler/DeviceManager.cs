@@ -13,6 +13,9 @@ namespace SPC.Core
 
         public bool IsSetUp => _IsSetup;
 
+        
+
+
         public void SetUp()
         {
             if (_IsSetup)
