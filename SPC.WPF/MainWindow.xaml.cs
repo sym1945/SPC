@@ -37,13 +37,19 @@ namespace SPC.WPF
         {
             _Spc = new Core.SPC();
             _Spc.SetUp();
-            _Spc.Start();
+            //_Spc.Start();
 
             var bitDevContainer = _Spc.DeviceManager.GetDeviceContainer<BitDeviceContainer>(1);
             var wordDevContainer = _Spc.DeviceManager.GetDeviceContainer<WordDeviceContainer>(3);
             TestDeviceViewModel = new TestDeviceViewModel(bitDevContainer, wordDevContainer);
 
             DataContext = this;
+
+            short[] arr1 = new short[2] { 1, 2 };
+            short[] arr2 = new short[5];
+
+            Array.Copy(arr1, arr2, arr2.Length);
+
         }
     }
 }

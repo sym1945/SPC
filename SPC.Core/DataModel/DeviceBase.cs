@@ -25,12 +25,12 @@ namespace SPC.Core
 
         
 
-        public bool CanExecute(object parameter)
+        public virtual bool CanExecute(object parameter)
         {
             return true;
         }
 
-        public void Execute(object parameter = null)
+        public virtual void Execute(object parameter = null)
         {
             //if (WriteToPlc == null)
             //    return;
@@ -39,7 +39,7 @@ namespace SPC.Core
             //    WriteToPlc(writeInfo);
             //else
             //    WriteToPlc(MakeWriteInfo(parameter));
-            WriteToPlc?.Invoke(MakeWriteInfo(parameter));
+            //OnWriteToPlc(MakeWriteInfo(parameter));
         }
 
         protected void OnPropertyChanged(string propertyName)
@@ -49,6 +49,10 @@ namespace SPC.Core
 
         public event Func<PlcWriteInfo, bool> WriteToPlc;
 
-        protected abstract PlcWriteInfo MakeWriteInfo(object parameter);
+        protected virtual void OnWriteToPlc(PlcWriteInfo plcWriteInfo)
+        {
+            WriteToPlc?.Invoke(plcWriteInfo);
+        }
+
     }
 }

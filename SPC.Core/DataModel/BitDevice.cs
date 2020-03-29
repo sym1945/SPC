@@ -82,9 +82,22 @@ namespace SPC.Core
 
         public void WriteValue(bool value)
         {
-            Execute(value);
+            OnWriteToPlc(new BitWriteInfo
+            {
+                Device = Device,
+                Address = Address,
+                Value = value
+            });
         }
 
+        public override void Execute(object parameter = null)
+        {
+            bool writeValue = !Value;
+            if (parameter is bool)
+                writeValue = (bool)parameter;
+
+            WriteValue(writeValue);
+        }
         #endregion
 
 
@@ -94,19 +107,6 @@ namespace SPC.Core
             _ManualResetEvent.Set();
         }
 
-        protected override PlcWriteInfo MakeWriteInfo(object value)
-        {
-            bool writeValue = !Value;
-            if (value is bool)
-                writeValue = (bool)value;
-
-            return new BitWriteInfo
-            {
-                Device = Device,
-                Address = Address,
-                Value = writeValue
-            };
-        }
         #endregion
 
     }

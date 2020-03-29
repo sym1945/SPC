@@ -17,15 +17,6 @@ namespace SPC.Core
             _Buffer = new short[length];
         }
 
-        public override string ToString()
-        {
-            return Functions.WordToString(true, _Buffer);
-        }
-
-        public int ToInt32()
-        {
-            return Functions.WordToInt32(_Buffer);
-        }
 
         public string ToDec()
         {
@@ -61,6 +52,25 @@ namespace SPC.Core
             }
 
             return sb.ToString();
+        }
+
+        public void SetValue(IEnumerable<short> values)
+        {
+            Clear();
+
+            int i = 0;
+            var len = _Buffer.Length;
+            foreach (short value in values)
+            {
+                _Buffer[i++] = value;
+                if (i >= len)
+                    break;
+            }
+        }
+
+        public void Clear()
+        {
+            Array.Clear(_Buffer, 0, _Buffer.Length);
         }
 
 
