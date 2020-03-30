@@ -10,109 +10,103 @@ namespace SPC.Core
     {
         #region Private Members
 
-        private bool _IsHandshaking = false;
-
-        private Core _Core = null;
-
         private BitDevice _RequestBit = null;
 
         private BitDevice _ReplyBit = null;
 
+        private bool _IsRun = false;
+
         #endregion
 
-        public TestCommandModel(Core core)
+
+        public async void Call()
         {
-            _Core = core;
-        }
-
-        public bool OnRequestBit() => true;
-
-        public bool OnReplyBit() => true;
-
-
-
-        private void TimerOn()
-        {
-        }
-
-        private void TimerOff()
-        {
-        }
-
-
-        async public void RequestActionStarter()
-        {
-            //TODO: Lock
-            if (_IsHandshaking)
+            if (_IsRun)
+                return;
+            if (!_RequestBit.IsOnTrigger)
                 return;
 
-            if (_RequestBit.IsOnTrigger)
+            _IsRun = true;
+
+            AfterTriggerBitOn();
+
+            _ReplyBit.WriteValue(true);
+
+            var timeout = await _RequestBit.WaitBitAsync(false, 2000); // T4
+
+            _ReplyBit.WriteValue(false);
+
+            if (timeout)
+                TimeOutTriggerBitOff();
+            else
+                AfterTriggerBitOff();
+            
+
+            _IsRun = false;
+        }
+
+        public async void Call2()
+        {
+            if (_IsRun)
+                return;
+            _IsRun = true;
+
+            BeforeTriggerBitOn();
+
+            await Task.Delay(1000); // Tn Delay
+
+            _RequestBit.WriteValue(true);
+
+            var timeout = await _ReplyBit.WaitBitAsync(true, 2000); // T1
+
+            _RequestBit.WriteValue(false);
+
+            if (timeout)
             {
-                _IsHandshaking = true;
-                await RequestActionAsync();
-                _IsHandshaking = false;
+                TimeOutReplyBitOn();
+                _IsRun = false;
+                return;
             }
+
+            timeout = await _ReplyBit.WaitBitAsync(false, 2000); // T2
+
+            if (timeout)
+            {
+                TimeOutReplyBitOff();
+            }
+
+            _IsRun = false;
         }
 
-
-        async public Task RequestActionAsync()
+        public virtual void BeforeTriggerBitOn()
         {
-        //    // read word
-        //    var alarm = _WordDevices.AlarmText;
 
-        //    // valid check
-        //    var isValid = _Core.ValidationCheck();
-
-        //    // write word
-        //    _WordDevices.AlarmType = "Reply Data";
-
-        //    #region Common
-        //    // reply bit on
-        //    _ReplyBit.Value = true;
-
-        //    // confirm req bit off
-        //    var timeout = await _RequestBit.WaitBitAsync(false, 2000);  // T4
-
-        //    _ReplyBit.Value = false;
-        //    if (timeout)
-        //    {
-        //        OnTimeOut();
-        //    }             
-        //    #endregion
         }
 
-        async public Task ReportActionAsync()
+        public virtual void AfterTriggerBitOn()
         {
-            //// write word
-            //_WordDevices.AlarmType = "Report Data";
-
-            //#region Common
-            //await Task.Delay(1000); // Tn Delay
-
-            //// req bit on
-            //_RequestBit.Value = true;
-
-            //// confirm rep bit on
-            //var timeout = await _ReplyBit.WaitBitAsync(true, 2000);   // T1
-
-            //// req bit off
-            //_RequestBit.Value = false;
-
-            //if (timeout)
-            //{
-            //    OnTimeOut();
-            //    return;
-            //}
-
-            //timeout = await _ReplyBit.WaitBitAsync(false, 2000);  // T2
-
-            //if (timeout)
-            //{
-            //    OnTimeOut();
-            //} 
-            //#endregion
+            
         }
 
+        public virtual void AfterTriggerBitOff()
+        {
+
+        }
+
+        public virtual void TimeOutTriggerBitOff()
+        {
+            
+        }
+
+        public virtual void TimeOutReplyBitOn()
+        {
+
+        }
+
+        public virtual void TimeOutReplyBitOff()
+        {
+
+        }
 
         protected virtual void OnTimeOut()
         {
