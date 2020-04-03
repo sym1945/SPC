@@ -55,7 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\TestDeviceViewModel.cs" />
+    <Compile Include="PlcCommand\SendAbleOnHandshakeAction.cs" />
+    <Compile Include="PlcCommand\RecvAbleOnHandshakeAction.cs" />
+    <Compile Include="ViewModel\DeviceListViewModel.cs" />
     <Compile Include="View\BitDeviceContainer.xaml.cs">
       <DependentUpon>BitDeviceContainer.xaml</DependentUpon>
     </Compile>

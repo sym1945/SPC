@@ -10,20 +10,27 @@ namespace SPC.Core
     {
         private PlcWatcher _PlcWatcher;
         private DeviceManager _DeviceManager;
+        private CommandManager _CommandManager;
 
         public PlcWatcher PlcWatcher => _PlcWatcher;
 
         public DeviceManager DeviceManager => _DeviceManager;
 
+        public CommandManager CommandManager => _CommandManager;
+
         public SPC()
         {
             _PlcWatcher = new PlcWatcher();
             _DeviceManager = new DeviceManager();
+            _CommandManager = new CommandManager();
+            SPCContainer.SetSPC(this);
         }
         public SPC(PlcComm plcComm)
         {
             _PlcWatcher = new PlcWatcher(plcComm);
             _DeviceManager = new DeviceManager();
+            _CommandManager = new CommandManager();
+            SPCContainer.SetSPC(this);
         }
 
 
@@ -68,6 +75,27 @@ namespace SPC.Core
             };
             _DeviceManager.SetUp();
 
+            // command init (config load)
+            _CommandManager = new CommandManager
+            {
+                new PlcCommand()
+                {
+                    Container = "CIM_RECV_BITS",
+                    Device = "RecvAble",
+                    Trigger = CommandTrigger.BitOn,
+                    Command ="RecvAbleOnHandshakeAction"
+                },
+
+                new PlcCommand()
+                {
+                    Container = "CIM_SEND_BITS",
+                    Device = "SendAble",
+                    Trigger = CommandTrigger.BitOn,
+                    Command ="SendAbleOnHandshakeAction"
+                }
+            };
+            _CommandManager.SetUp();
+
 
             // watcher <> manager connect
             foreach (DeviceContainerBase devContainer in _DeviceManager)
@@ -82,7 +110,15 @@ namespace SPC.Core
 
                 devContainer.WriteToPlc += _PlcWatcher.WriteToPlc;
             }
+
+
+            _PlcWatcher.PlcConnected += PlcConnected;
+            _PlcWatcher.BeforeRead += BeforeRead;
+            _PlcWatcher.AfterRead += AfterRead;
             
+
+            // command setup
+
         }
 
         public bool Start()
@@ -90,7 +126,49 @@ namespace SPC.Core
             // watcher start
             return _PlcWatcher.Start();
         }
-        
+
+        private void PlcConnected()
+        {
+            // Do Something
+
+            OnPlcConnected();
+        }
+
+
+        private void BeforeRead()
+        {
+            // Do Something
+
+            OnBeforeRead();
+        }
+
+        private void AfterRead()
+        {
+            // Do Something
+            foreach (var commandAction in _CommandManager.CommandActions)
+            {
+                commandAction.Execute();
+            }
+            
+
+            OnAfterRead();
+        }
+
+        public virtual void OnPlcConnected()
+        {
+
+        }
+
+        public virtual void OnBeforeRead()
+        {
+
+        }
+
+        public virtual void OnAfterRead()
+        {
+
+        }
+
 
     }
 

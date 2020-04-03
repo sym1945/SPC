@@ -23,7 +23,7 @@ namespace SPC.WPF
     {
         private Core.SPC _Spc;
 
-        public TestDeviceViewModel TestDeviceViewModel { get; set; }
+        public DeviceListViewModel DeviceListViewModel { get; set; }
 
 
         public MainWindow()
@@ -37,11 +37,9 @@ namespace SPC.WPF
         {
             _Spc = new Core.SPC();
             _Spc.SetUp();
-            //_Spc.Start();
-
-            var bitDevContainer = _Spc.DeviceManager.GetDeviceContainer<BitDeviceContainer>(1);
-            var wordDevContainer = _Spc.DeviceManager.GetDeviceContainer<WordDeviceContainer>(3);
-            TestDeviceViewModel = new TestDeviceViewModel(bitDevContainer, wordDevContainer);
+            _Spc.Start();
+            
+            DeviceListViewModel = new DeviceListViewModel(_Spc.DeviceManager);
 
             DataContext = this;
         }

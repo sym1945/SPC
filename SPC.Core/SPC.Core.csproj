@@ -45,9 +45,15 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\CimLowerBitContainer.cs" />
     <Compile Include="BusinessLogic\CimLowerWordContainer.cs" />
-    <Compile Include="Converter\WordWriteValueConverter.cs" />
+    <Compile Include="BusinessLogic\RecvAbleOnCommand.cs" />
+    <Compile Include="Command\DeviceFindKey.cs" />
+    <Compile Include="Command\HandshakeAction.cs" />
+    <Compile Include="Command\PlcCommandActionBase.cs" />
+    <Compile Include="Command\RecvHandshakeAction.cs" />
+    <Compile Include="Command\SendHandshakeAction.cs" />
     <Compile Include="DataModel\BitWriteInfo.cs" />
     <Compile Include="DataModel\DeviceBase.cs" />
+    <Compile Include="Command\PlcCommand.cs" />
     <Compile Include="DataModel\WordDeviceContainer.cs" />
     <Compile Include="DataModel\BitDeviceContainer.cs" />
     <Compile Include="DataModel\DeviceContainer.cs" />
@@ -67,12 +73,12 @@
     <Compile Include="DataModel\BitDevice.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="DataModel\IDevice.cs" />
-    <Compile Include="DataModel\IPlcCommandModel.cs" />
-    <Compile Include="DataModel\PlcCommandModel.cs" />
-    <Compile Include="BusinessLogic\TestCommandModel.cs" />
+    <Compile Include="Handler\CommandManagerBase.cs" />
+    <Compile Include="Handler\CommandManager.cs" />
     <Compile Include="Handler\DeviceManager.cs" />
     <Compile Include="Handler\DeviceManagerBase.cs" />
     <Compile Include="Handler\PlcWatcher.cs" />
+    <Compile Include="IoC\SPCContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SPC.cs" />
   </ItemGroup>

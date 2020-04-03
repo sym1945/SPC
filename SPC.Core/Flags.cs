@@ -119,6 +119,13 @@ namespace SPC.Core
         HEX,
     }
 
+    public enum CommandTrigger
+    {
+        Change,
+        BitOn,
+        BitOff,
+    }
+
 
 
 }

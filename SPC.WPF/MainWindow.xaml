@@ -12,9 +12,12 @@
         VerticalAlignment="Top">
         <view:BitDeviceContainer 
             HorizontalAlignment="Left"
-            DataContext="{Binding TestDeviceViewModel}"/>
+            DataContext="{Binding DeviceListViewModel.RecvBitDevices}"/>
+        <view:BitDeviceContainer 
+            HorizontalAlignment="Left"
+            DataContext="{Binding DeviceListViewModel.SendBitDevices}"/>
         <view:WordDeviceContainer 
             HorizontalAlignment="Left"
-            DataContext="{Binding TestDeviceViewModel}"/>
+            DataContext="{Binding DeviceListViewModel.WordDevices}"/>
     </StackPanel>
 </Window>

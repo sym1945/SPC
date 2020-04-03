@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SPC.WPF.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ItemsControl ItemsSource="{Binding BitDevices}">
+    <ItemsControl ItemsSource="{Binding}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <local:BitDeviceLabel/>

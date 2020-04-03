@@ -34,8 +34,8 @@ namespace SPC.Core
         #region Events
         public event Action PlcConnected;
         public event Action PlcDisconnected;
-        //public event Action<IReadOnlyList<PlcReadBlock>> BeginRead;
-        //public event Action<IReadOnlyList<PlcReadBlock>> EndRead;
+        public event Action BeforeRead;
+        public event Action AfterRead;
         #endregion
 
 
@@ -152,6 +152,7 @@ namespace SPC.Core
             {
                 readBlock.OnBeforeRead();
             }
+            BeforeRead?.Invoke();
         }
 
         private void OnAfterRead()
@@ -160,6 +161,7 @@ namespace SPC.Core
             {
                 readBlock.OnAfterRead();
             }
+            AfterRead?.Invoke();
         }
 
         public bool WriteToPlc(PlcWriteInfo writeInfo)

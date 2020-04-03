@@ -10,7 +10,7 @@ namespace SPC.Core
     public class BitDevice : DeviceBase
     {
         #region Private Members
-        private ManualResetEventSlim _ManualResetEvent = null;
+        private ManualResetEventSlim _ResetEvent = null;
         private bool _OldValue = false;
         private bool _Value = false;
         #endregion
@@ -43,7 +43,7 @@ namespace SPC.Core
         #region Constructor
         public BitDevice()
         {
-            _ManualResetEvent = new ManualResetEventSlim(false);
+            _ResetEvent = new ManualResetEventSlim(false);
         }
         #endregion
 
@@ -55,9 +55,9 @@ namespace SPC.Core
         /// <param name="exceptedValue">원하는 변경값</param>
         /// <param name="waitMsec">변경 대기시간(msec)</param>
         /// <returns>true: 변경됨, false: 변경안됨</returns>
-        public async Task<bool> WaitBitAsync(bool exceptedValue, short waitMsec = 2000)
+        public Task<bool> WaitBitAsync(bool exceptedValue, short waitMsec = 2000)
         {
-            return await Task.Run(() =>
+            return Task.Run(() =>
             {
                 return WaitBit(exceptedValue, waitMsec);
             });
@@ -74,8 +74,8 @@ namespace SPC.Core
             if (_Value == exceptedValue)
                 return true;
 
-            _ManualResetEvent.Reset();
-            _ManualResetEvent.Wait(waitMsec);
+            _ResetEvent.Reset();
+            _ResetEvent.Wait(waitMsec);
 
             return _Value == exceptedValue;
         }
@@ -104,7 +104,7 @@ namespace SPC.Core
         #region Inner Method
         protected void OnValueChanged()
         {
-            _ManualResetEvent.Set();
+            _ResetEvent.Set();
         }
 
         #endregion
