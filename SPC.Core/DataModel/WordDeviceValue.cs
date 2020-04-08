@@ -18,6 +18,12 @@ namespace SPC.Core
         }
 
 
+        public string ToAscii()
+        {
+            return Functions.WordToString_Swap(_Buffer);
+        }
+
+
         public string ToDec()
         {
             var len = _Buffer.Length;

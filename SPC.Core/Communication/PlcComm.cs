@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace SPC.Core
 {
-    public abstract class PlcComm : IPlcComm, INotifyPropertyChanged
+    public abstract class PlcComm : IPlcComm
     {
 
         #region Private Members
@@ -14,12 +15,16 @@ namespace SPC.Core
         public bool IsOpen
         {
             get => _IsOpen;
-            set
+            internal set
             {
                 if (_IsOpen == value)
                     return;
                 _IsOpen = value;
-                OnPropertyChanged(nameof(IsOpen));
+
+                if (_IsOpen)
+                    OnPlcConnected();
+                else
+                    OnPlcDisconnected();
             }
         }
         #endregion
@@ -34,13 +39,23 @@ namespace SPC.Core
 
         public abstract short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf);
 
-        public abstract short SetBit(eDevice device, short devno, bool set); 
+        public abstract short SetBit(eDevice device, short devno, bool set);
         #endregion
 
 
         #region Event
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string PropertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        public event Action PlcConnected;
+        public event Action PlcDisconnected;
+
+        private void OnPlcConnected()
+        {
+            PlcConnected?.Invoke();
+        }
+
+        private void OnPlcDisconnected()
+        {
+            PlcDisconnected?.Invoke();
+        }
         #endregion
 
     }

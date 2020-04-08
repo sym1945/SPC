@@ -13,7 +13,7 @@ namespace SPC.Core
             return TriggerBit?.IsOnTrigger ?? false;
         }
 
-        public override async void Execute()
+        public override void Execute()
         {
             if (CanExecute() == false)
                 return;
@@ -24,24 +24,21 @@ namespace SPC.Core
                     return;
 
                 IsRunning = true;
+                DoHandshake();
             }
-
-            await DoHandshake();
-
-            IsRunning = false;
         }
 
 
         private Task DoHandshake()
         {
-            return Task.Run(async () =>
+            return Task.Run(() =>
             {
                 AfterTriggerBitOn();
 
                 ReplyBit.WriteValue(true);
 
                 //TODO: Time 정보 Config로 보내기
-                var changed = await TriggerBit.WaitBitAsync(false, 2000); // T4
+                var changed = TriggerBit.WaitBit(false, 2000); // T4
 
                 ReplyBit.WriteValue(false);
 
@@ -49,7 +46,8 @@ namespace SPC.Core
                     AfterTriggerBitOff();
                 else
                     TimeOutTriggerBitOff();
-                
+
+                IsRunning = false;
             });
         }
 

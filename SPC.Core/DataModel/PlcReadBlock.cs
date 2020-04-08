@@ -9,11 +9,14 @@ namespace SPC.Core
     public class PlcReadBlock
     {
         #region Private Members
+
         private short _Size = 0;
+
         #endregion
 
 
         #region Public Properties
+
         public int Key { get; set; }
 
         public eDevice Device { get; set; } = eDevice.B;
@@ -34,16 +37,21 @@ namespace SPC.Core
         }
 
         public short[] Buffer = null;
+
         #endregion
 
 
         #region Constructor
+
         public PlcReadBlock(short size = 1024)
         {
             Size = size;
         }
+
         #endregion
 
+
+        #region Events
 
         public event Action<PlcReadBlock> BeforeRead;
         public event Action<PlcReadBlock> AfterRead;
@@ -56,7 +64,9 @@ namespace SPC.Core
         internal void OnAfterRead()
         {
             AfterRead?.Invoke(this);
-        }
+        } 
+
+        #endregion
 
     }
 }

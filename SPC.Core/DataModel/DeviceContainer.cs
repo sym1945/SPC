@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SPC.Core
 {
     public class DeviceContainer<T> : DeviceContainerBase
-        where T : IDevice
+        where T : DeviceBase
     {
         
 

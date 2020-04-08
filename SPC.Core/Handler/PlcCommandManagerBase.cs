@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SPC.Core
 {
-    public abstract class CommandManagerBase : ICollection<PlcCommand>
+    public abstract class PlcCommandManagerBase : ICollection<PlcCommand>
     {
         private List<PlcCommand> _PlcCommands = new List<PlcCommand>();
 

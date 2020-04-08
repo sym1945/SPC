@@ -8,93 +8,45 @@ namespace SPC.Core
 {
     public class SPC
     {
+        private PlcComm _PlcComm;
         private PlcWatcher _PlcWatcher;
         private DeviceManager _DeviceManager;
-        private CommandManager _CommandManager;
+        private PlcCommandManager _CommandManager;
 
         public PlcWatcher PlcWatcher => _PlcWatcher;
 
         public DeviceManager DeviceManager => _DeviceManager;
 
-        public CommandManager CommandManager => _CommandManager;
+        public PlcCommandManager CommandManager => _CommandManager;
 
         public SPC()
         {
-            _PlcWatcher = new PlcWatcher();
-            _DeviceManager = new DeviceManager();
-            _CommandManager = new CommandManager();
+            _PlcComm = new Melsec();
             SPCContainer.SetSPC(this);
         }
         public SPC(PlcComm plcComm)
         {
-            _PlcWatcher = new PlcWatcher(plcComm);
-            _DeviceManager = new DeviceManager();
-            _CommandManager = new CommandManager();
+            _PlcComm = plcComm;
             SPCContainer.SetSPC(this);
         }
 
 
-        public void SetUp()
+        public void SetUp(PlcWatcher watcher, DeviceManager devManager, PlcCommandManager commandManager = null)
         {
-            // plc watcher init (config load)
-            _PlcWatcher = new PlcWatcher
-            {
-                new PlcReadBlock() { Device = eDevice.B, StartAddress = 0, Size = 100, Key = 1},
-                new PlcReadBlock() { Device = eDevice.W, StartAddress = 0, Size = 100, Key = 3},
-            };
+            _PlcWatcher = watcher;
+            _DeviceManager = devManager;
+            _CommandManager = commandManager;
 
-            // dev manager init (config load)
-            _DeviceManager = new DeviceManager
-            {
-                new BitDeviceContainer(eDevice.B, 0x0000, 1, "CIM_RECV_BITS")
-                {
-                    new BitDevice() { Offset = 0, Key = "HeartBit"},
-                    new BitDevice() { Offset = 1, Key = "RecvAble"},
-                    new BitDevice() { Offset = 2, Key = "RecvStart"},
-                    new BitDevice() { Offset = 3, Key = "RecvComplete"},
-                },
-                new BitDeviceContainer(eDevice.B, 0x0100, 2, "CIM_SEND_BITS")
-                {
-                    new BitDevice() { Offset = 0, Key = "HeartBit"},
-                    new BitDevice() { Offset = 1, Key = "SendAble"},
-                    new BitDevice() { Offset = 2, Key = "SendStart"},
-                    new BitDevice() { Offset = 3, Key = "SendComplete"},
-                },
-                new WordDeviceContainer(eDevice.W, 0x0000, 3, "CIM_RECV_WORDS")
-                {
-                    new WordDevice() { Offset = 0, Length = 3, Key = "RecvGlassId"},
-                    new WordDevice() { Offset = 3, Length = 1, Key = "RecvSlotNo"},
-                    new WordDevice() { Offset = 4, Length = 2, Key = "RecvWorkState"},
-                },
-                new WordDeviceContainer(eDevice.W, 0x0100, 4, "CIM_SEND_WORDS")
-                {
-                    new WordDevice() { Offset = 0, Length = 12, Key = "SendGlassId"},
-                    new WordDevice() { Offset = 12, Length = 1, Key = "SendSlotNo"},
-                    new WordDevice() { Offset = 13, Length = 2, Key = "SendWorkState"},
-                },
-            };
+            if (_PlcWatcher == null)
+                throw new NullReferenceException("PlcWathcer is NULL");
+            if (_DeviceManager == null)
+                throw new NullReferenceException("DeviceManager is NULL");
+
+            _PlcWatcher.Comm = _PlcComm;
+            _DeviceManager.Comm = _PlcComm;
+
             _DeviceManager.SetUp();
-
-            // command init (config load)
-            _CommandManager = new CommandManager
-            {
-                new PlcCommand()
-                {
-                    Container = "CIM_RECV_BITS",
-                    Device = "RecvAble",
-                    Trigger = CommandTrigger.BitOn,
-                    Command ="RecvAbleOnHandshakeAction"
-                },
-
-                new PlcCommand()
-                {
-                    Container = "CIM_SEND_BITS",
-                    Device = "SendAble",
-                    Trigger = CommandTrigger.BitOn,
-                    Command ="SendAbleOnHandshakeAction"
-                }
-            };
-            _CommandManager.SetUp();
+            _CommandManager?.SetUp();
 
 
             // watcher <> manager connect
@@ -103,26 +55,24 @@ namespace SPC.Core
                 var readBlock = _PlcWatcher.GetReadBlock(devContainer.ReadBlockKey);
                 if (readBlock != null)
                 {
-                    _PlcWatcher.PlcConnected += devContainer.PlcConnected;
+                    _PlcComm.PlcConnected += devContainer.PlcConnected;
                     readBlock.BeforeRead += devContainer.BeforeRead;
                     readBlock.AfterRead += devContainer.AfterRead;
                 }
-
-                devContainer.WriteToPlc += _PlcWatcher.WriteToPlc;
             }
 
 
-            _PlcWatcher.PlcConnected += PlcConnected;
+            _PlcComm.PlcConnected += PlcConnected;
             _PlcWatcher.BeforeRead += BeforeRead;
             _PlcWatcher.AfterRead += AfterRead;
-            
-
-            // command setup
 
         }
 
         public bool Start()
         {
+            if (_PlcWatcher == null)
+                throw new NullReferenceException("PlcWathcer is NULL");
+
             // watcher start
             return _PlcWatcher.Start();
         }
@@ -149,7 +99,6 @@ namespace SPC.Core
             {
                 commandAction.Execute();
             }
-            
 
             OnAfterRead();
         }

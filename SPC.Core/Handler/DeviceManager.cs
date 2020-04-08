@@ -11,9 +11,19 @@ namespace SPC.Core
     {
         private bool _IsSetup = false;
 
+       
         public bool IsSetUp => _IsSetup;
 
-        
+
+        #region Constructor
+
+        public DeviceManager()
+        {
+        } 
+
+        #endregion
+
+
 
 
         public void SetUp()

@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class WordWriteInfo : PlcWriteInfo
+    public class WordReadWriteInfo : DeviceReadWriteInfo
     {
         public short Size { get; set; }
         public short[] Value;

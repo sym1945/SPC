@@ -5,23 +5,48 @@ using System.Collections.Generic;
 
 namespace SPC.Core
 {
-    public class DeviceManagerBase : ICollection<IDeviceContainer>
+    public class DeviceManagerBase : ICollection<DeviceContainerBase>
     {
-        private List<IDeviceContainer> _DeviceContainers;
+        private List<DeviceContainerBase> _DeviceContainers;
+
+        protected PlcReadWriter _PlcReadWriter;
+
+
+        private PlcComm _Comm;
+        internal PlcComm Comm
+        {
+            get => _Comm;
+            set
+            {
+                if (_Comm == value)
+                    return;
+
+                _Comm = value;
+                _PlcReadWriter = new PlcReadWriter(_Comm);
+                foreach (var devContainer in this)
+                {
+                    devContainer.PlcReadWriter = _PlcReadWriter;
+                }
+            }
+        }
+
 
         public int Count => _DeviceContainers.Count;
 
         public bool IsReadOnly => false;
 
 
+        #region Constructor
+
         public DeviceManagerBase()
         {
-            _DeviceContainers = new List<IDeviceContainer>();
+            _DeviceContainers = new List<DeviceContainerBase>();
         }
 
+        #endregion
 
 
-        public void Add(IDeviceContainer item)
+        public void Add(DeviceContainerBase item)
         {
             lock (_DeviceContainers)
             {
@@ -29,7 +54,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Remove(IDeviceContainer item)
+        public bool Remove(DeviceContainerBase item)
         {
             lock (_DeviceContainers)
             {
@@ -53,7 +78,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Contains(IDeviceContainer item)
+        public bool Contains(DeviceContainerBase item)
         {
             lock (_DeviceContainers)
             {
@@ -61,7 +86,7 @@ namespace SPC.Core
             }
         }
 
-        public void CopyTo(IDeviceContainer[] array, int arrayIndex)
+        public void CopyTo(DeviceContainerBase[] array, int arrayIndex)
         {
             lock (_DeviceContainers)
             {
@@ -69,7 +94,7 @@ namespace SPC.Core
             }
         }
 
-        public IEnumerator<IDeviceContainer> GetEnumerator()
+        public IEnumerator<DeviceContainerBase> GetEnumerator()
         {
             return _DeviceContainers.GetEnumerator();
         }
@@ -81,6 +106,7 @@ namespace SPC.Core
         }
 
         public T GetDeviceContainer<T>(short readBlockKey)
+            where T : DeviceContainerBase
         {
             var devContainer = GetDeviceContainer(readBlockKey);
             if (devContainer != null)
@@ -89,7 +115,7 @@ namespace SPC.Core
                 return default(T);
         }
 
-        public IDeviceContainer GetDeviceContainer(short readBlockKey)
+        public DeviceContainerBase GetDeviceContainer(short readBlockKey)
         {
             return this.FirstOrDefault(container => container.ReadBlockKey == readBlockKey);
         }

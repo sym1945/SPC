@@ -8,36 +8,19 @@ namespace SPC.Core
     public class Melsec : PlcComm
     {
         #region Private Members
-        private int _nPath = 0;
-        private short _StationNo = 255;
-        private short _Mode = 0;
-        private eChannel _Channel = eChannel.CCLINK_IE_CTRLER_1;
+
+        private int _Path = 0;
+
         #endregion
 
 
         #region Public Properties
-        public eChannel Channel
-        {
-            get => _Channel;
-            set
-            {
-                if (_Channel == value)
-                    return;
-                _Channel = value;
-                OnPropertyChanged(nameof(Channel));
-            }
-        }
-        public short StationNo
-        {
-            get => _StationNo;
-            set
-            {
-                if (_StationNo == value)
-                    return;
-                _StationNo = value;
-                OnPropertyChanged(nameof(StationNo));
-            }
-        }
+
+        public eChannel Channel { get; private set; } = eChannel.CCLINK_IE_CTRLER_1;
+
+        public short StationNo { get; private set; } = 255;
+
+        public short Mode { get; private set; } = 0;
         
         #endregion
 
@@ -46,10 +29,11 @@ namespace SPC.Core
         public Melsec()
         {
         }
-        public Melsec(eChannel _channel, short _station) : this()
+        public Melsec(eChannel channel, short station, short mode) : this()
         {
-            _Channel = _channel;
-            _StationNo = _station;
+            Channel = channel;
+            StationNo = station;
+            Mode = mode;
         }
         #endregion
 
@@ -60,7 +44,7 @@ namespace SPC.Core
             if (IsOpen)
                 return 0;
 
-            var ret = MelsecFunction.mdOpen((short)_Channel, _Mode, ref _nPath);
+            var ret = MelsecFunction.mdOpen((short)Channel, Mode, ref _Path);
 
             if (ret == 0)
                 IsOpen = true;
@@ -69,7 +53,7 @@ namespace SPC.Core
         }
         public override short Close()
         {
-            var ret = MelsecFunction.mdClose(_nPath);
+            var ret = MelsecFunction.mdClose(_Path);
 
             if (ret == 0)
                 IsOpen = false;
@@ -80,22 +64,22 @@ namespace SPC.Core
         public override short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf)
         {
             size = (short)(size * 2);
-            var ret = MelsecFunction.mdSend(_nPath, _StationNo, (short)device, deviceNo, ref size, ref buf[0]);
+            var ret = MelsecFunction.mdSend(_Path, StationNo, (short)device, deviceNo, ref size, ref buf[0]);
             return ret;
         }
 
         public override short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf)
         {
             size = (short)(size * 2);
-            var ret = MelsecFunction.mdReceive(_nPath, _StationNo, (short)device, deviceNo, ref size, ref buf[0]);
+            var ret = MelsecFunction.mdReceive(_Path, StationNo, (short)device, deviceNo, ref size, ref buf[0]);
             return ret;
         }
 
         public override short SetBit(eDevice device, short devno, bool set)
         {
             return set
-                ? MelsecFunction.mdDevSet(_nPath, _StationNo, (short)device, devno)
-                : MelsecFunction.mdDevRst(_nPath, _StationNo, (short)device, devno);
+                ? MelsecFunction.mdDevSet(_Path, StationNo, (short)device, devno)
+                : MelsecFunction.mdDevRst(_Path, StationNo, (short)device, devno);
         } 
         #endregion
     }

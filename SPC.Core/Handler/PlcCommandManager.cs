@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace SPC.Core
 {
-    public class CommandManager : CommandManagerBase
+    public class PlcCommandManager : PlcCommandManagerBase
     {
         private List<PlcCommandActionBase> _CommandActions = new List<PlcCommandActionBase>();
 

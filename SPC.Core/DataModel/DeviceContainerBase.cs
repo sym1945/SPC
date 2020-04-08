@@ -7,21 +7,27 @@ using System.Threading.Tasks;
 
 namespace SPC.Core
 {
-    public abstract class DeviceContainerBase : IDeviceContainer
+    public abstract class DeviceContainerBase : ICollection<DeviceBase>
     {
-        private Dictionary<string, IDevice> _Devices;
+        private Dictionary<string, DeviceBase> _Devices;
+
+        
 
         public eDevice Device { get; set; }
         public eDeviceType DeviceType { get; set; }
         public short StartAddress { get; set; }
         public string Description { get; set; }
         public int ReadBlockKey { get; set; }
+        internal PlcReadWriter PlcReadWriter { get; set; }
+
 
         public int Count => _Devices.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => true;
 
-        protected IDevice this[string key]
+        
+
+        protected DeviceBase this[string key]
         {
             get
             {
@@ -36,44 +42,46 @@ namespace SPC.Core
             }
         }
 
-        private event Func<PlcWriteInfo, bool> _WriteToPlc;
-        public event Func<PlcWriteInfo, bool> WriteToPlc
-        {
-            add
-            {
-                _WriteToPlc += value;
-                foreach (DeviceBase dev in this)
-                {
-                    dev.WriteToPlc += value;
-                }
-            }
-            remove
-            {
-                _WriteToPlc -= value;
-                foreach (DeviceBase dev in this)
-                {
-                    dev.WriteToPlc -= value;
-                }
-            }
-        }
-
-
         public DeviceContainerBase()
         {
-            _Devices = new Dictionary<string, IDevice>();
+            _Devices = new Dictionary<string, DeviceBase>();
         }
 
 
-        public void Add(IDevice item)
+        public void Add(DeviceBase item)
         {
             lock (_Devices)
             {
                 item.Device = Device;
                 item.Address = (short)(StartAddress + item.Offset);
+                item.WriteToPlc += WriteToPlc;
+                item.ReadFromPlc += ReadFromPlc;
 
                 _Devices.Add(item.Key, item);
             }
         }
+
+        
+
+        public bool Remove(DeviceBase item)
+        {
+            lock (_Devices)
+            {
+                var key = item.Key;
+                if (_Devices.ContainsKey(key))
+                {
+                    item.WriteToPlc -= WriteToPlc;
+                    item.ReadFromPlc -= ReadFromPlc;
+
+                    return _Devices.Remove(key);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
 
         public void Clear()
         {
@@ -83,7 +91,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Contains(IDevice item)
+        public bool Contains(DeviceBase item)
         {
             return Contains(item.Key);
         }
@@ -96,31 +104,17 @@ namespace SPC.Core
             }
         }
 
-        public void CopyTo(IDevice[] array, int arrayIndex)
+        public void CopyTo(DeviceBase[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerator<IDevice> GetEnumerator()
+        public IEnumerator<DeviceBase> GetEnumerator()
         {
             return _Devices.Values.GetEnumerator();
         }
 
-        public bool Remove(IDevice item)
-        {
-            lock (_Devices)
-            {
-                var key = item.Key;
-                if (_Devices.ContainsKey(key))
-                {
-                    return _Devices.Remove(key);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+        
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -143,11 +137,15 @@ namespace SPC.Core
         {
         }
 
-        protected void OnWriteToPlc(PlcWriteInfo writeInfo)
-        {
-            _WriteToPlc?.Invoke(writeInfo);
-        }
 
+        protected void WriteToPlc(DeviceReadWriteInfo writeInfo)
+        {
+            PlcReadWriter?.WriteToPlc(writeInfo);
+        }
+        protected void ReadFromPlc(DeviceReadWriteInfo readInfo)
+        {
+            PlcReadWriter?.ReadFromPlc(readInfo);
+        }
 
     }
 }

@@ -68,7 +68,7 @@ namespace SPC.Core
 
         public string ToAscii()
         {
-            return _ReadValue.ToString();
+            return _ReadValue.ToAscii();
         }
 
         public string ToDec()
@@ -132,7 +132,7 @@ namespace SPC.Core
         {
             _WriteValue.SetValue(value);
 
-            OnWriteToPlc(new WordWriteInfo
+            OnWriteToPlc(new WordReadWriteInfo
             {
                 Device = Device,
                 Address = Address,
@@ -157,6 +157,36 @@ namespace SPC.Core
                 case double d: WriteValue(d); break;
             }
         }
+
+        public void ReadValue()
+        {
+            var readInfo = new WordReadWriteInfo
+            {
+                Device = Device,
+                Address = Address,
+                Size = Length,
+                Value = new short[Length]
+            };
+
+            OnReadFromPlc(readInfo);
+
+            var isChanged = false;
+            for (int i = 0; i < Length; i++)
+            {
+                if (_ReadValue.RawData[i] != readInfo.Value[i])
+                {
+                    Array.Copy(readInfo.Value, 0, _ReadValue.RawData, 0, Length);
+                    isChanged = true;
+                    break;
+                }
+            }
+
+            if (isChanged)
+            {
+                OnRawDataChanged();
+            }
+        }
+
 
         internal void OnRawDataChanged()
         {

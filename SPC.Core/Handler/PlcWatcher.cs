@@ -9,80 +9,81 @@ namespace SPC.Core
     public class PlcWatcher : ICollection<PlcReadBlock>
     {
         #region Constant
+
         private const int WATCH_DELAY = 100;
+
         #endregion
 
+
         #region Private Members
+
         private bool _IsRunning = false;
-        private PlcComm _Comm = null;
         private Thread _RunningThread = null;
         private List<PlcReadBlock> _ReadBlocks = new List<PlcReadBlock>();
+
+        #endregion
+
+
+        #region Internal Properties
+
+        internal PlcComm Comm { get; set; }
+
         #endregion
 
 
         #region Public Properties
+
         public bool IsRunning => _IsRunning;
 
-        public bool IsConnected => _Comm.IsOpen;
+        public bool IsConnected => Comm?.IsOpen ?? false;
 
         public int Count => _ReadBlocks.Count;
 
         public bool IsReadOnly => true;
+
         #endregion
 
 
         #region Events
-        public event Action PlcConnected;
-        public event Action PlcDisconnected;
+
         public event Action BeforeRead;
         public event Action AfterRead;
+        private void OnBeforeRead()
+        {
+            foreach (var readBlock in _ReadBlocks)
+            {
+                readBlock.OnBeforeRead();
+            }
+            BeforeRead?.Invoke();
+        }
+        private void OnAfterRead()
+        {
+            foreach (var readBlock in _ReadBlocks)
+            {
+                readBlock.OnAfterRead();
+            }
+            AfterRead?.Invoke();
+        }
+
         #endregion
 
 
         #region Constructor
+
         public PlcWatcher()
         {
-            _Comm = new Melsec();
         }
 
-        public PlcWatcher(PlcComm comm)
-        {
-            _Comm = comm;
-        }
         #endregion
 
 
         #region Public Methods
-        public bool Connect()
-        {
-            _Comm.Open();
-            var isConnected = _Comm.IsOpen;
-            if (isConnected)
-            {
-                PlcConnected?.Invoke();
-            }
-
-            return isConnected;
-        }
-
-        public bool Disconnect()
-        {
-            _Comm.Close();
-            var isDisconnected = !_Comm.IsOpen;
-            if (isDisconnected)
-            {
-                PlcDisconnected?.Invoke();
-            }
-
-            return isDisconnected;
-        }
-
 
 
         public bool Start()
         {
             if (!IsConnected)
-                Connect();
+                Comm?.Open();
 
             if (_IsRunning
                 || _RunningThread != null
@@ -104,7 +105,7 @@ namespace SPC.Core
 
                         foreach (var block in _ReadBlocks)
                         {
-                            var result = _Comm.BlockRead(block.Device, block.StartAddress, block.Size, ref block.Buffer);
+                            var result = Comm.BlockRead(block.Device, block.StartAddress, block.Size, ref block.Buffer);
                             if (result == 0)
                             {
                                 //TODO: Update Device Map
@@ -146,36 +147,6 @@ namespace SPC.Core
             return _ReadBlocks.FirstOrDefault(block => block.Key == key);
         }
 
-        private void OnBeforeRead()
-        {
-            foreach (var readBlock in _ReadBlocks)
-            {
-                readBlock.OnBeforeRead();
-            }
-            BeforeRead?.Invoke();
-        }
-
-        private void OnAfterRead()
-        {
-            foreach (var readBlock in _ReadBlocks)
-            {
-                readBlock.OnAfterRead();
-            }
-            AfterRead?.Invoke();
-        }
-
-        public bool WriteToPlc(PlcWriteInfo writeInfo)
-        {
-            switch (writeInfo)
-            {
-                default:
-                    return false;
-                case BitWriteInfo bInfo:
-                    return _Comm.SetBit(bInfo.Device, bInfo.Address, bInfo.Value) == 0;
-                case WordWriteInfo wInfo:
-                    return _Comm.BlockWrite(wInfo.Device, wInfo.Address, wInfo.Size, ref wInfo.Value) == 0;
-            }
-        }
 
         public void Add(PlcReadBlock item)
         {

@@ -82,7 +82,7 @@ namespace SPC.Core
 
         public void WriteValue(bool value)
         {
-            OnWriteToPlc(new BitWriteInfo
+            OnWriteToPlc(new BitReadWriteInfo
             {
                 Device = Device,
                 Address = Address,

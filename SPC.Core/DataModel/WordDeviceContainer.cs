@@ -47,7 +47,7 @@ namespace SPC.Core
             }
 
             // write to plc
-            OnWriteToPlc(new WordWriteInfo
+            WriteToPlc(new WordReadWriteInfo
             {
                 Address = firstDev.Address,
                 Device = Device,
