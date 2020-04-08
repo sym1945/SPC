@@ -8,30 +8,28 @@ using System.Threading.Tasks;
 
 namespace SPC.WPF
 {
-    public class SendAbleOnHandshakeAction : RecvHandshakeAction
+    public class SendAbleOnHandshakeAction : SendHandshakeAction
     {
+        public override DeviceFindKey ReplyBitFindKey => new DeviceFindKey("CIM_RECV_BITS", "RecvStart");
 
-        public override DeviceFindKey ReplyBitFindKey => new DeviceFindKey("CIM_RECV_BITS", "RecvAble");
+
+        public override void BeforeTriggerBitOn()
+        {
+            var hpanelId = DevManager.W("CIM_RECV_WORDS")["RecvGlassId"];
+            hpanelId.WriteValue("TEST");
+        }
 
 
-        
+        public override void TimeOutReplyBitOff()
+        {
+            Console.WriteLine("Reply Bit Off Time out!");
+        }
 
-        //public override void AfterTriggerBitOn()
-        //{
-        //    Debug.WriteLine("Trigger Bit On");
-        //    // Word Write
 
-        //}
-
-        //public override void AfterTriggerBitOff()
-        //{
-        //    Debug.WriteLine("Trigger Bit Off");
-        //}
-
-        //public override void TimeOutTriggerBitOff()
-        //{
-        //    Debug.WriteLine("Trigger Bit Off Timeout");
-        //}
+        public override void TimeOutReplyBitOn()
+        {
+            Console.WriteLine("Reply Bit On Time out!");
+        }
 
     }
 }

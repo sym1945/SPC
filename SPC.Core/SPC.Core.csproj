@@ -49,6 +49,7 @@
     <Compile Include="Command\DeviceFindKey.cs" />
     <Compile Include="Command\HandshakeAction.cs" />
     <Compile Include="Command\PlcCommandActionBase.cs" />
+    <Compile Include="Command\PlcCommandParameter.cs" />
     <Compile Include="Command\RecvHandshakeAction.cs" />
     <Compile Include="Command\SendHandshakeAction.cs" />
     <Compile Include="Communication\IPlcReadWriter.cs" />

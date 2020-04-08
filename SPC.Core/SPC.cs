@@ -119,6 +119,18 @@ namespace SPC.Core
         }
 
 
+        public void SendCommand(string commandName, PlcCommandParameter commandParameter)
+        {
+            var commandAction = _CommandManager.CommandActions.FirstOrDefault(d => d.GetType().Name == commandName);
+
+            if (commandAction is SendHandshakeAction sendAction)
+            {
+                sendAction.AddCommandParameter(commandParameter);
+            }
+
+        }
+
+
     }
 
 }

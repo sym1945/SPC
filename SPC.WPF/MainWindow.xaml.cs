@@ -85,19 +85,21 @@ namespace SPC.WPF
                     Command ="RecvAbleOnHandshakeAction"
                 },
 
-                //new PlcCommand()
-                //{
-                //    Container = "CIM_SEND_BITS",
-                //    Device = "SendAble",
-                //    Trigger = CommandTrigger.BitOn,
-                //    Command ="SendAbleOnHandshakeAction"
-                //}
+                new PlcCommand()
+                {
+                    Container = "CIM_SEND_BITS",
+                    Device = "SendAble",
+                    Trigger = CommandTrigger.BitOn,
+                    Command ="SendAbleOnHandshakeAction"
+                }
             };
 
 
             _Spc = new Core.SPC();
             _Spc.SetUp(plcWatcher, deviceManager, commandManager);
             _Spc.Start();
+
+            _Spc.SendCommand("SendAbleOnHandshakeAction", new PlcCommandParameter());
 
 
             DeviceListViewModel = new DeviceListViewModel(_Spc.DeviceManager);
