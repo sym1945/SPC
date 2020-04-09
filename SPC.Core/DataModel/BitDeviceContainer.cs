@@ -13,12 +13,12 @@ namespace SPC.Core
         {
             DeviceType = eDeviceType.Bit;
         }
-        public BitDeviceContainer(eDevice device, short startAddress, int readBlockKey, string desc = "") : this()
+        public BitDeviceContainer(eDevice device, short startAddress, string key, int readBlockKey) : this()
         {
             Device = device;
             StartAddress = startAddress;
+            Key = key;
             ReadBlockKey = readBlockKey;
-            Description = desc;
         }
 
 

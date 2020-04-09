@@ -28,7 +28,7 @@ namespace SPC.Core
             Device = device;
             DeviceType = deviceType;
             StartAddress = startAddress;
-            Description = desc;
+            Key = desc;
         }
     }
 }

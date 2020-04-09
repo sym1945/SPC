@@ -16,6 +16,23 @@ namespace SPC.Core
             lock (Locker)
             {
                 _CommandParameterQueue.Enqueue(commandParameter);
+
+                if (IsRunning)
+                    return;
+
+                IsRunning = true;
+                DoHandshake();
+            }
+        }
+
+        private PlcCommandParameter GetCommandParameter()
+        {
+            lock (Locker)
+            {
+                if (_CommandParameterQueue.Count > 0)
+                    return _CommandParameterQueue.Dequeue();
+                else
+                    return null;
             }
         }
 
@@ -27,15 +44,7 @@ namespace SPC.Core
 
         public override void Execute()
         {
-            lock (Locker)
-            {
-                if (IsRunning)
-                    return;
-
-                IsRunning = true;
-
-                DoHandshake();
-            }
+            
         }
 
 
@@ -43,37 +52,54 @@ namespace SPC.Core
         {
             return Task.Run(() =>
             {
-                BeforeTriggerBitOn();
+                PlcCommandParameter commandParam = null;
 
-                Thread.Sleep(1000); // Tn Delay
-
-                TriggerBit.WriteValue(true);
-
-                var timeout = ReplyBit.WaitBit(true, 2000); // T1
-
-                TriggerBit.WriteValue(false);
-
-                if (timeout)
+                while (true)
                 {
-                    TimeOutReplyBitOn();
-                    IsRunning = false;
-                    return;
+                    Thread.Sleep(100); // Tn Delay
+
+                    lock (Locker)
+                    {
+                        commandParam = GetCommandParameter();
+                        if (commandParam == null)
+                        {
+                            IsRunning = false;
+                            break;
+                        }
+                    }
+
+                    BeforeTriggerBitOn(commandParam);
+
+                    Thread.Sleep(100); // Tn Delay
+
+                    TriggerBit.WriteValue(true);
+
+                    var changed = ReplyBit.WaitBit(true, 2000); // T1
+
+                    TriggerBit.WriteValue(false);
+
+                    if (!changed)
+                    {
+                        TimeOutReplyBitOn();
+                        continue;
+                    }
+
+                    changed = ReplyBit.WaitBit(false, 2000); // T2
+
+                    if (!changed)
+                    {
+                        TimeOutReplyBitOff();
+                    }
+
+                    Console.WriteLine("Handshake Done");
                 }
-
-                timeout = ReplyBit.WaitBit(false, 2000); // T2
-
-                if (timeout)
-                {
-                    TimeOutReplyBitOff();
-                }
-
-                IsRunning = false;
+                
             });
         }
 
 
 
-        public virtual void BeforeTriggerBitOn()
+        public virtual void BeforeTriggerBitOn(PlcCommandParameter commandParam)
         {
 
         }

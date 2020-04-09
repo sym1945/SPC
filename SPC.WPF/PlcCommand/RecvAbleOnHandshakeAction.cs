@@ -10,7 +10,7 @@ namespace SPC.WPF
 {
     public class RecvAbleOnHandshakeAction : RecvHandshakeAction
     {
-        public override DeviceFindKey ReplyBitFindKey => new DeviceFindKey("CIM_SEND_BITS", "SendAble");
+        public override DeviceFindKey ReplyBitFindKey => new DeviceFindKey("CIM_RECV_BITS", "RecvAble");
 
 
         public override void AfterTriggerBitOn()

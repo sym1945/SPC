@@ -19,5 +19,15 @@
         <view:WordDeviceContainer 
             HorizontalAlignment="Left"
             DataContext="{Binding DeviceListViewModel.WordDevices}"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBox 
+                x:Name="SendGlassId"
+                Width="200"/>
+            <Button 
+                Command="{Binding DeviceListViewModel.SendCommandTest}"
+                CommandParameter="{Binding ElementName=SendGlassId, Path=Text}"
+                Content="SEND COMMAND"/>
+        </StackPanel>
+        
     </StackPanel>
 </Window>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPC.WPF", "SPC.WPF\SPC.WPF.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPC.Core", "SPC.Core\SPC.Core.csproj", "{99F6DDA7-2B9F-4A5A-A979-F6120CD5EE29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleEqp", "SampleEqp\SampleEqp.csproj", "{9F91BB15-56DE-46D9-AB70-2E2AAD41F569}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{99F6DDA7-2B9F-4A5A-A979-F6120CD5EE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99F6DDA7-2B9F-4A5A-A979-F6120CD5EE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99F6DDA7-2B9F-4A5A-A979-F6120CD5EE29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F91BB15-56DE-46D9-AB70-2E2AAD41F569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F91BB15-56DE-46D9-AB70-2E2AAD41F569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F91BB15-56DE-46D9-AB70-2E2AAD41F569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F91BB15-56DE-46D9-AB70-2E2AAD41F569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

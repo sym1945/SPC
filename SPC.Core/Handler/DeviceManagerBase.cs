@@ -122,12 +122,12 @@ namespace SPC.Core
 
         public BitDeviceContainer B(string key)
         {
-            return this.OfType<BitDeviceContainer>().FirstOrDefault(d => d.Description == key);
+            return this.OfType<BitDeviceContainer>().FirstOrDefault(d => d.Key == key);
         }
 
         public WordDeviceContainer W(string key)
         {
-            return this.OfType<WordDeviceContainer>().FirstOrDefault(d => d.Description == key);
+            return this.OfType<WordDeviceContainer>().FirstOrDefault(d => d.Key == key);
         }
 
     }

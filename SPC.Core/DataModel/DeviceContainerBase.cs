@@ -16,7 +16,7 @@ namespace SPC.Core
         public eDevice Device { get; set; }
         public eDeviceType DeviceType { get; set; }
         public short StartAddress { get; set; }
-        public string Description { get; set; }
+        public string Key { get; set; }
         public int ReadBlockKey { get; set; }
         internal PlcReadWriter PlcReadWriter { get; set; }
 

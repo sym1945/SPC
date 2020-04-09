@@ -46,27 +46,27 @@ namespace SPC.WPF
             // dev manager init (config load)
             var deviceManager = new DeviceManager
             {
-                new BitDeviceContainer(eDevice.B, 0x0000, 1, "CIM_RECV_BITS")
+                new BitDeviceContainer(eDevice.B, 0x0000, "CIM_RECV_BITS", 1)
                 {
                     new BitDevice() { Offset = 0, Key = "HeartBit"},
                     new BitDevice() { Offset = 1, Key = "RecvAble"},
                     new BitDevice() { Offset = 2, Key = "RecvStart"},
                     new BitDevice() { Offset = 3, Key = "RecvComplete"},
                 },
-                new BitDeviceContainer(eDevice.B, 0x0100, 2, "CIM_SEND_BITS")
+                new BitDeviceContainer(eDevice.B, 0x0100, "CIM_SEND_BITS", 2)
                 {
                     new BitDevice() { Offset = 0, Key = "HeartBit"},
                     new BitDevice() { Offset = 1, Key = "SendAble"},
                     new BitDevice() { Offset = 2, Key = "SendStart"},
                     new BitDevice() { Offset = 3, Key = "SendComplete"},
                 },
-                new WordDeviceContainer(eDevice.W, 0x0000, 3, "CIM_RECV_WORDS")
+                new WordDeviceContainer(eDevice.W, 0x0000, "CIM_RECV_WORDS", 3)
                 {
                     new WordDevice() { Offset = 0, Length = 3, Key = "RecvGlassId"},
                     new WordDevice() { Offset = 3, Length = 1, Key = "RecvSlotNo"},
                     new WordDevice() { Offset = 4, Length = 2, Key = "RecvWorkState"},
                 },
-                new WordDeviceContainer(eDevice.W, 0x0100, 4, "CIM_SEND_WORDS")
+                new WordDeviceContainer(eDevice.W, 0x0100, "CIM_SEND_WORDS", 4)
                 {
                     new WordDevice() { Offset = 0, Length = 12, Key = "SendGlassId"},
                     new WordDevice() { Offset = 12, Length = 1, Key = "SendSlotNo"},
@@ -79,8 +79,8 @@ namespace SPC.WPF
             {
                 new PlcCommand()
                 {
-                    Container = "CIM_RECV_BITS",
-                    Device = "RecvAble",
+                    Container = "CIM_SEND_BITS",
+                    Device = "SendAble",
                     Trigger = CommandTrigger.BitOn,
                     Command ="RecvAbleOnHandshakeAction"
                 },
@@ -99,7 +99,7 @@ namespace SPC.WPF
             _Spc.SetUp(plcWatcher, deviceManager, commandManager);
             _Spc.Start();
 
-            _Spc.SendCommand("SendAbleOnHandshakeAction", new PlcCommandParameter());
+            
 
 
             DeviceListViewModel = new DeviceListViewModel(_Spc.DeviceManager);

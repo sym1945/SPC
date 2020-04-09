@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SPC.WPF
 {
@@ -14,6 +15,24 @@ namespace SPC.WPF
         public BitDeviceContainer SendBitDevices { get; set; }
 
         public WordDeviceContainer WordDevices { get; set; }
+
+
+        public ICommand SendCommandTest
+        {
+            get => new CommandBase((parameter) =>
+            {
+                var spc = SPCContainer.GetSPC();
+                spc.SendCommand(
+                    "SendAbleOnHandshakeAction"
+                    , new SendGlassData
+                    {
+                        GlassId = parameter.ToString()
+                    }
+                );
+            });
+        }
+
+
 
         public DeviceListViewModel(DeviceManager manager)
         {

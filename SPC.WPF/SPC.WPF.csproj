@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base\CommandBase.cs" />
+    <Compile Include="PlcCommand\Parameter\SendGlassData.cs" />
     <Compile Include="PlcCommand\SendAbleOnHandshakeAction.cs" />
     <Compile Include="PlcCommand\RecvAbleOnHandshakeAction.cs" />
     <Compile Include="ViewModel\DeviceListViewModel.cs" />
