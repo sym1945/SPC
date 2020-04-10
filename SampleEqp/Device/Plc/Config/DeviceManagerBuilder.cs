@@ -36,9 +36,9 @@ namespace SampleEqp
                     new BitDevice { Offset = 0x004C, Key = "UnloadEndReply" },
                 },
 
-                new GlassDataContainer(eDevice.W, 0x0420, "LOAD_GLASS_DATA", 3),
+                new A3GlassDataContainer(eDevice.W, 0x0420, "LOAD_GLASS_DATA", 3),
 
-                new GlassDataContainer(eDevice.W, 0x0588, "UNLOAD_GLASS_DATA", 3),
+                new A3GlassDataContainer(eDevice.W, 0x0588, "UNLOAD_GLASS_DATA", 3),
 
             };
         }

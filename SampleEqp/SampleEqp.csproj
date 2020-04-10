@@ -46,8 +46,8 @@
     <Compile Include="Core.cs" />
     <Compile Include="Data\Equipment.cs" />
     <Compile Include="Data\GlassData.cs" />
-    <Compile Include="Device\Plc\Builder\DeviceManagerBuilder.cs" />
-    <Compile Include="Device\Plc\Component\GlassDataContainer.cs" />
+    <Compile Include="Device\Plc\Config\DeviceManagerBuilder.cs" />
+    <Compile Include="Device\Plc\DeviceContainer\A3GlassDataContainer.cs" />
     <Compile Include="Device\Plc\PlcHandler.cs" />
     <Compile Include="Enum\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

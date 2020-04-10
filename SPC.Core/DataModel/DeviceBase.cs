@@ -59,9 +59,7 @@ namespace SPC.Core
             return true;
         }
 
-        public virtual void Execute(object parameter = null)
-        {
-        } 
+        public abstract void Execute(object parameter = null);
 
         #endregion
 
