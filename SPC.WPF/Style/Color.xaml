@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SPC.WPF">
+    
+    <SolidColorBrush Color="Lime" x:Key="eqstNormalBackground"/>
+    <SolidColorBrush Color="Red" x:Key="eqstFaultBackground"/>
+    <SolidColorBrush Color="Magenta" x:Key="eqstPMBackground"/>
+
+    <SolidColorBrush Color="Black" x:Key="eqstNormalForeground"/>
+    <SolidColorBrush Color="White" x:Key="eqstFaultForeground"/>
+    <SolidColorBrush Color="White" x:Key="eqstPMForeground"/>
+
+    <SolidColorBrush Color="Yellow" x:Key="prstIdleBackground"/>
+    <SolidColorBrush Color="Lime" x:Key="prstExecuteBackground"/>
+    <SolidColorBrush Color="Magenta" x:Key="prstPauseBackground"/>
+
+    <SolidColorBrush Color="Black" x:Key="prstIdleForeground"/>
+    <SolidColorBrush Color="Black" x:Key="prstExecuteForeground"/>
+    <SolidColorBrush Color="White" x:Key="prstPauseForeground"/>
+
+</ResourceDictionary>

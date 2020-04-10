@@ -9,6 +9,13 @@ namespace SampleEqp
 {
     public class GlassDataContainer : WordDeviceContainer
     {
+        public string HPanelId
+        {
+            get => this["HPanelId"].ToAscii();
+            set => this["HPanelId"].WriteValue(value);
+        }
+
+
         public GlassDataContainer(eDevice device, short startAddress, string key, int readBlockKey) 
             : base(device, startAddress, key, readBlockKey)
         {

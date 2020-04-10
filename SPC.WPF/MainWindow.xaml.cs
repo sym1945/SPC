@@ -1,4 +1,5 @@
-﻿using SPC.Core;
+﻿using SampleEqp;
+using SPC.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +24,26 @@ namespace SPC.WPF
     {
         private Core.SPC _Spc;
 
+        private Equipment _Eqp = new Equipment();
+
         public DeviceListViewModel DeviceListViewModel { get; set; }
+
+        public EqpStatusViewModel EqpStatusViewModel { get; set; }
+
+        public GlassExistenceViewModel GlassExistenceViewModel { get; set; }
+
+        public ProcessCommandViewModel ProcessCommandViewModel { get; set; }
 
 
         public MainWindow()
         {
             InitializeComponent();
 
-            this.Loaded += MainWindow_Loaded;
+            EqpStatusViewModel = new EqpStatusViewModel(_Eqp);
+            GlassExistenceViewModel = new GlassExistenceViewModel(_Eqp);
+            ProcessCommandViewModel = new ProcessCommandViewModel(_Eqp);
+
+            DataContext = this;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

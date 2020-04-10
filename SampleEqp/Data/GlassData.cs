@@ -2,7 +2,7 @@
 {
     public class GlassData
     {
-        public string GlassId { get; set; }
-        public ushort SlotNo { get; set; }
+        public string HPanelId { get; set; }
+        public int SlotNo { get; set; }
     }
 }

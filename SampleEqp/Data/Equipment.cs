@@ -70,7 +70,7 @@ namespace SampleEqp
             if (glassId == null)
                 return _GlassData.FirstOrDefault();
 
-            return _GlassData.FirstOrDefault();
+            return _GlassData.FirstOrDefault(d=>d.HPanelId == glassId);
         }
 
         public void AddGlassData(GlassData glassData)
@@ -78,6 +78,11 @@ namespace SampleEqp
             _GlassData.Add(glassData);
 
             OnGlassDataAdded(glassData);
+
+            if (_GlassData.Count > 0)
+            {
+                Prst = Prst.Execute;
+            }
         }
 
         public void RemoveGlassData(string glassId = null)
@@ -88,9 +93,19 @@ namespace SampleEqp
 
             if (_GlassData.Remove(glassData))
             {
-                OnGlassDataAdded(glassData);
+                OnGlassDataRemoved(glassData);
             }
-        } 
+
+            if (_GlassData.Count < 1)
+            {
+                Prst = Prst.Idle;
+            }
+        }
+
+        public void CompleteProcess()
+        {
+            // Do Something
+        }
 
         #endregion
 

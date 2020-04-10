@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="SPC.WPF.EqpStatus"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SPC.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Column="0"
+            Background="{Binding EqstBackground}"
+            BorderBrush="Gray"
+            BorderThickness="1 1 1 1"
+            >
+            <Viewbox>
+                <TextBlock 
+                    Padding="10"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Foreground="{Binding EqstForeground}"
+                    Text="{Binding Eqst, Converter={local:EqstConverter}, FallbackValue=EQST}"
+                    />
+            </Viewbox>
+        </Border>
+
+        <Border
+            Grid.Column="1"
+            Background="{Binding PrstBackground}"
+            BorderBrush="Gray"
+            BorderThickness="0 1 1 1"
+            >
+            <Viewbox>
+                <TextBlock 
+                    Padding="10"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Foreground="{Binding PrstForeground}"
+                    Text="{Binding Prst, Converter={local:PrstConverter}, FallbackValue=PRST}"
+                    />
+            </Viewbox>
+        </Border>
+    </Grid>
+    
+    
+    
+</UserControl>
