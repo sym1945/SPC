@@ -1,0 +1,75 @@
+﻿<Window x:Class="SampleEqp.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleEqp.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <local:EqpStatus 
+            Grid.Row="0"
+            DataContext="{Binding EqpStatusViewModel}"
+            />
+        
+        <local:GlassExsistence
+            Margin="10"
+            Grid.Row="1"
+            DataContext="{Binding GlassExistenceViewModel}"
+            />
+        
+        <Grid
+            Grid.Row="2"
+            DataContext="{Binding ProcessCommandViewModel}"
+            >
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Margin="10 10 10 5"
+                FontSize="20"
+                Command="{Binding SetGlassDataCommand}"
+                Content="SET GLASS DATA"/>
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10 5 5 10"
+                FontSize="20"
+                Command="{Binding TrackInCommand}"
+                Content="TRACK IN"/>
+            <Button
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="5 5 5 10"
+                FontSize="20"
+                Command="{Binding ProcessEndCommand}"
+                Content="PROCESS END"/>
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="5 5 10 10"
+                FontSize="20"
+                Command="{Binding TrackOutCommand}"
+                Content="TRACK OUT"/>
+        </Grid>
+    </Grid>
+    
+</Window>

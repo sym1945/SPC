@@ -38,6 +38,10 @@ namespace SPC.Core
             get => _ReadValue.RawData;
         }
 
+        public short[] WriteData
+        {
+            get => _WriteValue.RawData;
+        }
         #endregion
 
 
