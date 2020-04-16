@@ -8,7 +8,7 @@ namespace SampleEqp.WPF
 
         public string HPanelId { get; set; } = "UNKNOWN";
 
-        public int SlotNo { get; set; } = 0;
+        public string SlotNo { get; set; } = "";
 
 
         public GlassExistenceViewModel(Equipment eqp)
@@ -20,7 +20,7 @@ namespace SampleEqp.WPF
         private void _Eqp_GlassDataAdded(Equipment eqp, GlassData data)
         {
             HPanelId = data.HPanelId;
-            SlotNo = data.SlotNo;
+            SlotNo = data.SlotId;
             IsExist = true;
         }
 

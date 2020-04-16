@@ -25,9 +25,9 @@ namespace SampleEqp.WPF
 
         public DeviceListViewModel(DeviceManager manager)
         {
-            RecvBitDevices = manager.GetDeviceContainer<BitDeviceContainer>(1);
-            SendBitDevices = manager.GetDeviceContainer<BitDeviceContainer>(2);
-            WordDevices = manager.GetDeviceContainer<WordDeviceContainer>(3);
+            RecvBitDevices = manager.B("CIM_RECV_BIT");
+            SendBitDevices = manager.B("CIM_SEND_BIT");
+            WordDevices = manager.W("CIM_RECV_WORD");
         }
 
     }
