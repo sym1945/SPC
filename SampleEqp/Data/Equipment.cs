@@ -54,6 +54,7 @@ namespace SampleEqp
         public event Action<Equipment> PrstChanged;
         public event Action<Equipment, GlassData> GlassDataAdded;
         public event Action<Equipment, GlassData> GlassDataRemoved;
+        public event Action ProcessDone;
 
         protected void OnEqstChanged() => EqstChanged?.Invoke(this);
         protected void OnPrstChanged() => PrstChanged?.Invoke(this);
@@ -104,7 +105,7 @@ namespace SampleEqp
 
         public void CompleteProcess()
         {
-            // Do Something
+            ProcessDone?.Invoke();
         }
 
         #endregion

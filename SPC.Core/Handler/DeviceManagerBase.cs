@@ -105,29 +105,25 @@ namespace SPC.Core
             return GetEnumerator();
         }
 
-        public T GetDeviceContainer<T>(short readBlockKey)
+        public T GetDeviceContainer<T>(string key)
             where T : DeviceContainerBase
         {
-            var devContainer = GetDeviceContainer(readBlockKey);
-            if (devContainer != null)
-                return (T)devContainer;
-            else
-                return default(T);
+            return GetDeviceContainer(key) as T;
         }
 
-        public DeviceContainerBase GetDeviceContainer(short readBlockKey)
+        public DeviceContainerBase GetDeviceContainer(string key)
         {
-            return this.FirstOrDefault(container => container.ReadBlockKey == readBlockKey);
+            return this.FirstOrDefault(container => container.Key == key);
         }
 
         public BitDeviceContainer B(string key)
         {
-            return this.OfType<BitDeviceContainer>().FirstOrDefault(d => d.Key == key);
+            return this.OfType<BitDeviceContainer>().FirstOrDefault(container => container.Key == key);
         }
 
         public WordDeviceContainer W(string key)
         {
-            return this.OfType<WordDeviceContainer>().FirstOrDefault(d => d.Key == key);
+            return this.OfType<WordDeviceContainer>().FirstOrDefault(container => container.Key == key);
         }
 
     }
