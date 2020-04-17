@@ -9,25 +9,68 @@
         Title="GLASS DATA EDITOR" 
         Height="450" 
         Width="500">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel 
-            Grid.Row="0"
-            Margin="10"
-            HorizontalAlignment="Stretch">
-            <local:LabelTextBox
-                Label="HPANEL ID"
-                Text="{Binding HPanelId}"
-                />
-            <local:LabelTextBox
-                Label="SLOT NO"
-                Text="{Binding SlotNo}"
-                />
-        </StackPanel>
+
+        <ScrollViewer>
+            <StackPanel 
+                Grid.Row="0"
+                Margin="10"
+                HorizontalAlignment="Stretch">
+                
+                <local:LabelTextBox Label="HPANEL ID" Text="{Binding HPanelId}" />
+                <local:LabelTextBox Label="EPANEL ID" Text="{Binding EPanelId}" />
+                <local:LabelTextBox Label="LOT ID" Text="{Binding LotId}" />
+                <local:LabelTextBox Label="BATCH ID" Text="{Binding BatchId}" />
+                <local:LabelTextBox Label="JOB ID" Text="{Binding JobId}" />
+                <local:LabelTextBox Label="PORT ID" Text="{Binding PortId}" />
+                <local:LabelTextBox Label="SLOT ID" Text="{Binding SlotId}" />
+                <local:LabelTextBox Label="PRODUCT TYPE" Text="{Binding ProductType}" />
+                <local:LabelTextBox Label="PRODUCT KIND" Text="{Binding ProductKind}" />
+                <local:LabelTextBox Label="PRODUCT ID" Text="{Binding ProductId}" />
+                <local:LabelTextBox Label="RUNSPEC ID" Text="{Binding RunspecId}" />
+                <local:LabelTextBox Label="LAYER ID" Text="{Binding LayerId}" />
+                <local:LabelTextBox Label="STEP ID" Text="{Binding StepId}" />
+                <local:LabelTextBox Label="PPID" Text="{Binding Ppid}" />
+                <local:LabelTextBox Label="FLOW ID" Text="{Binding FlowId}" />
+                <local:LabelTextBox Label="GLASS SIZE" Text="{Binding GlassSize}" />
+                <local:LabelTextBox Label="GLASS TICK" Text="{Binding GlassThickness}" />
+                <local:LabelTextBox Label="GLASS STATE" Text="{Binding GlassState}" />
+                <local:LabelTextBox Label="GLASS ORDER" Text="{Binding GlassOrder}" />
+                <local:LabelTextBox Label="COMMENT" Text="{Binding Comment}" />
+                <local:LabelTextBox Label="USE COUNT" Text="{Binding UseCount}" />
+                <local:LabelTextBox Label="JUDGEMENT" Text="{Binding Judgement}" />
+                <local:LabelTextBox Label="REASON CODE" Text="{Binding ReasonCode}" />
+                <local:LabelTextBox Label="INS FLAG" Text="{Binding InsFlag}" />
+                <local:LabelTextBox Label="ENC FLAG" Text="{Binding EncFlag}" />
+                <local:LabelTextBox Label="PRE RUN FLAG" Text="{Binding PreRunFlag}" />
+                <local:LabelTextBox Label="TURN DIR" Text="{Binding TurnDir}" />
+                <local:LabelTextBox Label="FLIP STATE" Text="{Binding FlipState}" />
+                <local:LabelTextBox Label="WORK STATE" Text="{Binding WorkState}" />
+                <local:LabelTextBox Label="MULTI USE" Text="{Binding MultiUse}" />
+                <local:LabelTextBox Label="PAIR GLASSID" Text="{Binding PairGlassId}" />
+                <local:LabelTextBox Label="PAIR PPID" Text="{Binding PairPpid}" />
+                <local:LabelTextBox Label="OPT. NAME1" Text="{Binding OptionName1}" />
+                <local:LabelTextBox Label="OPT. VALUE1" Text="{Binding OptionValue1}" />
+                <local:LabelTextBox Label="OPT. NAME2" Text="{Binding OptionName2}" />
+                <local:LabelTextBox Label="OPT. VALUE2" Text="{Binding OptionValue2}" />
+                <local:LabelTextBox Label="OPT. NAME3" Text="{Binding OptionName3}" />
+                <local:LabelTextBox Label="OPT. VALUE3" Text="{Binding OptionValue3}" />
+                <local:LabelTextBox Label="OPT. NAME4" Text="{Binding OptionName4}" />
+                <local:LabelTextBox Label="OPT. VALUE4" Text="{Binding OptionValue4}" />
+                <local:LabelTextBox Label="OPT. NAME5" Text="{Binding OptionName5}" />
+                <local:LabelTextBox Label="OPT. VALUE5" Text="{Binding OptionValue5}" />
+                <local:LabelTextBox Label="CSIF" Text="{Binding CSIF}" />
+                <local:LabelTextBox Label="AS" Text="{Binding AS}" />
+                <local:LabelTextBox Label="APS" Text="{Binding APS}" />
+                <local:LabelTextBox Label="UNIQUE ID" Text="{Binding UniqueId}" />
+                <local:LabelTextBox Label="BIT SIGNAL" Text="{Binding BitSignal}" />
+            </StackPanel>
+        </ScrollViewer>
 
 
         <Button
@@ -37,5 +80,7 @@
             Content="SAVE"
             Click="ClickSave"
             />
+        
     </Grid>
+    
 </Window>

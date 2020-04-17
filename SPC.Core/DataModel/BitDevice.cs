@@ -30,6 +30,8 @@ namespace SPC.Core
                 {
                     OnValueChanged();
                     OnPropertyChanged(nameof(Value));
+                    //TODO: Write Log
+                    Console.WriteLine($"BIT CHANGE: {FullAddress}={(_Value ? 1 : 0)}");
                 }
             }
         }

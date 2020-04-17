@@ -14,6 +14,11 @@ namespace SampleEqp
                 DeviceManagerFactory.Make(),
                 PlcCommandFactory.Make()
                 ) ;
+            _Spc.CommandManager.AddCommandActions(
+                new GlassLoadCommand(),
+                new GlassUnloadCommand(),
+                new ProcessEndCommand()
+                );
         }
 
         public void Start()
@@ -24,7 +29,7 @@ namespace SampleEqp
 
         public void WriteProcessState(Prst prst)
         {
-            var processStateDevice = _Spc.DeviceManager.W("PLC_STATUS")["ProcessState"].AsUShort();
+            var processStateDevice = _Spc.DeviceManager.W("EQP_STATUS")["ProcessState"].AsUShort();
             processStateDevice.Value = (ushort)prst;
         }
 
@@ -40,7 +45,7 @@ namespace SampleEqp
 
         public void CommandProcessEnd()
         {
-            _Spc.SendCommand("ProcessEndCommand", null);
+            _Spc.SendCommand("ProcessEndCommand", new PlcCommandParameter());
         }
 
 

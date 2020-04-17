@@ -9,10 +9,10 @@
 
     public enum Prst
     {
-        Idle = 1,
-        Setup = 2,
-        Execute = 3,
-        Pause = 4,
+        Idle = 2,
+        Setup = 3,
+        Execute = 5,
+        Pause = 6,
     }
 
 }

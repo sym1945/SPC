@@ -47,7 +47,7 @@ namespace SampleEqp
 
         private void Equipment_ProcessDone()
         {
-            // Do Something
+            PlcHandler.CommandProcessEnd();
         }
 
     }

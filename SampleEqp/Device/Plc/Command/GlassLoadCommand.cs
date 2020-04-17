@@ -1,4 +1,5 @@
 ﻿using SPC.Core;
+using System;
 
 namespace SampleEqp
 {
@@ -12,6 +13,16 @@ namespace SampleEqp
             var glassDataContainer = DevManager.GetDeviceContainer<A3GlassDataContainer>("LOAD_GLASS_DATA");
 
             glassDataContainer.WriteGlassData(glassDataParam.GlassData);
+        }
+
+        public override void TimeOutReplyBitOn()
+        {
+            Console.WriteLine("Reply Bit On TimeOut!");
+        }
+
+        public override void TimeOutReplyBitOff()
+        {
+            Console.WriteLine("Reply Bit Off TimeOut!");
         }
 
     }

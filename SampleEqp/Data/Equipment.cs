@@ -76,6 +76,9 @@ namespace SampleEqp
 
         public void AddGlassData(GlassData glassData)
         {
+            if (_GlassData.Count > 0)
+                return;
+
             _GlassData.Add(glassData);
 
             OnGlassDataAdded(glassData);

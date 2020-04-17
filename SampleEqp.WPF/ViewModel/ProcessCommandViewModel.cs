@@ -15,7 +15,7 @@ namespace SampleEqp.WPF
         {
             get => new CommandBase((parameter) =>
             {
-                var glassEditorViewModel = new GlassDataEditorViewModel();
+                var glassEditorViewModel = new GlassDataEditorViewModel(_Eqp.GetGlassData());
                 var glassEditorWindow = new GlassDataEditor();
                 glassEditorWindow.Owner = Application.Current.MainWindow;
                 glassEditorWindow.DataContext = glassEditorViewModel;
@@ -29,6 +29,9 @@ namespace SampleEqp.WPF
         {
             get => new CommandBase((parameter) =>
             {
+                if (_GlassDataEditorViewModel == null)
+                    return;
+
                 _Eqp.AddGlassData(_GlassDataEditorViewModel.GlassData);
             });
         }
@@ -45,6 +48,9 @@ namespace SampleEqp.WPF
         {
             get => new CommandBase((parameter) =>
             {
+                if (_GlassDataEditorViewModel == null)
+                    return;
+
                 _Eqp.RemoveGlassData(_GlassDataEditorViewModel.GlassData.HPanelId);
             });
         }

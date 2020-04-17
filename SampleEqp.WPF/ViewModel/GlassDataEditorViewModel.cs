@@ -4,7 +4,7 @@ namespace SampleEqp.WPF
 {
     public class GlassDataEditorViewModel : NotifyPropertyChanged
     {
-        public GlassData GlassData { get; private set; } = new GlassData();
+        public GlassData GlassData { get; private set; }
 
         public string HPanelId
         {
@@ -288,5 +288,64 @@ namespace SampleEqp.WPF
             set => GlassData.BitSignal = value;
         }
 
+
+
+        public GlassDataEditorViewModel(GlassData glassData = null)
+        {
+            GlassData = glassData;
+            if (GlassData == null)
+            {
+                GlassData = new GlassData
+                {
+                    HPanelId = "A1A1AAAAAAAAAAAA",
+                    EPanelId = "B1B1BBBBBBBBBBBB",
+                    LotId = "C1C1CCCCCCCCCCCC",
+                    BatchId = "D1D1DDDDDDDDDDDD",
+                    JobId = "E1E1EEEEEEEEEEEE",
+                    PortId = "F1F1",
+                    SlotId = "G1",
+                    ProductType = "H1H1",
+                    ProductKind = "I1I1",
+                    ProductId = "J1J1JJJJJJJJJJJJ",
+                    RunspecId = "K1K1KKKKKKKKKKKK",
+                    LayerId = "L1L1LLLL",
+                    StepId = "MMMMMMMM",
+                    Ppid = "NNNNNNNNNNNNNNNNNNNN",
+                    FlowId = "OOOOOOOOOOOOOOOOOOOO",
+                    GlassSize = 1,
+                    GlassThickness = 2,
+                    GlassState = 3,
+                    GlassOrder = "PPPP",
+                    Comment = "QQQQQQQQQQQQQQQQ",
+                    UseCount = "RRRR",
+                    Judgement = "SSSS",
+                    ReasonCode = "TTTT",
+                    InsFlag = "UU",
+                    EncFlag = "VV",
+                    PreRunFlag = "WW",
+                    TurnDir = "XX",
+                    FlipState = "YY",
+                    WorkState = "ZZZZ",
+                    MultiUse = "AAAAAAAAAAAAAAAA",
+                    PairGlassId = "BBBBBBBBBBBBBBBB",
+                    PairPpid = "CCCCCCCCCCCCCCCCCCCC",
+                    OptionName1 = "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+                    OptionValue1 = "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",
+                    OptionName2 = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                    OptionValue2 = "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+                    OptionName3 = "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
+                    OptionValue3 = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
+                    OptionName4 = "JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ",
+                    OptionValue4 = "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+                    OptionName5 = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+                    OptionValue5 = "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+                    CSIF = 4,
+                    AS = 5,
+                    APS = 6,
+                    UniqueId = 7,
+                    BitSignal = 65535,
+                };
+            }
+        }
     }
 }

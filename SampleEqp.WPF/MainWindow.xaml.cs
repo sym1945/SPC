@@ -46,7 +46,7 @@ namespace SampleEqp.WPF
 
             Loaded += (sender, e) =>
             {
-                //_Core.Start();
+                _Core.Start();
             };
         }
 

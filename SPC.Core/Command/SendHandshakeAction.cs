@@ -74,7 +74,7 @@ namespace SPC.Core
 
                     TriggerBit.WriteValue(true);
 
-                    var changed = ReplyBit.WaitBit(true, 2000); // T1
+                    var changed = ReplyBit.WaitBit(true, 5000); // T1
 
                     TriggerBit.WriteValue(false);
 
@@ -84,7 +84,7 @@ namespace SPC.Core
                         continue;
                     }
 
-                    changed = ReplyBit.WaitBit(false, 2000); // T2
+                    changed = ReplyBit.WaitBit(false, 5000); // T2
 
                     if (!changed)
                     {

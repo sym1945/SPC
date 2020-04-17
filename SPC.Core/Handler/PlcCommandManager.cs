@@ -40,5 +40,20 @@ namespace SPC.Core
             }
         }
 
+        /// <summary>
+        /// 임시 
+        /// </summary>
+        public void AddCommandActions(params PlcCommandActionBase[] commandActions)
+        {
+            foreach (var commandAction in commandActions)
+            {
+                var command = this.FirstOrDefault(d => d.Command == commandAction.GetType().Name);
+                commandAction.PlcCommand = command;
+                commandAction.Initialize();
+
+                _CommandActions.Add(commandAction);
+            }
+        }
+
     }
 }

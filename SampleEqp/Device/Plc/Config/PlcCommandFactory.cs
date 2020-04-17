@@ -18,14 +18,14 @@ namespace SampleEqp
                 new PlcCommand
                 {
                     Container = "PLC_COMMAND",
-                    Device = "UnloadStart",
+                    Device = "UnloadEnd",
                     Trigger = CommandTrigger.BitOn,
                     Command = "GlassUnloadCommand"
                 },
                 new PlcCommand
                 {
                     Container = "PLC_COMMAND",
-                    Device = "GlassInspLoadStart",
+                    Device = "UnloadStart",
                     Trigger = CommandTrigger.BitOn,
                     Command = "ProcessEndCommand"
                 },
