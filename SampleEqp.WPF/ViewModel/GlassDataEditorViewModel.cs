@@ -1,6 +1,4 @@
-﻿using SampleEqp;
-
-namespace SampleEqp.WPF
+﻿namespace SampleEqp.WPF
 {
     public class GlassDataEditorViewModel : NotifyPropertyChanged
     {

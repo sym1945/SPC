@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace SampleEqp.Base
+namespace SampleEqp
 {
     public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {

@@ -1,5 +1,4 @@
-﻿using SampleEqp;
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace SampleEqp.WPF
