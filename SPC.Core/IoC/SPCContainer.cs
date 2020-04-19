@@ -9,6 +9,13 @@
             return Instance;
         }
 
+        public static T GetSPC<T>()
+            where T : SPC
+        {
+            //TODO: SPC 타입별로 관리
+            return (T)Instance;
+        }
+
         public static void SetSPC(SPC spc)
         {
             Instance = spc;
