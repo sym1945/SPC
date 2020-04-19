@@ -71,6 +71,7 @@
     <Compile Include="DataModel\WordUIntDevice.cs" />
     <Compile Include="DataModel\WordULongDevice.cs" />
     <Compile Include="DataModel\WordUShortDevice.cs" />
+    <Compile Include="Extension\TaskExtension.cs" />
     <Compile Include="Flags.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Communication\IPlcComm.cs" />
