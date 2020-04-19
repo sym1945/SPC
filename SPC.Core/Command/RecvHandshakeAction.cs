@@ -20,31 +20,28 @@ namespace SPC.Core
                     return;
 
                 IsRunning = true;
-                DoHandshake();
+                DoHandshake().DoNotAwait();
             }
         }
 
 
-        private Task DoHandshake()
+        private async Task DoHandshake()
         {
-            return Task.Run(() =>
-            {
-                AfterTriggerBitOn();
+            AfterTriggerBitOn();
 
-                ReplyBit.WriteValue(true);
+            ReplyBit.WriteValue(true);
 
-                //TODO: Time 정보 Config로 보내기
-                var changed = TriggerBit.WaitBit(false, 2000); // T4
+            //TODO: Time 정보 Config로 보내기
+            var changed = await TriggerBit.WaitBitAsync(false, 2000); // T4
 
-                ReplyBit.WriteValue(false);
+            ReplyBit.WriteValue(false);
 
-                if (changed)
-                    AfterTriggerBitOff();
-                else
-                    TimeOutTriggerBitOff();
+            if (changed)
+                AfterTriggerBitOff();
+            else
+                TimeOutTriggerBitOff();
 
-                IsRunning = false;
-            });
+            IsRunning = false;
         }
 
         public virtual void AfterTriggerBitOn()

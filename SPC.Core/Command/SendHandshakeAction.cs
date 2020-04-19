@@ -19,7 +19,7 @@ namespace SPC.Core
                     return;
 
                 IsRunning = true;
-                DoHandshake();
+                DoHandshake().DoNotAwait();
             }
         }
 
@@ -46,53 +46,49 @@ namespace SPC.Core
         }
 
 
-        public Task DoHandshake()
+        public async Task DoHandshake()
         {
-            return Task.Run(() =>
+            PlcCommandParameter commandParam = null;
+
+            while (true)
             {
-                PlcCommandParameter commandParam = null;
+                Thread.Sleep(100); // Tn Delay
 
-                while (true)
+                lock (Locker)
                 {
-                    Thread.Sleep(100); // Tn Delay
-
-                    lock (Locker)
+                    commandParam = GetCommandParameter();
+                    if (commandParam == null)
                     {
-                        commandParam = GetCommandParameter();
-                        if (commandParam == null)
-                        {
-                            IsRunning = false;
-                            break;
-                        }
+                        IsRunning = false;
+                        break;
                     }
-
-                    BeforeTriggerBitOn(commandParam);
-
-                    Thread.Sleep(100); // Tn Delay
-
-                    TriggerBit.WriteValue(true);
-
-                    var changed = ReplyBit.WaitBit(true, 5000); // T1
-
-                    TriggerBit.WriteValue(false);
-
-                    if (!changed)
-                    {
-                        TimeOutReplyBitOn();
-                        continue;
-                    }
-
-                    changed = ReplyBit.WaitBit(false, 5000); // T2
-
-                    if (!changed)
-                    {
-                        TimeOutReplyBitOff();
-                    }
-
-                    Console.WriteLine("Handshake Done");
                 }
-                
-            });
+
+                BeforeTriggerBitOn(commandParam);
+
+                Thread.Sleep(100); // Tn Delay
+
+                TriggerBit.WriteValue(true);
+
+                var changed = await ReplyBit.WaitBitAsync(true, 5000); // T1
+
+                TriggerBit.WriteValue(false);
+
+                if (!changed)
+                {
+                    TimeOutReplyBitOn();
+                    continue;
+                }
+
+                changed = await ReplyBit.WaitBitAsync(false, 5000); // T2
+
+                if (!changed)
+                {
+                    TimeOutReplyBitOff();
+                }
+
+                Console.WriteLine("Handshake Done");
+            }
         }
 
 

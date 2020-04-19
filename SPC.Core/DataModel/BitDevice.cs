@@ -54,13 +54,13 @@ namespace SPC.Core
         /// <param name="exceptedValue">원하는 변경값</param>
         /// <param name="waitMsec">변경 대기시간(msec)</param>
         /// <returns>true: 변경됨, false: 변경안됨</returns>
-        public Task<bool> WaitBitAsync(bool exceptedValue, short waitMsec = 2000)
-        {
-            return Task.Run(() =>
-            {
-                return WaitBit(exceptedValue, waitMsec);
-            });
-        }
+        //public Task<bool> WaitBitAsync(bool exceptedValue, short waitMsec = 2000)
+        //{
+        //    return Task.Run(() =>
+        //    {
+        //        return WaitBit(exceptedValue, waitMsec);
+        //    });
+        //}
 
         /// <summary>
         /// Bit 값 변경을 대기한다.
@@ -68,7 +68,7 @@ namespace SPC.Core
         /// <param name="exceptedValue">원하는 변경값</param>
         /// <param name="waitMsec">변경 대기시간(msec)</param>
         /// <returns>true: 변경됨, false: 변경안됨</returns>
-        public bool WaitBit(bool exceptedValue, short waitMsec = 2000)
+        public async ValueTask<bool> WaitBitAsync(bool exceptedValue, short waitMsec = 2000)
         {
             if (_Value == exceptedValue)
                 return true;
@@ -76,7 +76,7 @@ namespace SPC.Core
             _ResetEvent.Reset();
             _ResetEvent.Wait(waitMsec);
 
-            return _Value == exceptedValue;
+            return await new ValueTask<bool>(_Value == exceptedValue);
         }
 
         public void WriteValue(bool value)
