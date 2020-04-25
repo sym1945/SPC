@@ -6,7 +6,7 @@ namespace SPC.Core
 {
     public class DeviceManagerBase : ICollection<DeviceContainerBase>
     {
-        private List<DeviceContainerBase> _DeviceContainers;
+        private readonly List<DeviceContainerBase> _DeviceContainers;
 
         protected PlcReadWriter _PlcReadWriter;
 

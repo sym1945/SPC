@@ -5,13 +5,35 @@ using System.Threading.Tasks;
 
 namespace SPC.Core
 {
-    public abstract class SendHandshakeAction : HandshakeAction
+    public abstract class SendHandshake<T> : SendHandshake<PlcCommandParameter, T>
+        where T : SPC
     {
-        private Queue<PlcCommandParameter> _CommandParameterQueue = new Queue<PlcCommandParameter>();
+        
+    }
 
-        public void AddCommandParameter(PlcCommandParameter commandParameter)
+    public abstract class SendHandshake<TParam, T> : SendPlcCommand<T>
+        where TParam : PlcCommandParameter
+        where T : SPC
+    {
+        private readonly object _Locker = new object();
+
+        private readonly Queue<PlcCommandParameter> _CommandParameterQueue = new Queue<PlcCommandParameter>();
+
+
+        public abstract BitDevice CommandBit { get; }
+
+        public abstract BitDevice ReplyBit { get; }
+
+
+        public bool IsRunning { get; private set; }
+
+
+        public override void AddCommandParameter(PlcCommandParameter commandParameter)
         {
-            lock (Locker)
+            if (CommandBit == null || ReplyBit == null)
+                return;
+
+            lock (_Locker)
             {
                 _CommandParameterQueue.Enqueue(commandParameter);
 
@@ -25,24 +47,13 @@ namespace SPC.Core
 
         private PlcCommandParameter GetCommandParameter()
         {
-            lock (Locker)
+            lock (_Locker)
             {
                 if (_CommandParameterQueue.Count > 0)
                     return _CommandParameterQueue.Dequeue();
                 else
                     return null;
             }
-        }
-
-
-        public override bool CanExecute()
-        {
-            return false;
-        }
-
-        public override void Execute()
-        {
-            
         }
 
 
@@ -54,7 +65,7 @@ namespace SPC.Core
             {
                 Thread.Sleep(100); // Tn Delay
 
-                lock (Locker)
+                lock (_Locker)
                 {
                     commandParam = GetCommandParameter();
                     if (commandParam == null)
@@ -64,18 +75,19 @@ namespace SPC.Core
                     }
                 }
 
-                BeforeTriggerBitOn(commandParam);
+                BeforeTriggerBitOn((TParam)commandParam);
 
                 Thread.Sleep(100); // Tn Delay
 
-                TriggerBit.WriteValue(true);
+                CommandBit.WriteValue(true);
 
                 var changed = await ReplyBit.WaitBitAsync(true, 5000); // T1
 
-                TriggerBit.WriteValue(false);
+                CommandBit.WriteValue(false);
 
                 if (!changed)
                 {
+                    Console.WriteLine("Reply Bit On TimeOut!");
                     TimeOutReplyBitOn();
                     continue;
                 }
@@ -84,6 +96,7 @@ namespace SPC.Core
 
                 if (!changed)
                 {
+                    Console.WriteLine("Reply Bit Off TimeOut!");
                     TimeOutReplyBitOff();
                 }
 
@@ -92,8 +105,7 @@ namespace SPC.Core
         }
 
 
-
-        public virtual void BeforeTriggerBitOn(PlcCommandParameter commandParam)
+        public virtual void BeforeTriggerBitOn(TParam commandParam)
         {
 
         }
@@ -107,6 +119,5 @@ namespace SPC.Core
         {
 
         }
-
     }
 }

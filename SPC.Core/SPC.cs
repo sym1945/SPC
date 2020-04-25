@@ -3,18 +3,15 @@ using System.Linq;
 
 namespace SPC.Core
 {
-    public class SPC
+    public abstract class SPC
     {
-        private PlcComm _PlcComm;
-        private PlcWatcher _PlcWatcher;
-        private DeviceManager _DeviceManager;
-        private PlcCommandManager _CommandManager;
+        private readonly PlcComm _PlcComm;
 
-        public PlcWatcher PlcWatcher => _PlcWatcher;
+        public PlcWatcher PlcWatcher { get; private set; }
 
-        public DeviceManager DeviceManager => _DeviceManager;
+        public DeviceManager DeviceManager { get; private set; }
 
-        public PlcCommandManager CommandManager => _CommandManager;
+        public PlcCommandManager CommandManager { get; private set; }
 
         public SPC()
         {
@@ -27,29 +24,33 @@ namespace SPC.Core
             SPCContainer.SetSPC(this);
         }
 
+        public void SetUp()
+        {
+            SetUp(BuildPlcWatcher(), BuildDeviceManager(), BuildPlcCommandManger());
+        }
 
         public void SetUp(PlcWatcher watcher, DeviceManager devManager, PlcCommandManager commandManager = null)
         {
-            _PlcWatcher = watcher;
-            _DeviceManager = devManager;
-            _CommandManager = commandManager;
+            PlcWatcher = watcher;
+            DeviceManager = devManager;
+            CommandManager = commandManager;
 
-            if (_PlcWatcher == null)
+            if (PlcWatcher == null)
                 throw new NullReferenceException("PlcWathcer is NULL");
-            if (_DeviceManager == null)
+            if (DeviceManager == null)
                 throw new NullReferenceException("DeviceManager is NULL");
 
-            _PlcWatcher.Comm = _PlcComm;
-            _DeviceManager.Comm = _PlcComm;
+            PlcWatcher.Comm = _PlcComm;
+            DeviceManager.Comm = _PlcComm;
 
-            _DeviceManager.SetUp();
-            _CommandManager?.SetUp();
+            DeviceManager.SetUp();
+            //CommandManager?.SetUp();
 
 
             // watcher <> manager connect
-            foreach (DeviceContainerBase devContainer in _DeviceManager)
+            foreach (DeviceContainerBase devContainer in DeviceManager)
             {
-                var readBlock = _PlcWatcher.GetReadBlock(devContainer.ReadBlockKey);
+                var readBlock = PlcWatcher.GetReadBlock(devContainer.ReadBlockKey);
                 if (readBlock != null)
                 {
                     _PlcComm.PlcConnected += devContainer.PlcConnected;
@@ -60,18 +61,18 @@ namespace SPC.Core
 
 
             _PlcComm.PlcConnected += PlcConnected;
-            _PlcWatcher.BeforeRead += BeforeRead;
-            _PlcWatcher.AfterRead += AfterRead;
+            PlcWatcher.BeforeRead += BeforeRead;
+            PlcWatcher.AfterRead += AfterRead;
 
         }
 
         public bool Start()
         {
-            if (_PlcWatcher == null)
+            if (PlcWatcher == null)
                 throw new NullReferenceException("PlcWathcer is NULL");
 
             // watcher start
-            return _PlcWatcher.Start();
+            return PlcWatcher.Start();
         }
 
         private void PlcConnected()
@@ -92,9 +93,9 @@ namespace SPC.Core
         private void AfterRead()
         {
             // Do Something
-            foreach (var commandAction in _CommandManager.CommandActions)
+            foreach (var command in CommandManager.OfType<IRecvPlcCommand>())
             {
-                commandAction.Execute();
+                command.Execute();
             }
 
             OnAfterRead();
@@ -118,15 +119,28 @@ namespace SPC.Core
 
         public void SendCommand(string commandName, PlcCommandParameter commandParameter)
         {
-            var commandAction = _CommandManager.CommandActions.FirstOrDefault(d => d.GetType().Name == commandName);
+            var command = CommandManager
+                .OfType<ISendPlcCommand>()
+                .FirstOrDefault(d => d.GetType().Name == commandName);
 
-            if (commandAction is SendHandshakeAction sendAction)
-            {
-                sendAction.AddCommandParameter(commandParameter);
-            }
-
+            if (command != null)
+                command.AddCommandParameter(commandParameter);
         }
 
+        public virtual PlcCommandManager BuildPlcCommandManger()
+        {
+            return null;
+        }
+
+        public virtual PlcWatcher BuildPlcWatcher()
+        {
+            return null;
+        }
+
+        public virtual DeviceManager BuildDeviceManager()
+        {
+            return null;
+        }
 
     }
 

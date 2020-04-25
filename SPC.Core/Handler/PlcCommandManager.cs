@@ -7,48 +7,18 @@ namespace SPC.Core
 {
     public class PlcCommandManager : PlcCommandManagerBase
     {
-        private List<PlcCommandActionBase> _CommandActions = new List<PlcCommandActionBase>();
-
-        public IReadOnlyList<PlcCommandActionBase> CommandActions => _CommandActions;
-
-        public void SetUp()
+        public void SetUp(Assembly assembly)
         {
-            var commandActions = new List<PlcCommandActionBase>();
-            var commandActionTypes = (
-                Assembly
-                .GetEntryAssembly()
+            var commandTypes = (
+                assembly
                 .GetExportedTypes()
-                .Where(d => d.IsSubclassOf(typeof(PlcCommandActionBase)))
+                .Where(d => d.IsSubclassOf(typeof(IPlcCommand)))
                 .ToList()
             );
 
-            foreach (var command in this)
+            foreach (var commandType in commandTypes)
             {
-                var commandActionType = commandActionTypes.FirstOrDefault(d => d.Name == command.Command);
-                if (commandActionType != null)
-                {
-                    var commandAction = (PlcCommandActionBase)Activator.CreateInstance(commandActionType);
-                    commandAction.PlcCommand = command;
-                    commandAction.Initialize();
-
-                    _CommandActions.Add(commandAction);
-                }
-                    
-            }
-        }
-
-        /// <summary>
-        /// 임시 
-        /// </summary>
-        public void AddCommandActions(params PlcCommandActionBase[] commandActions)
-        {
-            foreach (var commandAction in commandActions)
-            {
-                var command = this.FirstOrDefault(d => d.Command == commandAction.GetType().Name);
-                commandAction.PlcCommand = command;
-                commandAction.Initialize();
-
-                _CommandActions.Add(commandAction);
+                Add(PlcCommandFactory.Make(commandType));
             }
         }
 

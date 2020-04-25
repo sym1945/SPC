@@ -2,11 +2,22 @@
 
 namespace SPC.Core
 {
-    public abstract class RecvHandshakeAction : HandshakeAction
+    public abstract class RecvHandshake<T> : RecvBitOn<T>
+        where T : SPC
     {
+        private readonly object _Locker = new object();
+
+        public abstract BitDevice ReplyBit { get; }
+
+        public bool IsRunning { get; private set; }
+
+
         public override bool CanExecute()
         {
-            return TriggerBit?.IsOnTrigger ?? false;
+            if (ReplyBit == null)
+                return false;
+
+            return base.CanExecute();
         }
 
         public override void Execute()
@@ -14,7 +25,7 @@ namespace SPC.Core
             if (CanExecute() == false)
                 return;
 
-            lock (Locker)
+            lock (_Locker)
             {
                 if (IsRunning)
                     return;
@@ -58,7 +69,5 @@ namespace SPC.Core
         {
 
         }
-
-
     }
 }

@@ -57,7 +57,6 @@
     <Compile Include="Device\Plc\Command\GlassLoadCommand.cs" />
     <Compile Include="Device\Plc\Command\Param\GlassCommandParam.cs" />
     <Compile Include="Device\Plc\Config\DeviceManagerFactory.cs" />
-    <Compile Include="Device\Plc\Config\PlcCommandFactory.cs" />
     <Compile Include="Device\Plc\Config\PlcWatcherFactory.cs" />
     <Compile Include="Device\Plc\DeviceContainer\A3GlassDataContainer.cs" />
     <Compile Include="Device\Plc\Helper\WordWriteHelper.cs" />

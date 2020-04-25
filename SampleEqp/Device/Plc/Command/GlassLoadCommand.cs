@@ -1,29 +1,21 @@
 ﻿using SPC.Core;
-using System;
 
 namespace SampleEqp
 {
-    public class GlassLoadCommand : SendHandshakeAction
+    public class GlassLoadCommand : SendHandshake<GlassCommandParam, SPC.Core.SPC>
     {
-        public override DeviceFindKey ReplyBitFindKey => new DeviceFindKey("CIM_REPLY", "GlassInspLoadStartReply");
+        public override BitDevice CommandBit => Devices.B("PLC_COMMAND")["GlassInspLoadStart"];
 
-        public override void BeforeTriggerBitOn(PlcCommandParameter commandParam)
+        public override BitDevice ReplyBit => Devices.B("CIM_REPLY")["GlassInspLoadStartReply"];
+
+
+        public override void BeforeTriggerBitOn(GlassCommandParam commandParam)
         {
-            var glassDataParam = commandParam as GlassCommandParam;
-            var glassDataContainer = DevManager.GetDeviceContainer<A3GlassDataContainer>("LOAD_GLASS_DATA");
+            var glassDataContainer = Devices.GetDeviceContainer<A3GlassDataContainer>("LOAD_GLASS_DATA");
 
-            glassDataContainer.WriteGlassData(glassDataParam.GlassData);
+            glassDataContainer.WriteGlassData(commandParam.GlassData);
         }
 
-        public override void TimeOutReplyBitOn()
-        {
-            Console.WriteLine("Reply Bit On TimeOut!");
-        }
-
-        public override void TimeOutReplyBitOff()
-        {
-            Console.WriteLine("Reply Bit Off TimeOut!");
-        }
 
     }
 }

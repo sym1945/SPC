@@ -50,17 +50,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\DeviceFindKey.cs" />
-    <Compile Include="Command\HandshakeAction.cs" />
-    <Compile Include="Command\PlcCommandActionBase.cs" />
+    <Compile Include="Builder\PlcCommandFactory.cs" />
+    <Compile Include="Command\IPlcCommand.cs" />
+    <Compile Include="Command\IRecvPlcCommand.cs" />
+    <Compile Include="Command\ISendPlcCommand.cs" />
     <Compile Include="Command\PlcCommandParameter.cs" />
-    <Compile Include="Command\RecvHandshakeAction.cs" />
-    <Compile Include="Command\SendHandshakeAction.cs" />
+    <Compile Include="Command\RecvBitOff.cs" />
+    <Compile Include="Command\RecvBitOn.cs" />
+    <Compile Include="Command\RecvHandshake.cs" />
+    <Compile Include="Command\RecvPlcCommand.cs" />
+    <Compile Include="Command\SendHandshake.cs" />
+    <Compile Include="Command\SendPlcCommand.cs" />
     <Compile Include="Communication\IPlcReadWriter.cs" />
     <Compile Include="Communication\PlcReadWriter.cs" />
     <Compile Include="DataModel\BitReadWriteInfo.cs" />
     <Compile Include="DataModel\DeviceBase.cs" />
-    <Compile Include="Command\PlcCommand.cs" />
+    <Compile Include="Command\PlcCommandBase.cs" />
     <Compile Include="DataModel\DeviceContainer.cs" />
     <Compile Include="DataModel\WordDoubleDevice.cs" />
     <Compile Include="DataModel\WordStringDevice.cs" />
@@ -79,6 +84,7 @@
     <Compile Include="DataModel\WordULongDevice.cs" />
     <Compile Include="DataModel\WordUShortDevice.cs" />
     <Compile Include="Extension\TaskExtension.cs" />
+    <Compile Include="Builder\PlcCommandManagerBuilder.cs" />
     <Compile Include="Flags.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Communication\IPlcComm.cs" />
@@ -102,5 +108,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

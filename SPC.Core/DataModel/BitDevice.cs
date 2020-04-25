@@ -73,10 +73,13 @@ namespace SPC.Core
             if (_Value == exceptedValue)
                 return true;
 
-            _ResetEvent.Reset();
-            _ResetEvent.Wait(waitMsec);
+            await Task.Run(() =>
+            {
+                _ResetEvent.Reset();
+                _ResetEvent.Wait(waitMsec);
+            });
 
-            return await new ValueTask<bool>(_Value == exceptedValue);
+            return (_Value == exceptedValue);
         }
 
         public void WriteValue(bool value)

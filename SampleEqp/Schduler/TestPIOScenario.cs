@@ -14,15 +14,13 @@ namespace SampleEqp
 
     public class TestPIOScenario
     {
-        private object _Locker = new object();
+        private readonly object _Locker = new object();
 
         private bool _IsRunning;
 
         private ScenarioStep _Step;
-
-        BitDeviceContainer EqpBits;
-
-        BitDeviceContainer IdxBits;
+        readonly BitDeviceContainer EqpBits;
+        readonly BitDeviceContainer IdxBits;
 
         public bool Start()
         {
