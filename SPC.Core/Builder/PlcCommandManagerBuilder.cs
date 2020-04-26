@@ -33,6 +33,8 @@ namespace SPC.Core
                 plcCommandManager.Add(plcCommand);
             }
 
+            _PlcCommandTypes.Clear();
+
             return plcCommandManager;
         }
 

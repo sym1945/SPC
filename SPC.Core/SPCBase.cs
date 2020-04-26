@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SPC.Core
 {
-    public abstract class SPC
+    public abstract class SPCBase
     {
         private readonly PlcComm _PlcComm;
 
@@ -13,12 +13,12 @@ namespace SPC.Core
 
         public PlcCommandManager CommandManager { get; private set; }
 
-        public SPC()
+        public SPCBase()
         {
             _PlcComm = new Melsec();
             SPCContainer.SetSPC(this);
         }
-        public SPC(PlcComm plcComm)
+        public SPCBase(PlcComm plcComm)
         {
             _PlcComm = plcComm;
             SPCContainer.SetSPC(this);
@@ -95,7 +95,8 @@ namespace SPC.Core
             // Do Something
             foreach (var command in CommandManager.OfType<IRecvPlcCommand>())
             {
-                command.Execute();
+                if (command.CanExecute())
+                    command.Execute();
             }
 
             OnAfterRead();

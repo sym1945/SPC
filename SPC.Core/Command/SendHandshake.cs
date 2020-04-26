@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 namespace SPC.Core
 {
     public abstract class SendHandshake<T> : SendHandshake<PlcCommandParameter, T>
-        where T : SPC
+        where T : SPCBase
     {
         
     }
 
-    public abstract class SendHandshake<TParam, T> : SendPlcCommand<T>
+    public abstract class SendHandshake<TParam, TSpc> : SendPlcCommand<TSpc>
         where TParam : PlcCommandParameter
-        where T : SPC
+        where TSpc : SPCBase
     {
         private readonly object _Locker = new object();
 
@@ -75,7 +75,7 @@ namespace SPC.Core
                     }
                 }
 
-                BeforeTriggerBitOn((TParam)commandParam);
+                BeforeCommandBitOn((TParam)commandParam);
 
                 Thread.Sleep(100); // Tn Delay
 
@@ -105,7 +105,7 @@ namespace SPC.Core
         }
 
 
-        public virtual void BeforeTriggerBitOn(TParam commandParam)
+        public virtual void BeforeCommandBitOn(TParam commandParam)
         {
 
         }

@@ -2,26 +2,25 @@
 
 namespace SampleEqp
 {
-    public class PlcHandler : SPC.Core.SPC
+    public class PlcHandler : SPCBase
     {
-        public PlcHandler()
+        private Equipment _Eqp;
+
+        public PlcHandler(Equipment eqp)
         {
-            //_Spc = new SPC.Core.SPC();
-            //_Spc.SetUp(
-            //    PlcWatcherFactory.Make(),
-            //    DeviceManagerFactory.Make(),
-            //    PlcCommandFactory.Make()
-            //    ) ;
-            //_Spc.CommandManager.AddCommandActions(
-            //    new GlassLoadCommand(),
-            //    new GlassUnloadCommand(),
-            //    new ProcessEndCommand()
-            //    );
+            _Eqp = eqp;
+            _Eqp.PrstChanged += Equipment_PrstChanged;
+            _Eqp.GlassDataAdded += Equipment_GlassDataAdded;
+            _Eqp.GlassDataRemoved += Equipment_GlassDataRemoved;
+            _Eqp.ProcessDone += Equipment_ProcessDone;
         }
 
         public override PlcCommandManager BuildPlcCommandManger()
         {
             return new PlcCommandManagerBuilder()
+                .AddPlcCommand<GlassLoadCommand>()
+                .AddPlcCommand<ProcessEndCommand>()
+                .AddPlcCommand<GlassUnloadCommand>()
                 .Build();
         }
 
@@ -36,29 +35,25 @@ namespace SampleEqp
         }
 
 
-
-
-
-
-        public void WriteProcessState(Prst prst)
+        private void Equipment_PrstChanged(Equipment eqp)
         {
             var processStateDevice = DeviceManager.W("EQP_STATUS")["ProcessState"].AsUShort();
-            processStateDevice.Value = (ushort)prst;
+            processStateDevice.Value = (ushort)eqp.Prst;
         }
 
-        public void CommandGlassLoad(GlassData glassData)
+        private void Equipment_GlassDataAdded(Equipment eqp, GlassData glass)
         {
-            SendCommand("GlassLoadCommand", new GlassCommandParam(glassData));
+            SendCommand("GlassLoadCommand", new GlassCommandParam(glass));
         }
 
-        public void CommandGlassUnload(GlassData glassData)
-        {
-            SendCommand("GlassUnloadCommand", new GlassCommandParam(glassData));
-        }
-
-        public void CommandProcessEnd()
+        private void Equipment_ProcessDone()
         {
             SendCommand("ProcessEndCommand", new PlcCommandParameter());
+        }
+
+        private void Equipment_GlassDataRemoved(Equipment eqp, GlassData glass)
+        {
+            SendCommand("GlassUnloadCommand", new GlassCommandParam(glass));
         }
 
 

@@ -7,25 +7,34 @@ namespace SPC.Core
 {
     public static class SPCContainer
     {
-        private static SPC Instance;
+        private static readonly Dictionary<Type, SPCBase> _SPCs = new Dictionary<Type, SPCBase>();
 
         private static readonly Dictionary<Type, object> _Sigletons = new Dictionary<Type, object>();
-
-        public static SPC GetSPC()
-        {
-            return Instance;
-        }
+        
 
         public static T GetSPC<T>()
-            where T : SPC
+            where T : SPCBase
         {
-            //TODO: SPC 타입별로 관리
-            return (T)Instance;
+            lock (_SPCs)
+            {
+                var spcType = typeof(T);
+                if (_SPCs.TryGetValue(spcType, out SPCBase spc))
+                    return (T)spc;
+                else
+                    return null;
+            }
         }
 
-        public static void SetSPC(SPC spc)
+        public static void SetSPC(SPCBase spc)
         {
-            Instance = spc;
+            lock (_SPCs)
+            {
+                var spcType = spc.GetType();
+                if (_SPCs.ContainsKey(spcType))
+                    _SPCs[spcType] = spc;
+                else
+                    _SPCs.Add(spcType, spc);
+            }
         }
 
         public static void AddSingleton<T>(T data = null)
@@ -37,7 +46,10 @@ namespace SPC.Core
                 if (data == null)
                     data = (T)Activator.CreateInstance(dataType);
 
-                _Sigletons.Add(dataType, data);
+                if (_Sigletons.ContainsKey(dataType))
+                    _Sigletons[dataType] = data;
+                else
+                    _Sigletons.Add(dataType, data);
             }
         }
 

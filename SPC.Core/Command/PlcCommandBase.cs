@@ -1,7 +1,7 @@
 ﻿namespace SPC.Core
 {
     public abstract class PlcCommandBase<T> : IPlcCommand
-        where T : SPC
+        where T : SPCBase
     {
         public DeviceManager Devices => SPCContainer.GetSPC<T>().DeviceManager;
     }

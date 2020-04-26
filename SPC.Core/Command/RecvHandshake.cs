@@ -3,7 +3,7 @@
 namespace SPC.Core
 {
     public abstract class RecvHandshake<T> : RecvBitOn<T>
-        where T : SPC
+        where T : SPCBase
     {
         private readonly object _Locker = new object();
 
@@ -22,9 +22,6 @@ namespace SPC.Core
 
         public override void Execute()
         {
-            if (CanExecute() == false)
-                return;
-
             lock (_Locker)
             {
                 if (IsRunning)

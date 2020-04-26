@@ -67,7 +67,6 @@
     <Compile Include="Base\ValueConverterBase.cs" />
     <Compile Include="Converter\PrstConverter.cs" />
     <Compile Include="Converter\EqstConverter.cs" />
-    <Compile Include="ViewModel\DeviceListViewModel.cs" />
     <Compile Include="ViewModel\EqpStatusViewModel.cs" />
     <Compile Include="ViewModel\GlassDataEditorViewModel.cs" />
     <Compile Include="ViewModel\GlassExistenceViewModel.cs" />

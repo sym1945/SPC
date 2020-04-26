@@ -2,7 +2,7 @@
 
 namespace SampleEqp
 {
-    public class ProcessEndCommand : SendHandshake<SPC.Core.SPC>
+    public class ProcessEndCommand : SendHandshake<PlcHandler>
     {
         public override BitDevice CommandBit => Devices.B("PLC_COMMAND")["UnloadStart"];
 

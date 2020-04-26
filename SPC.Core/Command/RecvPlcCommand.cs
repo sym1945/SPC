@@ -1,7 +1,7 @@
 ﻿namespace SPC.Core
 {
     public abstract class RecvPlcCommand<T> : PlcCommandBase<T>, IRecvPlcCommand
-        where T : SPC
+        where T : SPCBase
     {
         public abstract bool CanExecute();
 
