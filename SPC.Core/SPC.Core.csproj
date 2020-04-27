@@ -55,6 +55,7 @@
     <Compile Include="Command\IRecvPlcCommand.cs" />
     <Compile Include="Command\ISendPlcCommand.cs" />
     <Compile Include="Command\PlcCommandParameter.cs" />
+    <Compile Include="Command\RecvBitChange.cs" />
     <Compile Include="Command\RecvBitOff.cs" />
     <Compile Include="Command\RecvBitOn.cs" />
     <Compile Include="Command\RecvHandshake.cs" />

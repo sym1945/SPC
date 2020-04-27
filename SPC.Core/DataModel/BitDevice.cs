@@ -23,7 +23,7 @@ namespace SPC.Core
                 _OldValue = _Value;
                 _Value = value;
 
-                if (IsOnTrigger || IsOffTrigger)
+                if (IsChanged)
                 {
                     OnValueChanged();
                     OnPropertyChanged(nameof(Value));
@@ -36,6 +36,8 @@ namespace SPC.Core
         public bool IsOnTrigger => !_OldValue && _Value;
 
         public bool IsOffTrigger => _OldValue && !_Value;
+
+        public bool IsChanged => _OldValue != _Value;
         #endregion
 
 
