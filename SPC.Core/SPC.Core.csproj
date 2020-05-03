@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IMPLC.Core">
+      <HintPath>..\..\IMPLC\IMPLC\bin\Debug\IMPLC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IMPLC.Service">
+      <HintPath>..\..\IMPLC\IMPLC\bin\Debug\IMPLC.Service.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,6 +68,7 @@
     <Compile Include="Command\RecvPlcCommand.cs" />
     <Compile Include="Command\SendHandshake.cs" />
     <Compile Include="Command\SendPlcCommand.cs" />
+    <Compile Include="Communication\IMPLC\Implc.cs" />
     <Compile Include="Communication\IPlcReadWriter.cs" />
     <Compile Include="Communication\PlcReadWriter.cs" />
     <Compile Include="DataModel\BitReadWriteInfo.cs" />

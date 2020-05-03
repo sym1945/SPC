@@ -1,4 +1,5 @@
 ﻿using SPC.Core;
+using SPC.Core.Communication.IMPLC;
 
 namespace SampleEqp
 {
@@ -6,7 +7,7 @@ namespace SampleEqp
     {
         private Equipment _Eqp;
 
-        public PlcHandler(Equipment eqp)
+        public PlcHandler(Equipment eqp) : base(new Implc())
         {
             _Eqp = eqp;
             _Eqp.PrstChanged += Equipment_PrstChanged;
