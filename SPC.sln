@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPC.Test", "SPC.Test\SPC.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleEqp.WPF", "SampleEqp.WPF\SampleEqp.WPF.csproj", "{885B295E-FBB4-4EE1-99BB-C205B0FACC42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMPLC.Monitor", "IMPLC.Monitor\IMPLC.Monitor.csproj", "{C89256F1-AB43-4AC8-8E16-00EFC22B066F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{885B295E-FBB4-4EE1-99BB-C205B0FACC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{885B295E-FBB4-4EE1-99BB-C205B0FACC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{885B295E-FBB4-4EE1-99BB-C205B0FACC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C89256F1-AB43-4AC8-8E16-00EFC22B066F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C89256F1-AB43-4AC8-8E16-00EFC22B066F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C89256F1-AB43-4AC8-8E16-00EFC22B066F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C89256F1-AB43-4AC8-8E16-00EFC22B066F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

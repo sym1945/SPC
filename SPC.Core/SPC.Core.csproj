@@ -32,10 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IMPLC.Core">
+    <Reference Include="IMPLC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\IMPLC\IMPLC\bin\Debug\IMPLC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="IMPLC.Service">
+    <Reference Include="IMPLC.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\IMPLC\IMPLC\bin\Debug\IMPLC.Service.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
@@ -71,10 +73,12 @@
     <Compile Include="Communication\IMPLC\Implc.cs" />
     <Compile Include="Communication\IPlcReadWriter.cs" />
     <Compile Include="Communication\PlcReadWriter.cs" />
+    <Compile Include="DataModel\BitDeviceArrayContainer.cs" />
     <Compile Include="DataModel\BitReadWriteInfo.cs" />
     <Compile Include="DataModel\DeviceBase.cs" />
     <Compile Include="Command\PlcCommandBase.cs" />
     <Compile Include="DataModel\DeviceContainer.cs" />
+    <Compile Include="DataModel\WordDeviceArrayContainer.cs" />
     <Compile Include="DataModel\WordDoubleDevice.cs" />
     <Compile Include="DataModel\WordStringDevice.cs" />
     <Compile Include="DataModel\WordDeviceContainer.cs" />

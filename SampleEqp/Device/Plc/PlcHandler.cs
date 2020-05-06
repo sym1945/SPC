@@ -1,5 +1,4 @@
 ﻿using SPC.Core;
-using SPC.Core.Communication.IMPLC;
 
 namespace SampleEqp
 {

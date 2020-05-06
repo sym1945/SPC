@@ -1,45 +1,45 @@
 ﻿using IMPLC.Service;
 
-namespace SPC.Core.Communication.IMPLC
+namespace SPC.Core
 {
     public class Implc : PlcComm
     {
-        private IPLCServiceClient _Client;
-        private IPLCServiceObject _PlcService;
+
+        private readonly IPLCServiceClient _Client;
+
+        public IPLCServiceObject ServiceObject { get; private set; }
+
 
         public Implc(string serviceUri = "ipc://localhost:9090")
         {
             _Client = PLCServiceProvider.GetServiceClient(PLCServiceType.IPC);
+            ServiceObject = _Client.Connect(serviceUri);
         }
 
         public override short Open()
         {
-            _PlcService = _Client.Connect("ipc://localhost:9090");
-
-            return _PlcService?.Open() ?? 99;
+            return (short)(ServiceObject != null ? 0 : 99);
         }
 
         public override short Close()
         {
-            if (_PlcService == null)
-                return 99;
-
-            return _PlcService.Close();
+            ServiceObject = null;
+            return (short)(_Client.Disconnect() ? 0 : 99);
         }
 
         public override short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf)
         {
-            return _PlcService?.ReadBlock((short)device, deviceNo, size, ref buf) ?? 99;
+            return ServiceObject?.ReadBlock((short)device, deviceNo, size, ref buf) ?? 99;
         }
 
         public override short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf)
         {
-            return _PlcService?.WriteBlock((short)device, deviceNo, size, ref buf) ?? 99;
+            return ServiceObject?.WriteBlock((short)device, deviceNo, size, ref buf) ?? 99;
         }
 
         public override short SetBit(eDevice device, short devno, bool set)
         {
-            return _PlcService?.SetBit((short)device, devno, set) ?? 99;
+            return ServiceObject?.SetBit((short)device, devno, set) ?? 99;
         }
     }
 }
