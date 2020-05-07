@@ -18,7 +18,11 @@ namespace SPC.Core
 
         public override short Open()
         {
-            return (short)(ServiceObject != null ? 0 : 99);
+            var result = (short)(ServiceObject != null ? 0 : 99);
+
+            IsOpen = (result == 0);
+
+            return result;
         }
 
         public override short Close()

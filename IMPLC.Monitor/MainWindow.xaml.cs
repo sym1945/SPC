@@ -23,6 +23,7 @@ namespace IMPLC.Monitor
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
     }
 }

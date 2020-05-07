@@ -10,6 +10,7 @@ namespace IMPLC.Monitor
 
         public DeviceMonitorViewModel(ServiceClientViewModel serviceClient)
         {
+            DeviceTabs = new ObservableCollection<DeviceMonitorTabViewModel>();
             serviceClient.Connected += ServiceClient_Connected;
             serviceClient.Disconnected += ServiceClient_Disconnected;
 
@@ -25,6 +26,8 @@ namespace IMPLC.Monitor
                 {
                     case BitDeviceArrayContainer b:
                         {
+                            var tab = new DeviceMonitorTabViewModel(b.Device.ToString(), b);
+                            DeviceTabs.Add(tab);
                             break;
                         }
                     case WordDeviceArrayContainer w:

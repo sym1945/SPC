@@ -1,5 +1,6 @@
 ﻿using SPC.Core;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace IMPLC.Monitor
@@ -10,9 +11,10 @@ namespace IMPLC.Monitor
 
         public ObservableCollection<DeviceBase> Devices { get; private set; }
 
-        public DeviceMonitorTabViewModel()
+        public DeviceMonitorTabViewModel(string header, IEnumerable<DeviceBase> devices)
         {
-            Devices = new ObservableCollection<DeviceBase>();
+            TabHeader = header;
+            Devices = new ObservableCollection<DeviceBase>(devices);
         }       
     }
 }

@@ -8,7 +8,7 @@ namespace IMPLC.Monitor
     {
         private SpcHandler _SpcHandler;
 
-        public string Uri { get; set; }
+        public string Uri { get; set; } = @"ipc://localhost:9090";
 
         public ICommand ConnectStart
         {

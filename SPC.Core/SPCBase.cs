@@ -92,11 +92,13 @@ namespace SPC.Core
 
         private void AfterRead()
         {
-            // Do Something
-            foreach (var command in CommandManager.OfType<IRecvPlcCommand>())
+            if (CommandManager != null)
             {
-                if (command.CanExecute())
-                    command.Execute();
+                foreach (var command in CommandManager.OfType<IRecvPlcCommand>())
+                {
+                    if (command.CanExecute())
+                        command.Execute();
+                }
             }
 
             OnAfterRead();

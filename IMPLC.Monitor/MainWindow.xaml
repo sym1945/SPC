@@ -10,12 +10,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0">
-            <local:HeaderControl/>    
+            <local:HeaderControl DataContext="{Binding ServiceClientViewModel}"/>
         </Border>
+
+        <local:DeviceMonitor Grid.Row="1"
+                             DataContext="{Binding DeviceMonitorViewModel}"/>
         
     </Grid>
 </Window>

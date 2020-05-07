@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\DeviceMonitorTabViewModel.cs" />
     <Compile Include="ViewModels\DeviceMonitorViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ServiceClientViewModel.cs" />
     <Page Include="Controls\BitDeviceMonitor.xaml">
       <SubType>Designer</SubType>
