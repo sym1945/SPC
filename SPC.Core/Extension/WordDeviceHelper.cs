@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public static class WordDeviceHelper
+    public static class WordDeviceExtension
     {
         public static WordStringDevice AsString(this WordDevice dev)
         {
@@ -45,6 +45,21 @@
         public static WordDoubleDevice AsDouble(this WordDevice dev)
         {
             return dev as WordDoubleDevice;
+        }
+
+        public static WordBoolArrayDevice AsBoolArray(this WordDevice dev)
+        {
+            return dev as WordBoolArrayDevice;
+        }
+
+        public static WordByteArrayDevice AsByteArray(this WordDevice dev)
+        {
+            return dev as WordByteArrayDevice;
+        }
+
+        public static WordUShortArrayDevice AsUShortArray(this WordDevice dev)
+        {
+            return dev as WordUShortArrayDevice;
         }
 
     }

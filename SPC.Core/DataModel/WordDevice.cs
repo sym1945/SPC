@@ -85,6 +85,11 @@ namespace SPC.Core
         {
             _WriteValue.SetValue(value);
 
+            WriteValue();
+        }
+
+        protected void WriteValue()
+        {
             OnWriteToPlc(new WordReadWriteInfo
             {
                 Device = Device,
@@ -92,7 +97,8 @@ namespace SPC.Core
                 Size = Length,
                 Value = _WriteValue.RawData
             });
-        } 
+        }
+    
 
         #endregion
 

@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SPC.Core;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SPC.Test
 {
@@ -168,7 +170,74 @@ namespace SPC.Test
             }
         }
 
+        [TestMethod]
+        public void WriteBoolArrayValueTest()
+        {
+            var writeBits = new List<bool>
+            {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+                true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
+            };
 
+            var wordDev = new WordBoolArrayDevice { Length = 2 };
+            wordDev.Value = writeBits;
+
+            CollectionAssert.AreEqual(writeBits.ToShort().ToList(), wordDev.WriteData);
+
+            wordDev.SetValue(1, true);
+            writeBits[1] = true;
+
+            wordDev.SetValue(17, false);
+            writeBits[17] = false;
+
+            CollectionAssert.AreEqual(writeBits.ToShort().ToList(), wordDev.WriteData);
+        }
+
+        [TestMethod]
+        public void WriteByteArrayValueTest()
+        {
+            var wrtieBytes = new List<byte>
+            {
+                byte.MinValue, byte.MinValue,
+                byte.MaxValue, byte.MaxValue
+            };
+
+            var wordDev = new WordByteArrayDevice { Length = 2 };
+            wordDev.Value = wrtieBytes;
+
+            CollectionAssert.AreEqual(wrtieBytes.ToShort().ToList(), wordDev.WriteData);
+
+            wordDev.SetValue(1, 127);
+            wrtieBytes[1] = 127;
+
+            wordDev.SetValue(3, 95);
+            wrtieBytes[3] = 95;
+
+            CollectionAssert.AreEqual(wrtieBytes.ToShort().ToList(), wordDev.WriteData);
+        }
+
+        [TestMethod]
+        public void WriteUshortArrayValueTest()
+        {
+            var wrtieUshorts = new List<ushort>
+            {
+                ushort.MinValue,
+                ushort.MaxValue
+            };
+
+            var wordDev = new WordUShortArrayDevice { Length = 2 };
+            wordDev.Value = wrtieUshorts;
+
+            CollectionAssert.AreEqual(wrtieUshorts.ToShort().ToList(), wordDev.WriteData);
+
+            wordDev.SetValue(0, 100);
+            wrtieUshorts[0] = 100;
+
+            wordDev.SetValue(1, 3000);
+            wrtieUshorts[1] = 3000;
+
+            CollectionAssert.AreEqual(wrtieUshorts.ToShort().ToList(), wordDev.WriteData);
+        }
 
     }
 }
