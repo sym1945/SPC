@@ -32,6 +32,8 @@ namespace IMPLC.Monitor
                         }
                     case WordDeviceArrayContainer w:
                         {
+                            var tab = new DeviceMonitorTabViewModel(w.Device.ToString(), w);
+                            DeviceTabs.Add(tab);
                             break;
                         }
                 }
