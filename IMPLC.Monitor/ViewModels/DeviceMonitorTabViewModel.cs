@@ -18,10 +18,10 @@ namespace IMPLC.Monitor
 
         public int CurrentPage { get; set; }
 
-        public ObservableCollection<DeviceMonitorPageViewModel> FirstPage { get; private set; } = new ObservableCollection<DeviceMonitorPageViewModel>();
-        public ObservableCollection<DeviceMonitorPageViewModel> SecondPage { get; private set; } = new ObservableCollection<DeviceMonitorPageViewModel>();
-        public ObservableCollection<DeviceMonitorPageViewModel> ThirdPage { get; private set; } = new ObservableCollection<DeviceMonitorPageViewModel>();
-        public ObservableCollection<DeviceMonitorPageViewModel> LastPage { get; private set; } = new ObservableCollection<DeviceMonitorPageViewModel>();
+        public DeviceMonitorPageViewModel FirstPage { get; private set; }
+        public DeviceMonitorPageViewModel SecondPage { get; private set; }
+        public DeviceMonitorPageViewModel ThirdPage { get; private set; }
+        public DeviceMonitorPageViewModel LastPage { get; private set; }
 
         public ICommand PrevPageCommand
         {
@@ -32,19 +32,10 @@ namespace IMPLC.Monitor
                 {
                     var prevPage = CurrentPage - 1;
 
-                    LastPage.Clear();
-                    LastPage = new ObservableCollection<DeviceMonitorPageViewModel>(ThirdPage);
-
-                    ThirdPage.Clear();
-                    ThirdPage = new ObservableCollection<DeviceMonitorPageViewModel>(SecondPage);
-
-                    SecondPage.Clear();
-                    SecondPage = new ObservableCollection<DeviceMonitorPageViewModel>(FirstPage);
-
-                    FirstPage.Clear();
-                    FirstPage = new ObservableCollection<DeviceMonitorPageViewModel>();
-                    FirstPage.Add(new DeviceMonitorPageViewModel(_Devices.Skip((prevPage - 1) * ITEM_COUNT_PER_PAGE).Take(ITEM_COUNT_PER_PAGE)));
-
+                    LastPage = ThirdPage;
+                    ThirdPage = SecondPage;
+                    SecondPage = FirstPage;
+                    FirstPage = new DeviceMonitorPageViewModel(_Devices.Skip((prevPage - 1) * ITEM_COUNT_PER_PAGE).Take(ITEM_COUNT_PER_PAGE));
 
                     CurrentPage = prevPage;
                 }
@@ -60,17 +51,10 @@ namespace IMPLC.Monitor
                 {
                     var nextPage = CurrentPage + 1;
 
-                    FirstPage.Clear();
-                    FirstPage = new ObservableCollection<DeviceMonitorPageViewModel>(SecondPage);
-
-                    SecondPage.Clear();
-                    SecondPage = new ObservableCollection<DeviceMonitorPageViewModel>(ThirdPage);
-
-                    ThirdPage.Clear();
-                    ThirdPage = new ObservableCollection<DeviceMonitorPageViewModel>(LastPage);
-
-                    LastPage.Clear();
-                    LastPage.Add(new DeviceMonitorPageViewModel(_Devices.Skip((nextPage - 1) * ITEM_COUNT_PER_PAGE).Take(ITEM_COUNT_PER_PAGE)));
+                    FirstPage = SecondPage;
+                    SecondPage = ThirdPage;
+                    ThirdPage = LastPage;
+                    LastPage = new DeviceMonitorPageViewModel(_Devices.Skip((nextPage + 3 - 1) * ITEM_COUNT_PER_PAGE).Take(ITEM_COUNT_PER_PAGE));
 
                     CurrentPage = nextPage;
 
@@ -98,19 +82,19 @@ namespace IMPLC.Monitor
 
                 if (i == 1)
                 {
-                    FirstPage.Add(new DeviceMonitorPageViewModel(pageItems));
+                    FirstPage = new DeviceMonitorPageViewModel(pageItems);
                 }
                 else if (i == 2)
                 {
-                    SecondPage.Add(new DeviceMonitorPageViewModel(pageItems));
+                    SecondPage = new DeviceMonitorPageViewModel(pageItems);
                 }
                 else if (i == 3)
                 {
-                    ThirdPage.Add(new DeviceMonitorPageViewModel(pageItems));
+                    ThirdPage = new DeviceMonitorPageViewModel(pageItems);
                 }
                 else if (i == 4)
                 {
-                    LastPage.Add(new DeviceMonitorPageViewModel(pageItems));
+                    LastPage = new DeviceMonitorPageViewModel(pageItems);
                 }
                 else
                 {
