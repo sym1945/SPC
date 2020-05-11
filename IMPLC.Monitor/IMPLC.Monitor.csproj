@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\CommandBase.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\DeviceMonitorPageViewModel.cs" />
     <Compile Include="ViewModels\DeviceMonitorTabViewModel.cs" />
     <Compile Include="ViewModels\DeviceMonitorViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

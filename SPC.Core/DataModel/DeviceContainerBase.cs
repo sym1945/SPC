@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SPC.Core
 {
@@ -103,7 +104,7 @@ namespace SPC.Core
 
         public void CopyTo(DeviceBase[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _Devices.Values.CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<DeviceBase> GetEnumerator()

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:IMPLC.Monitor"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <TabControl ItemsSource="{Binding DeviceTabs}">
         <TabControl.ItemContainerStyle>
             <Style TargetType="{x:Type TabItem}">
@@ -13,12 +14,68 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <local:DeviceMonitorPage/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Device Page-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <local:DeviceMonitorPage 
+                                            Grid.Column="0"
+                                            DataContext="{Binding FirstPage}"/>
+                                    <local:DeviceMonitorPage 
+                                            Grid.Column="1"
+                                            DataContext="{Binding SecondPage}"/>
+                                    <local:DeviceMonitorPage 
+                                            Grid.Column="2"
+                                            DataContext="{Binding ThirdPage}"/>
+                                    <local:DeviceMonitorPage 
+                                            Grid.Column="3"
+                                            DataContext="{Binding LastPage}"/>
+                                </Grid>
+
+                                <!-- Page Controller -->
+                                <Border Grid.Row="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0" Content="◀◀"/>
+                                        <Button Grid.Column="1" Content="◀" Command="{Binding PrevPageCommand}"/>
+
+                                        <TextBlock 
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            TextAlignment="Center">
+                                            <Run Text="{Binding CurrentPage, FallbackValue=1}"/>
+                                            <Run Text="/"/>
+                                            <Run Text="{Binding TotalPageCount, FallbackValue=1}"/>
+                                        </TextBlock>
+
+                                        <Button Grid.Column="3" Content="▶" Command="{Binding NextPageCommand}"/>
+                                        <Button Grid.Column="4" Content="▶▶"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
         </TabControl.ItemContainerStyle>
-        
     </TabControl>
+
 </UserControl>

@@ -1,11 +1,14 @@
 ﻿using SPC.Core;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace IMPLC.Monitor
 {
     public class DeviceMonitorViewModel
     {
         public ObservableCollection<DeviceMonitorTabViewModel> DeviceTabs { get; private set; }
+
+        public DeviceMonitorTabViewModel SelectedTab { get; set; }
 
 
         public DeviceMonitorViewModel(ServiceClientViewModel serviceClient)
@@ -38,6 +41,8 @@ namespace IMPLC.Monitor
                         }
                 }
             }
+
+            SelectedTab = DeviceTabs.FirstOrDefault();
         }
 
         private void ServiceClient_Disconnected()
