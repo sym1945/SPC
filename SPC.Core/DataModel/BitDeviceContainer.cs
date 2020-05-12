@@ -31,9 +31,12 @@
             {
                 try
                 {
-                    int offset = device.Offset;
+                    int offset = device.Address - devBlock.StartAddress;
                     int i = offset / 16;
                     int o = offset % 16;
+
+                    if (i >= devBlock.Buffer.Length || i < 0)
+                        continue;
 
                     device.Value = ((devBlock.Buffer[i] >> o & 0b00000001) == 0b00000001);
                 }
