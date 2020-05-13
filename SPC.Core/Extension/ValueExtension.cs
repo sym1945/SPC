@@ -14,7 +14,7 @@ namespace SPC.Core
             return (1 == ((value >> index) & 1));
         }
 
-        public static void SetBit(this short value, int index, bool bitValue)
+        public static short SetBit(this short value, int index, bool bitValue)
         {
             if (index < 0 || index > 15)
                 throw new ArgumentOutOfRangeException();
@@ -23,6 +23,8 @@ namespace SPC.Core
                 value |= (short)(1 << index);
             else
                 value &= (short)~(1 << index);
+
+            return value;
         }
 
         public static byte GetByte(this short value, int index)
@@ -35,7 +37,7 @@ namespace SPC.Core
             return (byte)((value >> shiftLength) & 0xFF);
         }
 
-        public static void SetByte(this short value, int index, byte byteValue)
+        public static short SetByte(this short value, int index, byte byteValue)
         {
             if (index < 0 || index > 1)
                 throw new ArgumentOutOfRangeException();
@@ -45,6 +47,8 @@ namespace SPC.Core
             value &= (short)~(0xFF << shiftLength);
 
             value |= (short)(byteValue << shiftLength);
+
+            return value;
         }
 
 
@@ -55,7 +59,7 @@ namespace SPC.Core
             
             foreach (var bit in value)
             {
-                shortValue.SetBit(++pos, bit);
+                shortValue = shortValue.SetBit(++pos, bit);
                 if (pos == 15)
                 {
                     yield return shortValue;
@@ -75,7 +79,7 @@ namespace SPC.Core
 
             foreach (var byteValue in value)
             {
-                shortValue.SetByte(++pos, byteValue);
+                shortValue = shortValue.SetByte(++pos, byteValue);
                 if (pos == 1)
                 {
                     yield return shortValue;

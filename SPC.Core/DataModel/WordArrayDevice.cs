@@ -26,7 +26,7 @@ namespace SPC.Core
             if (index >= _Length)
                 throw new ArgumentOutOfRangeException();
 
-            Array.Copy(_ReadValue.RawData, _WriteValue.RawData, 0);
+            Array.Copy(_ReadValue.RawData, _WriteValue.RawData, _Length);
             _WriteValue.RawData[index] = (short)value;
 
             WriteValue();
@@ -74,8 +74,9 @@ namespace SPC.Core
             var wordValueIndex = index / 2;
             var byteIndex = index % 2;
 
-            Array.Copy(_ReadValue.RawData, _WriteValue.RawData, 0);
-            _WriteValue.RawData[wordValueIndex].SetByte(byteIndex, value);
+            Array.Copy(_ReadValue.RawData, _WriteValue.RawData, _Length);
+            var newValue = _WriteValue.RawData[wordValueIndex].SetByte(byteIndex, value);
+            _WriteValue.RawData[wordValueIndex] = newValue;
 
             WriteValue();
         }
@@ -122,8 +123,9 @@ namespace SPC.Core
             var wordValueIndex = index / 16;
             var bitIndex = index % 16;
 
-            Array.Copy(_ReadValue.RawData, _WriteValue.RawData, 0);
-            _WriteValue.RawData[wordValueIndex].SetBit(bitIndex, value);
+            Array.Copy(_ReadValue.RawData, _WriteValue.RawData, _Length);
+            var newValue = _WriteValue.RawData[wordValueIndex].SetBit(bitIndex, value);
+            _WriteValue.RawData[wordValueIndex] = newValue;
 
             WriteValue();
         }
