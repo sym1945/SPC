@@ -75,6 +75,15 @@ namespace SPC.Core
             return PlcWatcher.Start();
         }
 
+        public bool Stop()
+        {
+            if (PlcWatcher == null)
+                return true;
+
+            PlcWatcher.Stop();
+            return true;
+        }
+
         private void PlcConnected()
         {
             // Do Something

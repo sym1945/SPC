@@ -7,75 +7,119 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <TabControl ItemsSource="{Binding DeviceTabs}">
-        <TabControl.ItemContainerStyle>
-            <Style TargetType="{x:Type TabItem}">
-                <Setter Property="Header" Value="{Binding TabHeader}"/>
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="50"/>
-                                </Grid.RowDefinitions>
+    <Grid>
+        <!-- Find Panel -->
+        <Border 
+            Margin="0 22 0 0"
+            Panel.ZIndex="1"
+            Width="200"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            BorderBrush="Gray"
+            BorderThickness="0.7"
+            Background="#F0F0F0">
 
-                                <!-- Device Page-->
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowFindPanel}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox 
+                    Grid.Column="0"
+                    VerticalAlignment="Stretch"
+                    Margin="10"
+                    local:IsFocusProperty.Value="{Binding ShowFindPanel}"
+                    Text="{Binding TargetDevice, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button 
+                    Grid.Column="1"
+                    Margin="0 10 10 10"
+                    Content="FIND"
+                    IsDefault="True"
+                    Command="{Binding FindDeviceCommand}"/>
+
+            </Grid>
+        </Border>
+        
+        <!-- Device Monitor Tab -->
+        <TabControl 
+            SelectedItem="{Binding SelectedTab}"
+            ItemsSource="{Binding DeviceTabs}">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Header" Value="{Binding TabHeader}"/>
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
 
-                                    <local:DeviceMonitorPage 
-                                            Grid.Column="0"
-                                            DataContext="{Binding FirstPage}"/>
-                                    <local:DeviceMonitorPage 
-                                            Grid.Column="1"
-                                            DataContext="{Binding SecondPage}"/>
-                                    <local:DeviceMonitorPage 
-                                            Grid.Column="2"
-                                            DataContext="{Binding ThirdPage}"/>
-                                    <local:DeviceMonitorPage 
-                                            Grid.Column="3"
-                                            DataContext="{Binding LastPage}"/>
-                                </Grid>
+                                    <!-- Device Page-->
+                                    <ItemsControl ItemsSource="{Binding ViewingPages}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="{Binding PageCountPerScreen}"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
 
-                                <!-- Page Controller -->
-                                <Border Grid.Row="1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <local:DeviceMonitorPage />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
 
-                                        <Button Grid.Column="0" Content="◀◀"/>
-                                        <Button Grid.Column="1" Content="◀" Command="{Binding PrevPageCommand}"/>
+                                    <!-- Page Controller -->
+                                    <Border Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <TextBlock 
+                                            <Button Grid.Column="0" Content="◀◀" Command="{Binding PrevScreenCommand}"/>
+                                            <Button Grid.Column="1" Content="◀" Command="{Binding PrevPageCommand}"/>
+
+                                            <TextBlock 
                                             Grid.Column="2"
                                             VerticalAlignment="Center"
                                             TextAlignment="Center">
                                             <Run Text="{Binding CurrentPage, FallbackValue=1}"/>
                                             <Run Text="/"/>
                                             <Run Text="{Binding TotalPageCount, FallbackValue=1}"/>
-                                        </TextBlock>
+                                            </TextBlock>
 
-                                        <Button Grid.Column="3" Content="▶" Command="{Binding NextPageCommand}"/>
-                                        <Button Grid.Column="4" Content="▶▶"/>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </TabControl.ItemContainerStyle>
-    </TabControl>
+                                            <Button Grid.Column="3" Content="▶" Command="{Binding NextPageCommand}"/>
+                                            <Button Grid.Column="4" Content="▶▶" Command="{Binding NextScreenCommand}"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>
+    </Grid>
+
 
 </UserControl>

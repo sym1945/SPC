@@ -140,6 +140,8 @@ namespace SPC.Core
                 _RunningThread.Join();
                 _RunningThread = null;
             }
+
+            Comm?.Close();
         }
 
         public PlcReadBlock GetReadBlock(int key)

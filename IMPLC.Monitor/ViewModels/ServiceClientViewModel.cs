@@ -10,6 +10,8 @@ namespace IMPLC.Monitor
 
         public string Uri { get; set; } = @"ipc://localhost:9090";
 
+        public bool IsRunning { get; set; }
+
         public ICommand ConnectStart
         {
             get => new CommandBase
@@ -23,6 +25,7 @@ namespace IMPLC.Monitor
 
                     if (_SpcHandler.Start())
                     {
+                        IsRunning = true;
                         OnConnected(_SpcHandler.DeviceManager);
                     }
                     else
@@ -39,8 +42,15 @@ namespace IMPLC.Monitor
             get => new CommandBase
             {
                 ExecuteAction = (param) => 
-                { 
-                    // client Disconnect;
+                {
+                    if (_SpcHandler != null)
+                    {
+                        if (_SpcHandler.Stop())
+                        {
+                            IsRunning = false;
+                            OnDisconnected();
+                        }   
+                    }
                 }
             };
         }

@@ -29,8 +29,11 @@
             BorderThickness="0.5"
             Padding="10 5">
             <TextBox 
+                BorderThickness="0"
                 VerticalAlignment="Center"
-                Text="{Binding Value, FallbackValue=0}"/>
+                local:SelectAllProperty.Value="{Binding IsFocused, RelativeSource={RelativeSource Self}}"
+                Text="{Binding Value, FallbackValue=0}">
+            </TextBox>
 
             <Border.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding}"/>

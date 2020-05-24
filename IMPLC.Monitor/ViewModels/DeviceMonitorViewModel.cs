@@ -1,15 +1,79 @@
 ﻿using SPC.Core;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace IMPLC.Monitor
 {
-    public class DeviceMonitorViewModel
+    public class DeviceMonitorViewModel : ViewModelBase
     {
+        #region Public Properties
+
         public ObservableCollection<DeviceMonitorTabViewModel> DeviceTabs { get; private set; }
 
         public DeviceMonitorTabViewModel SelectedTab { get; set; }
 
+        public bool ShowFindPanel { get; set; }
+
+        public string TargetDevice { get; set; }
+
+        #endregion
+
+
+        #region Commands
+
+        public ICommand ShowFindPanelCommand
+        {
+            get => new CommandBase
+            {
+                CanExecuteFunction = (param) => DeviceTabs.Count > 0,
+                ExecuteAction = (param) =>
+                {
+                    ShowFindPanel = true;
+                }
+            };
+        }
+
+        public ICommand HideFindPanelCommand
+        {
+            get => new CommandBase
+            {
+                ExecuteAction = (param) =>
+                {
+                    ShowFindPanel = false;
+                    TargetDevice = string.Empty;
+                }
+            };
+        }
+
+        public ICommand FindDeviceCommand
+        {
+            get => new CommandBase
+            {
+                ExecuteAction = (param) =>
+                {
+                    var deviceAddress = DeviceHelper.ConvertDeviceText(TargetDevice);
+                    if (deviceAddress != null)
+                    {
+                        DeviceBase findDevice = null;
+                        var foundTab = DeviceTabs.FirstOrDefault(tab => tab.FindDevice(deviceAddress, out findDevice));
+                        if (foundTab != null)
+                        {
+                            SelectedTab = foundTab;
+                            foundTab.GoToDevice(findDevice);
+                        }
+                    }
+
+                    ShowFindPanel = false;
+                    TargetDevice = string.Empty;
+                }
+            };
+        }
+
+        #endregion
+
+
+        #region Constructor
 
         public DeviceMonitorViewModel(ServiceClientViewModel serviceClient)
         {
@@ -19,6 +83,10 @@ namespace IMPLC.Monitor
 
         }
 
+        #endregion
+
+
+        #region Event Callback
         private void ServiceClient_Connected(DeviceManager devManager)
         {
             DeviceTabs.Clear();
@@ -47,10 +115,10 @@ namespace IMPLC.Monitor
 
         private void ServiceClient_Disconnected()
         {
-            
-        }
+            DeviceTabs.Clear();
+        } 
+        #endregion
 
-        
     }
 
 }

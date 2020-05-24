@@ -4,8 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMPLC.Monitor"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="MainWindow" Height="590" Width="800">
+        Title="IMPLC Device Monitor" Height="590" Width="800">
+
+    <Window.InputBindings>
+        <KeyBinding 
+            Key="F"
+            Modifiers="Ctrl"
+            Command="{Binding DeviceMonitorViewModel.ShowFindPanelCommand}">
+        </KeyBinding>
+
+        <KeyBinding
+            Key="Esc"
+            Command="{Binding DeviceMonitorViewModel.HideFindPanelCommand}"/>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>

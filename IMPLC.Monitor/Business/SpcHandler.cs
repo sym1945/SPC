@@ -8,7 +8,7 @@ namespace IMPLC.Monitor
 {
     public class SpcHandler : SPCBase
     {
-        private Implc _Implc;
+        private readonly Implc _Implc;
 
         public SpcHandler(Implc plcComm) : base(plcComm)
         {
