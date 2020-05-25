@@ -40,7 +40,7 @@ namespace SPC.Core
             foreach (WordDevice device in this)
             {
                 bool isChanged = false;
-                var offset = device.Offset;
+                var offset = device.Address - devBlock.StartAddress;
                 var length = device.Length;
 
                 try
