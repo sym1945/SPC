@@ -3,19 +3,19 @@ using System.Linq;
 
 namespace SPC.Core
 {
-    public class WordDeviceContainer : DeviceContainer<WordDevice>
+    public class WordDeviceContainer : SpcDeviceContainer<WordDevice>
     {
+        #region Counstructor
+
         public WordDeviceContainer()
         {
-            DeviceType = eDeviceType.Word;
+            DeviceType = EDeviceType.Word;
         }
-        public WordDeviceContainer(eDevice device, short startAddress, string key, int readBlockKey) : this()
-        {
-            Device = device;
-            StartAddress = startAddress;
-            Key = key;
-            ReadBlockKey = readBlockKey;
-        }
+
+        #endregion
+
+
+        #region Public Methods
 
         public void BatchWrite()
         {
@@ -35,7 +35,7 @@ namespace SPC.Core
         }
 
 
-        public override void AfterRead(PlcReadBlock devBlock)
+        public override void AfterRead(DeviceReadBlock devBlock)
         {
             foreach (WordDevice device in this)
             {
@@ -47,9 +47,9 @@ namespace SPC.Core
                 {
                     for (int i = 0, j = offset; i < length; i++, j++)
                     {
-                        if (devBlock.Buffer[j] != device.RawData[i])
+                        if (devBlock.Buffer[j] != device.ReadBufferData[i])
                         {
-                            Array.Copy(devBlock.Buffer, offset, device.RawData, 0, length);
+                            Array.Copy(devBlock.Buffer, offset, device.ReadBufferData, 0, length);
                             isChanged = true;
                             break;
                         }
@@ -65,7 +65,9 @@ namespace SPC.Core
                     //TODO: todo Something
                 }
             }
-        }
+        } 
+
+        #endregion
 
     }
 }

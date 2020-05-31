@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace SPC.Core
 {
@@ -8,5 +9,18 @@ namespace SPC.Core
         {
             
         }
+
+        public static async Task<bool> WaitAsync(this Task task, int millisecond)
+        {
+            bool ret = false;
+
+            await Task.Run(() =>
+            {
+                ret= task.Wait(millisecond);
+            });
+
+            return ret;
+        }
+
     }
 }

@@ -56,11 +56,11 @@ namespace IMPLC.Monitor
         }
 
 
-        public event Action<DeviceManager> Connected;
+        public event Action<SpcDeviceManager> Connected;
 
         public event Action Disconnected;
 
-        protected void OnConnected(DeviceManager devManager)
+        protected void OnConnected(SpcDeviceManager devManager)
         {
             Connected?.Invoke(devManager);
         }

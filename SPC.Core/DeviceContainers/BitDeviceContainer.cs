@@ -1,19 +1,18 @@
 ﻿namespace SPC.Core
 {
-    public class BitDeviceContainer : DeviceContainer<BitDevice>
+    public class BitDeviceContainer : SpcDeviceContainer<BitDevice>
     {
+        #region Constructor
+
         public BitDeviceContainer()
         {
-            DeviceType = eDeviceType.Bit;
-        }
-        public BitDeviceContainer(eDevice device, short startAddress, string key, int readBlockKey) : this()
-        {
-            Device = device;
-            StartAddress = startAddress;
-            Key = key;
-            ReadBlockKey = readBlockKey;
+            DeviceType = EDeviceType.Bit;
         }
 
+        #endregion
+
+
+        #region Public Methods
 
         public void SetValue(string key, bool value)
         {
@@ -24,8 +23,7 @@
             dev.WriteValue(value);
         }
 
-
-        public override void AfterRead(PlcReadBlock devBlock)
+        public override void AfterRead(DeviceReadBlock devBlock)
         {
             foreach (BitDevice device in this)
             {
@@ -38,14 +36,17 @@
                     if (i >= devBlock.Buffer.Length || i < 0)
                         continue;
 
-                    device.Value = ((devBlock.Buffer[i] >> o & 0b00000001) == 0b00000001);
+                    var newValue = devBlock.Buffer[i].GetBit(o);
+                    device.UpdateValue(newValue);
                 }
                 catch
                 {
                     // TODO: todo Something
                 }
             }
-        }
+        } 
+
+        #endregion
 
     }
 }

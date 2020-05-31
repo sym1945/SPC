@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace SPC.Core
 {
-    public class PlcCommandManager : PlcCommandManagerBase
+    public class SpcCommandManager : PlcCommandManagerBase
     {
         public void SetUp(Assembly assembly)
         {

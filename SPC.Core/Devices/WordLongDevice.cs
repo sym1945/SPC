@@ -4,8 +4,13 @@
     {
         public override long Value
         {
-            get => Functions.WordToInt64(RawData);
+            get => Functions.WordToInt64(ReadBufferData);
             set => WriteValue(value);
+        }
+
+        public WordLongDevice()
+        {
+            Length = 4;
         }
 
         public override void WriteValue(long value)

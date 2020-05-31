@@ -6,11 +6,11 @@ namespace IMPLC.Monitor
 {
     public class DeviceMonitorPageViewModel
     {
-        public ObservableCollection<DeviceBase> Devices { get; private set; }
+        public ObservableCollection<SpcDeviceBase> Devices { get; private set; }
 
-        public DeviceMonitorPageViewModel(IEnumerable<DeviceBase> devices)
+        public DeviceMonitorPageViewModel(IEnumerable<SpcDeviceBase> devices)
         {
-            Devices = new ObservableCollection<DeviceBase>(devices);
+            Devices = new ObservableCollection<SpcDeviceBase>(devices);
         }       
     }
 }

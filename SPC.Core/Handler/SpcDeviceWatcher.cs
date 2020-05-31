@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace SPC.Core
 {
-    public class PlcWatcher : ICollection<PlcReadBlock>
+    public class SpcDeviceWatcher : ICollection<DeviceReadBlock>
     {
         #region Constant
 
@@ -19,14 +19,14 @@ namespace SPC.Core
 
         private bool _IsRunning = false;
         private Thread _RunningThread = null;
-        private List<PlcReadBlock> _ReadBlocks = new List<PlcReadBlock>();
+        private readonly List<DeviceReadBlock> _ReadBlocks = new List<DeviceReadBlock>();
 
         #endregion
 
 
         #region Internal Properties
 
-        internal PlcComm Comm { get; set; }
+        internal SpcCommunication Comm { get; set; }
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace SPC.Core
 
         #region Constructor
 
-        public PlcWatcher()
+        public SpcDeviceWatcher()
         {
         }
 
@@ -144,13 +144,13 @@ namespace SPC.Core
             Comm?.Close();
         }
 
-        public PlcReadBlock GetReadBlock(int key)
+        public DeviceReadBlock GetReadBlock(string key)
         {
             return _ReadBlocks.FirstOrDefault(block => block.Key == key);
         }
 
 
-        public void Add(PlcReadBlock item)
+        public void Add(DeviceReadBlock item)
         {
             lock (_ReadBlocks)
             {
@@ -158,7 +158,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Remove(PlcReadBlock item)
+        public bool Remove(DeviceReadBlock item)
         {
             lock (_ReadBlocks)
             {
@@ -181,7 +181,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Contains(PlcReadBlock item)
+        public bool Contains(DeviceReadBlock item)
         {
             lock (_ReadBlocks)
             {
@@ -189,7 +189,7 @@ namespace SPC.Core
             }
         }
 
-        public void CopyTo(PlcReadBlock[] array, int arrayIndex)
+        public void CopyTo(DeviceReadBlock[] array, int arrayIndex)
         {
             lock (_ReadBlocks)
             {
@@ -199,7 +199,7 @@ namespace SPC.Core
 
 
 
-        public IEnumerator<PlcReadBlock> GetEnumerator()
+        public IEnumerator<DeviceReadBlock> GetEnumerator()
         {
             return _ReadBlocks.GetEnumerator();
         }

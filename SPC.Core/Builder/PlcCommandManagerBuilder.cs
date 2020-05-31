@@ -20,13 +20,13 @@ namespace SPC.Core
             return this;
         }
 
-        public PlcCommandManager Build()
+        public SpcCommandManager Build()
         {
             var plcCommands = _PlcCommandTypes
                 .Select(commandType => PlcCommandFactory.Make(commandType))
                 .ToList();
 
-            var plcCommandManager = new PlcCommandManager();
+            var plcCommandManager = new SpcCommandManager();
 
             foreach (var plcCommand in plcCommands)
             {

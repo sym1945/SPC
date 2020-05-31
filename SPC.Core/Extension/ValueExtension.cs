@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace SPC.Core
 {
@@ -56,7 +57,7 @@ namespace SPC.Core
         {
             int pos = -1;
             short shortValue = 0;
-            
+
             foreach (var bit in value)
             {
                 shortValue = shortValue.SetBit(++pos, bit);
@@ -95,6 +96,33 @@ namespace SPC.Core
         public static IEnumerable<short> ToShort(this IEnumerable<ushort> value)
         {
             return value.Select(d => (short)d);
+        }
+
+        public static string ToAscii(this IEnumerable<short> values, bool doSwap = true)
+        {
+            var ret = new StringBuilder();
+
+            foreach (short value in values)
+            {
+                char high = Convert.ToChar((value >> 8) & 0xFF);
+                char low = Convert.ToChar(value & 0xFF);
+                high = (high == char.MinValue) ? ' ' : high;
+                low = (low == char.MinValue) ? ' ' : low;
+
+                if (doSwap)
+                {
+                    ret.Append(low);
+                    ret.Append(high);
+                }
+                else
+                {
+                    ret.Append(high);
+                    ret.Append(low);
+                }
+            }
+
+            return ret.ToString();
+
         }
 
     }

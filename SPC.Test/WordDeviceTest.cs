@@ -20,7 +20,7 @@ namespace SPC.Test
                     0x4241,
                     0x4443
                 },
-                wordDev.WriteData);
+                wordDev.WriteBufferData);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace SPC.Test
                 {
                     short.MinValue
                 },
-                wordDev.WriteData);
+                wordDev.WriteBufferData);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace SPC.Test
                     {
                         (short)ushort.MaxValue
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -68,7 +68,7 @@ namespace SPC.Test
                         0x0000,
                         (short)0x8000
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -86,7 +86,7 @@ namespace SPC.Test
                         (short)0xFFFF,
                         (short)0xFFFF
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -106,7 +106,7 @@ namespace SPC.Test
                         (short)0x0000,
                         (short)0x8000
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -126,7 +126,7 @@ namespace SPC.Test
                         (short)0xFFFF,
                         (short)0xFFFF
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -145,7 +145,7 @@ namespace SPC.Test
                         (short)0xFFFF,
                         (short)0xFF7F,
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -166,7 +166,7 @@ namespace SPC.Test
                         (short)0xFFFF,
                         (short)0x7FEF,
                     },
-                    wordDev.WriteData);
+                    wordDev.WriteBufferData);
             }
         }
 
@@ -182,7 +182,7 @@ namespace SPC.Test
             var wordDev = new WordBoolArrayDevice { Length = 2 };
             wordDev.Value = writeBits;
 
-            CollectionAssert.AreEqual(writeBits.ToShort().ToList(), wordDev.WriteData);
+            CollectionAssert.AreEqual(writeBits.ToShort().ToList(), wordDev.WriteBufferData);
 
             wordDev.SetValue(1, true);
             writeBits[1] = true;
@@ -190,7 +190,7 @@ namespace SPC.Test
             wordDev.SetValue(17, false);
             writeBits[17] = false;
 
-            CollectionAssert.AreEqual(writeBits.ToShort().ToList(), wordDev.WriteData);
+            CollectionAssert.AreEqual(writeBits.ToShort().ToList(), wordDev.WriteBufferData);
         }
 
         [TestMethod]
@@ -205,7 +205,7 @@ namespace SPC.Test
             var wordDev = new WordByteArrayDevice { Length = 2 };
             wordDev.Value = wrtieBytes;
 
-            CollectionAssert.AreEqual(wrtieBytes.ToShort().ToList(), wordDev.WriteData);
+            CollectionAssert.AreEqual(wrtieBytes.ToShort().ToList(), wordDev.WriteBufferData);
 
             wordDev.SetValue(1, 127);
             wrtieBytes[1] = 127;
@@ -213,7 +213,7 @@ namespace SPC.Test
             wordDev.SetValue(3, 95);
             wrtieBytes[3] = 95;
 
-            CollectionAssert.AreEqual(wrtieBytes.ToShort().ToList(), wordDev.WriteData);
+            CollectionAssert.AreEqual(wrtieBytes.ToShort().ToList(), wordDev.WriteBufferData);
         }
 
         [TestMethod]
@@ -228,7 +228,7 @@ namespace SPC.Test
             var wordDev = new WordUShortArrayDevice { Length = 2 };
             wordDev.Value = wrtieUshorts;
 
-            CollectionAssert.AreEqual(wrtieUshorts.ToShort().ToList(), wordDev.WriteData);
+            CollectionAssert.AreEqual(wrtieUshorts.ToShort().ToList(), wordDev.WriteBufferData);
 
             wordDev.SetValue(0, 100);
             wrtieUshorts[0] = 100;
@@ -236,7 +236,7 @@ namespace SPC.Test
             wordDev.SetValue(1, 3000);
             wrtieUshorts[1] = 3000;
 
-            CollectionAssert.AreEqual(wrtieUshorts.ToShort().ToList(), wordDev.WriteData);
+            CollectionAssert.AreEqual(wrtieUshorts.ToShort().ToList(), wordDev.WriteBufferData);
         }
 
     }

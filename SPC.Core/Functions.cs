@@ -173,118 +173,6 @@ namespace SPC.Core
                 return new short[0];
             }
         }
-        public static string WordToString(bool _bswap, params short[] words)
-        {
-            try
-            {
-                return (_bswap) ? WordToString_Swap(words) : WordToString_Nonswap(words);
-            }
-            catch (Exception ex)
-            {
-                //Log.WriteLog(eLogType.Error, ex.ToString());
-                return "";
-            }
-        }
-        public static string WordToString_Swap(params short[] words)
-        {
-            try
-            {
-                StringBuilder ret = new StringBuilder();
-
-                for (int i = 0; i < words.Length; i++)
-                {
-                    char high = Convert.ToChar((words[i] >> 8) & 0xFF);
-                    char low = Convert.ToChar(words[i] & 0xFF);
-                    high = (high == char.MinValue) ? ' ' : high;
-                    low = (low == char.MinValue) ? ' ' : low;
-
-                    ret.Append(low);
-                    ret.Append(high);
-                }
-
-                return ret.ToString();
-            }
-            catch (Exception ex)
-            {
-                //Log.WriteLog(eLogType.Error, ex.ToString());
-                return "";
-            }
-        }
-        public static string WordToString_Swap(IEnumerable<short> words)
-        {
-            try
-            {
-                StringBuilder ret = new StringBuilder();
-
-                foreach (short word in words)
-                {
-                    char high = Convert.ToChar((word >> 8) & 0xFF);
-                    char low = Convert.ToChar(word & 0xFF);
-                    high = (high == char.MinValue) ? ' ' : high;
-                    low = (low == char.MinValue) ? ' ' : low;
-
-                    ret.Append(low);
-                    ret.Append(high);
-                }
-                return ret.ToString();
-            }
-            catch (Exception ex)
-            {
-                //Log.WriteLog(eLogType.Error, ex.ToString());
-                return "";
-            }
-        }
-        public static string WordToString_Nonswap(params short[] words)
-        {
-            try
-            {
-                StringBuilder ret = new StringBuilder();
-
-                for (int i = 0; i < words.Length; i++)
-                {
-                    char high = Convert.ToChar((words[i] >> 8) & 0xFF);
-                    char low = Convert.ToChar(words[i] & 0xFF);
-                    high = (high == char.MinValue) ? ' ' : high;
-                    low = (low == char.MinValue) ? ' ' : low;
-
-                    ret.Append(high);
-                    ret.Append(low);
-                }
-
-                return ret.ToString();
-            }
-            catch (Exception ex)
-            {
-                //Log.WriteLog(eLogType.Error, ex.ToString());
-                return "";
-            }
-        }
-        public static string WordToString_Nonswap(IEnumerable<short> words)
-        {
-            try
-            {
-                StringBuilder ret = new StringBuilder();
-
-                foreach (short word in words)
-                {
-                    char high = Convert.ToChar((word >> 8) & 0xFF);
-                    char low = Convert.ToChar(word & 0xFF);
-                    high = (high == char.MinValue) ? ' ' : high;
-                    low = (low == char.MinValue) ? ' ' : low;
-
-                    ret.Append(high);
-                    ret.Append(low);
-                }
-
-                return ret.ToString();
-            }
-            catch (Exception ex)
-            {
-                //Log.WriteLog(eLogType.Error, ex.ToString());
-                return "";
-            }
-        }
-
 
         public static short BitToWord(bool[] bits)
         {
@@ -421,7 +309,7 @@ namespace SPC.Core
         {
             if (words.Count() < 2)
             {
-                return default(Int32);
+                return default;
             }
 
             return BitConverter.ToInt32(WordToBytes(words), 0);
@@ -430,7 +318,7 @@ namespace SPC.Core
         {
             if (words.Count() < 2)
             {
-                return default(UInt32);
+                return default;
             }
 
             return BitConverter.ToUInt32(WordToBytes(words), 0);
@@ -440,7 +328,7 @@ namespace SPC.Core
         {
             if (words.Count() < 4)
             {
-                return default(Int64);
+                return default;
             }
 
             return BitConverter.ToInt64(WordToBytes(words), 0);
@@ -449,7 +337,7 @@ namespace SPC.Core
         {
             if (words.Count() < 4)
             {
-                return default(UInt64);
+                return default;
             }
 
             return BitConverter.ToUInt64(WordToBytes(words), 0);
@@ -459,7 +347,7 @@ namespace SPC.Core
         {
             if (words.Count() < 2)
             {
-                return default(Single);
+                return default;
             }
 
             return BitConverter.ToSingle(WordToBytes(words), 0);
@@ -468,7 +356,7 @@ namespace SPC.Core
         {
             if (words.Count() < 4)
             {
-                return default(Double);
+                return default;
             }
 
             return BitConverter.ToDouble(WordToBytes(words), 0);
@@ -500,7 +388,7 @@ namespace SPC.Core
         }
 
 
-        public static string DecToHexString(eDevice dev, ushort addr) => $"{dev}{addr:X4}";
+        public static string DecToHexString(EDevice dev, ushort addr) => $"{dev}{addr:X4}";
 
 
         public static bool GetBit(short num, int index) => (num & (1 << index)) != 0;

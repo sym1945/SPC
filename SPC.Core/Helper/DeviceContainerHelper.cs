@@ -9,7 +9,7 @@ namespace SPC.Core
         {
             var orderByAddress = wordContainer.OfType<WordDevice>().OrderBy(d => d.Address);
             var firstDev = orderByAddress.FirstOrDefault();
-            var writeValue = new List<short>(firstDev.WriteData);
+            var writeValue = new List<short>(firstDev.WriteBufferData);
 
             foreach (var afterDev in orderByAddress.Skip(1))
             {
@@ -25,7 +25,7 @@ namespace SPC.Core
                     writeValue.AddRange(new short[difference * -1]);
                 }
 
-                writeValue.AddRange(afterDev.WriteData);
+                writeValue.AddRange(afterDev.WriteBufferData);
             }
 
             return writeValue;

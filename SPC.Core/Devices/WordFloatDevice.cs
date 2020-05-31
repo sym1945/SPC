@@ -4,8 +4,13 @@
     {
         public override float Value
         {
-            get => Functions.WordToSingle(RawData);
+            get => Functions.WordToSingle(ReadBufferData);
             set => WriteValue(value);
+        }
+
+        public WordFloatDevice()
+        {
+            Length = 2;
         }
 
         public override void WriteValue(float value)

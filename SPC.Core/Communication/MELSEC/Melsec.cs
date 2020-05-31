@@ -3,7 +3,7 @@
 namespace SPC.Core
 {
     [Serializable]
-    public class Melsec : PlcComm
+    public class Melsec : SpcCommunication
     {
         #region Private Members
 
@@ -14,7 +14,7 @@ namespace SPC.Core
 
         #region Public Properties
 
-        public eChannel Channel { get; private set; } = eChannel.CCLINK_IE_CTRLER_1;
+        public EChannel Channel { get; private set; } = EChannel.CCLINK_IE_CTRLER_1;
 
         public short StationNo { get; private set; } = 255;
 
@@ -27,7 +27,7 @@ namespace SPC.Core
         public Melsec()
         {
         }
-        public Melsec(eChannel channel, short station, short mode) : this()
+        public Melsec(EChannel channel, short station, short mode) : this()
         {
             Channel = channel;
             StationNo = station;
@@ -59,25 +59,27 @@ namespace SPC.Core
             return ret;
         }
 
-        public override short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf)
+        public override short BlockWrite(EDevice device, int deviceNo, int size, ref short[] buf)
         {
-            size = (short)(size * 2);
-            var ret = MelsecFunction.mdSend(_Path, StationNo, (short)device, deviceNo, ref size, ref buf[0]);
+            short ssize = (short)(size * 2);
+            
+            var ret = MelsecFunction.mdSend(_Path, StationNo, (short)device, (short)deviceNo, ref ssize, ref buf[0]);
             return ret;
         }
 
-        public override short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf)
+        public override short BlockRead(EDevice device, int deviceNo, int size, ref short[] buf)
         {
-            size = (short)(size * 2);
-            var ret = MelsecFunction.mdReceive(_Path, StationNo, (short)device, deviceNo, ref size, ref buf[0]);
+            short ssize = (short)(size * 2);
+
+            var ret = MelsecFunction.mdReceive(_Path, StationNo, (short)device, (short)deviceNo, ref ssize, ref buf[0]);
             return ret;
         }
 
-        public override short SetBit(eDevice device, short devno, bool set)
+        public override short SetBit(EDevice device, int devno, bool set)
         {
             return set
-                ? MelsecFunction.mdDevSet(_Path, StationNo, (short)device, devno)
-                : MelsecFunction.mdDevRst(_Path, StationNo, (short)device, devno);
+                ? MelsecFunction.mdDevSet(_Path, StationNo, (short)device, (short)devno)
+                : MelsecFunction.mdDevRst(_Path, StationNo, (short)device, (short)devno);
         } 
         #endregion
     }

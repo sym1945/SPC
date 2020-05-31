@@ -38,7 +38,7 @@ namespace SPC.Test
             var writeValue = DeviceContainerHelper.GetBatchWriteValues(wordDevContainer);
 
 
-            List<short> expectedValue = null;
+            List<short> expectedValue;
             unchecked
             {
                 expectedValue = new List<short> 

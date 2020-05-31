@@ -2,7 +2,7 @@
 {
     public class WordReadWriteInfo : DeviceReadWriteInfo
     {
-        public short Size { get; set; }
+        public int Size { get; set; }
         public short[] Value;
     }
 }

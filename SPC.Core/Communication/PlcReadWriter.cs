@@ -2,10 +2,10 @@
 {
     public sealed class PlcReadWriter
     {
-        private PlcComm _Comm;
+        private SpcCommunication _Comm;
 
 
-        public PlcReadWriter(PlcComm comm)
+        public PlcReadWriter(SpcCommunication comm)
         {
             _Comm = comm;
         }

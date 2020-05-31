@@ -15,7 +15,7 @@ namespace SampleEqp
             _Eqp.ProcessDone += Equipment_ProcessDone;
         }
 
-        public override PlcCommandManager BuildPlcCommandManger()
+        public override SpcCommandManager BuildPlcCommandManger()
         {
             return new PlcCommandManagerBuilder()
                 .AddPlcCommand<GlassLoadCommand>()
@@ -24,12 +24,12 @@ namespace SampleEqp
                 .Build();
         }
 
-        public override PlcWatcher BuildPlcWatcher()
+        public override SpcDeviceWatcher BuildPlcWatcher()
         {
             return PlcWatcherFactory.Make();
         }
 
-        public override DeviceManager BuildDeviceManager()
+        public override SpcDeviceManager BuildDeviceManager()
         {
             return DeviceManagerFactory.Make();
         }

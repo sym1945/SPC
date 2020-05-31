@@ -2,7 +2,7 @@
 {
     public abstract class DeviceReadWriteInfo
     {
-        public eDevice Device { get; set; }
-        public short Address { get; set; }
+        public EDevice Device { get; set; }
+        public int Address { get; set; }
     }
 }

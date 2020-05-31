@@ -4,21 +4,30 @@ using System.Windows.Input;
 
 namespace SPC.Core
 {
-    public abstract class DeviceBase : INotifyPropertyChanged, ICommand
+    public abstract class SpcDeviceBase : INotifyPropertyChanged, ICommand
     {
         #region Public Properties
 
-        public string FullAddress => $"{Device}{Address:X4}";
+        public string FullAddress
+        {
+            get
+            {
+                if (Address > ushort.MaxValue)
+                    return $"{Device}{Address:X8}";
+                else
+                    return $"{Device}{Address:X4}";
+            }
+        }
 
-        public eDevice Device { get; set; }
+        public EDevice Device { get; set; }
 
-        public eDeviceType DeviceType { get; set; }
+        public EDeviceType DeviceType { get; set; }
 
         public string Key { get; set; }
 
-        public short Address { get; set; }
+        public int Address { get; set; }
 
-        public short Offset { get; set; }
+        public int Offset { get; set; }
 
         public string Desc { get; set; }
 
@@ -60,6 +69,8 @@ namespace SPC.Core
         }
 
         public abstract void Execute(object parameter = null);
+
+        public virtual void OnValueChanged() { }
 
         #endregion
 

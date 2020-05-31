@@ -2,46 +2,7 @@
 
 namespace SPC.Core
 {
-    public enum eChannel : short
-    {
-        [Description("MELSECNET/H-1")]
-        MELSECNET_H_1 = 51,
-        [Description("MELSECNET/H-2")]
-        MELSECNET_H_2 = 52,
-        [Description("MELSECNET/H-3")]
-        MELSECNET_H_3 = 53,
-        [Description("MELSECNET/H-4")]
-        MELSECNET_H_4 = 54,
-
-        [Description("CC-Link-1")]
-        CCLINK_1 = 81,
-        [Description("CC-Link-2")]
-        CCLINK_2 = 82,
-        [Description("CC-Link-3")]
-        CCLINK_3 = 83,
-        [Description("CC-Link-4")]
-        CCLINK_4 = 84,
-
-        [Description("CC-Link IE Controller-1")]
-        CCLINK_IE_CTRLER_1 = 151,
-        [Description("CC-Link IE Controller-2")]
-        CCLINK_IE_CTRLER_2 = 152,
-        [Description("CC-Link IE Controller-3")]
-        CCLINK_IE_CTRLER_3 = 153,
-        [Description("CC-Link IE Controller-4")]
-        CCLINK_IE_CTRLER_4 = 154,
-
-        [Description("CC-Link IE Field-1")]
-        CCLINK_IE_FIELD_1 = 181,
-        [Description("CC-Link IE Field-2")]
-        CCLINK_IE_FIELD_2 = 182,
-        [Description("CC-Link IE Field-3")]
-        CCLINK_IE_FIELD_3 = 183,
-        [Description("CC-Link IE Field-4")]
-        CCLINK_IE_FIELD_4 = 184,
-    }
-
-    public enum eDeviceType
+    public enum EDeviceType
     {
         [Description("BIT")]
         Bit,
@@ -49,7 +10,7 @@ namespace SPC.Core
         Word
     }
 
-    public enum eDevice
+    public enum EDevice
     {
         [Description("INPUT")]
         X = 1,
@@ -88,15 +49,7 @@ namespace SPC.Core
         W = 24,
     }
 
-    public enum eDeviceUseType
-    {
-        [Description("STATUS")]
-        Status,
-        [Description("INTERFACE")]
-        Interface,
-    }
-
-    public enum eValueType
+    public enum EValueType
     {
         [Description("BOOLEAN")]
         Bool,
@@ -112,20 +65,43 @@ namespace SPC.Core
         Ascii,
     }
 
-    public enum eValueDisplayMode
+    public enum EChannel : short
     {
-        ASCII,
-        DEC,
-        HEX,
+        [Description("MELSECNET/H-1")]
+        MELSECNET_H_1 = 51,
+        [Description("MELSECNET/H-2")]
+        MELSECNET_H_2 = 52,
+        [Description("MELSECNET/H-3")]
+        MELSECNET_H_3 = 53,
+        [Description("MELSECNET/H-4")]
+        MELSECNET_H_4 = 54,
+
+        [Description("CC-Link-1")]
+        CCLINK_1 = 81,
+        [Description("CC-Link-2")]
+        CCLINK_2 = 82,
+        [Description("CC-Link-3")]
+        CCLINK_3 = 83,
+        [Description("CC-Link-4")]
+        CCLINK_4 = 84,
+
+        [Description("CC-Link IE Controller-1")]
+        CCLINK_IE_CTRLER_1 = 151,
+        [Description("CC-Link IE Controller-2")]
+        CCLINK_IE_CTRLER_2 = 152,
+        [Description("CC-Link IE Controller-3")]
+        CCLINK_IE_CTRLER_3 = 153,
+        [Description("CC-Link IE Controller-4")]
+        CCLINK_IE_CTRLER_4 = 154,
+
+        [Description("CC-Link IE Field-1")]
+        CCLINK_IE_FIELD_1 = 181,
+        [Description("CC-Link IE Field-2")]
+        CCLINK_IE_FIELD_2 = 182,
+        [Description("CC-Link IE Field-3")]
+        CCLINK_IE_FIELD_3 = 183,
+        [Description("CC-Link IE Field-4")]
+        CCLINK_IE_FIELD_4 = 184,
     }
-
-    public enum CommandTrigger
-    {
-        Change,
-        BitOn,
-        BitOff,
-    }
-
-
 
 }

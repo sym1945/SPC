@@ -4,8 +4,13 @@
     {
         public override ushort Value
         {
-            get => (ushort)RawData[0];
+            get => (ushort)ReadBufferData[0];
             set => WriteValue(value);
+        }
+
+        public WordUShortDevice()
+        {
+            Length = 1;
         }
 
         public override void WriteValue(ushort value)

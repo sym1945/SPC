@@ -2,7 +2,7 @@
 
 namespace SPC.Core
 {
-    public abstract class PlcComm : IPlcComm
+    public abstract class SpcCommunication : IPlcComm
     {
 
         #region Private Members
@@ -34,11 +34,11 @@ namespace SPC.Core
 
         public abstract short Close();
 
-        public abstract short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf);
+        public abstract short BlockRead(EDevice device, int deviceNo, int size, ref short[] buf);
 
-        public abstract short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf);
+        public abstract short BlockWrite(EDevice device, int deviceNo, int size, ref short[] buf);
 
-        public abstract short SetBit(eDevice device, short devno, bool set);
+        public abstract short SetBit(EDevice device, int devno, bool set);
         #endregion
 
 

@@ -16,19 +16,19 @@ namespace IMPLC.Monitor
         }
 
 
-        public override PlcWatcher BuildPlcWatcher()
+        public override SpcDeviceWatcher BuildPlcWatcher()
         {
             var serviceDevices = GetServiceDevices();
             if (serviceDevices == null)
                 return null;
             else
             {
-                var watcher = new PlcWatcher();
+                var watcher = new SpcDeviceWatcher();
                 foreach (var serviceDevice in serviceDevices)
                 {
-                    if (ConvertDevice(serviceDevice.Device, out eDevice device))
+                    if (ConvertDevice(serviceDevice.Device, out EDevice device))
                     {
-                        watcher.Add(new PlcReadBlock { Device = device, StartAddress = 0, Size = serviceDevice.Length, Key = (int)device });
+                        watcher.Add(new DeviceReadBlock { Device = device, StartAddress = 0, Size = serviceDevice.Length, Key = device.ToString() });
                     }
                 }
 
@@ -36,26 +36,26 @@ namespace IMPLC.Monitor
             }
         }
 
-        public override DeviceManager BuildDeviceManager()
+        public override SpcDeviceManager BuildDeviceManager()
         {
             var serviceDevices = GetServiceDevices();
             if (serviceDevices == null)
                 return null;
             else
             {
-                var devManager = new DeviceManager();
+                var devManager = new SpcDeviceManager();
                 foreach (var serviceDevice in serviceDevices)
                 {
-                    if (false == ConvertDevice(serviceDevice.Device, out eDevice device))
+                    if (false == ConvertDevice(serviceDevice.Device, out EDevice device))
                         continue;
 
                     if (serviceDevice.Device.IsBitDevice())
                     {
-                        devManager.Add(new BitDeviceArrayContainer(device, 0, serviceDevice.Length, device.ToString(), (int)device));
+                        devManager.Add(new BitDeviceArrayContainer(device, 0, serviceDevice.Length, device.ToString(), device.ToString()));
                     }
                     else
                     {
-                        devManager.Add(new WordDeviceArrayContainer(device, 0, serviceDevice.Length, device.ToString(), (int)device));
+                        devManager.Add(new WordDeviceArrayContainer(device, 0, serviceDevice.Length, device.ToString(), device.ToString()));
                     }
                 }
 
@@ -70,7 +70,7 @@ namespace IMPLC.Monitor
             return serviceObject?.GetServiceDeviceInfo() ?? null;
         }
 
-        private bool ConvertDevice(Device device, out eDevice convertDevice)
+        private bool ConvertDevice(Device device, out EDevice convertDevice)
         {
             return Enum.TryParse(((int)device).ToString(), out convertDevice);
         }

@@ -5,20 +5,20 @@ namespace SPC.Core
 {
     public abstract class SPCBase
     {
-        private readonly PlcComm _PlcComm;
+        private readonly SpcCommunication _PlcComm;
 
-        public PlcWatcher PlcWatcher { get; private set; }
+        public SpcDeviceWatcher PlcWatcher { get; private set; }
 
-        public DeviceManager DeviceManager { get; private set; }
+        public SpcDeviceManager DeviceManager { get; private set; }
 
-        public PlcCommandManager CommandManager { get; private set; }
+        public SpcCommandManager CommandManager { get; private set; }
 
         public SPCBase()
         {
             _PlcComm = new Melsec();
             SPCContainer.SetSPC(this);
         }
-        public SPCBase(PlcComm plcComm)
+        public SPCBase(SpcCommunication plcComm)
         {
             _PlcComm = plcComm;
             SPCContainer.SetSPC(this);
@@ -29,7 +29,7 @@ namespace SPC.Core
             SetUp(BuildPlcWatcher(), BuildDeviceManager(), BuildPlcCommandManger());
         }
 
-        public void SetUp(PlcWatcher watcher, DeviceManager devManager, PlcCommandManager commandManager = null)
+        public void SetUp(SpcDeviceWatcher watcher, SpcDeviceManager devManager, SpcCommandManager commandManager = null)
         {
             PlcWatcher = watcher;
             DeviceManager = devManager;
@@ -48,7 +48,7 @@ namespace SPC.Core
 
 
             // watcher <> manager connect
-            foreach (DeviceContainerBase devContainer in DeviceManager)
+            foreach (SpcDeviceContainerBase devContainer in DeviceManager)
             {
                 var readBlock = PlcWatcher.GetReadBlock(devContainer.ReadBlockKey);
                 if (readBlock != null)
@@ -139,17 +139,17 @@ namespace SPC.Core
                 command.AddCommandParameter(commandParameter);
         }
 
-        public virtual PlcCommandManager BuildPlcCommandManger()
+        public virtual SpcCommandManager BuildPlcCommandManger()
         {
             return null;
         }
 
-        public virtual PlcWatcher BuildPlcWatcher()
+        public virtual SpcDeviceWatcher BuildPlcWatcher()
         {
             return null;
         }
 
-        public virtual DeviceManager BuildDeviceManager()
+        public virtual SpcDeviceManager BuildDeviceManager()
         {
             return null;
         }

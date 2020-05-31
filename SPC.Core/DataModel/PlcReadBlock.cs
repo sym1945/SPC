@@ -2,7 +2,7 @@
 
 namespace SPC.Core
 {
-    public class PlcReadBlock
+    public class DeviceReadBlock
     {
         #region Private Members
 
@@ -13,9 +13,9 @@ namespace SPC.Core
 
         #region Public Properties
 
-        public int Key { get; set; }
+        public string Key { get; set; }
 
-        public eDevice Device { get; set; } = eDevice.B;
+        public EDevice Device { get; set; } = EDevice.B;
 
         public short StartAddress { get; set; } = 0;
 
@@ -39,7 +39,7 @@ namespace SPC.Core
 
         #region Constructor
 
-        public PlcReadBlock(short size = 1024)
+        public DeviceReadBlock(short size = 1024)
         {
             Size = size;
         }
@@ -49,8 +49,8 @@ namespace SPC.Core
 
         #region Events
 
-        public event Action<PlcReadBlock> BeforeRead;
-        public event Action<PlcReadBlock> AfterRead;
+        public event Action<DeviceReadBlock> BeforeRead;
+        public event Action<DeviceReadBlock> AfterRead;
 
         internal void OnBeforeRead()
         {

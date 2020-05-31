@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="BitDeviceTest.cs" />
     <Compile Include="GenericSPCTest.cs" />
+    <Compile Include="AttribteTest.cs" />
     <Compile Include="WordDevcieContainerTest.cs" />
     <Compile Include="WordDeviceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

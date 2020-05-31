@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class DeviceManager : DeviceManagerBase
+    public class SpcDeviceManager : DeviceManagerBase
     {
         private bool _IsSetup = false;
 
@@ -10,7 +10,7 @@
 
         #region Constructor
 
-        public DeviceManager()
+        public SpcDeviceManager()
         {
         } 
 

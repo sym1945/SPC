@@ -4,8 +4,13 @@
     {
         public override short Value
         {
-            get => RawData[0];
+            get => ReadBufferData[0];
             set => WriteValue(value);
+        }
+
+        public WordShortDevice()
+        {
+            Length = 1;
         }
 
         public override void WriteValue(short value)

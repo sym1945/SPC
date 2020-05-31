@@ -4,13 +4,13 @@ namespace SampleEqp
 {
     public static class PlcWatcherFactory
     {
-        public static PlcWatcher Make()
+        public static SpcDeviceWatcher Make()
         {
-            return new PlcWatcher
+            return new SpcDeviceWatcher
             {
-                new PlcReadBlock { Device = eDevice.B, StartAddress = 0x0300, Size = 128, Key = 1 },
-                new PlcReadBlock { Device = eDevice.B, StartAddress = 0x0400, Size = 128, Key = 2 },
-                new PlcReadBlock { Device = eDevice.W, StartAddress = 0x0400, Size = 1024, Key = 3 },
+                new DeviceReadBlock { Device = EDevice.B, StartAddress = 0x0300, Size = 128, Key = "1" },
+                new DeviceReadBlock { Device = EDevice.B, StartAddress = 0x0400, Size = 128, Key = "2" },
+                new DeviceReadBlock { Device = EDevice.W, StartAddress = 0x0400, Size = 1024, Key = "3" },
             };
 
         }

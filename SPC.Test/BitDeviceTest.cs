@@ -25,7 +25,7 @@ namespace SPC.Test
             Task.Run(async () =>
             {
                 await Task.Delay(1000);
-                bitDev.Value = true;
+                bitDev.UpdateValue(true);
             }).DoNotAwait();
 
             var result = await bitDev.WaitBitAsync(true, 2000);

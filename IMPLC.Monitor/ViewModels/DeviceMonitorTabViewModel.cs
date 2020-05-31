@@ -15,7 +15,7 @@ namespace IMPLC.Monitor
 
         private int _CurrentPage;
 
-        private readonly List<DeviceBase> _Devices; 
+        private readonly List<SpcDeviceBase> _Devices; 
 
         #endregion
 
@@ -131,9 +131,9 @@ namespace IMPLC.Monitor
 
         #region Construtor
 
-        public DeviceMonitorTabViewModel(string header, IEnumerable<DeviceBase> devices)
+        public DeviceMonitorTabViewModel(string header, IEnumerable<SpcDeviceBase> devices)
         {
-            _Devices = new List<DeviceBase>(devices);
+            _Devices = new List<SpcDeviceBase>(devices);
 
             TabHeader = header;
             ViewingPages = new ObservableCollection<DeviceMonitorPageViewModel>();
@@ -151,14 +151,14 @@ namespace IMPLC.Monitor
         #endregion
 
 
-        public bool FindDevice(string deviceAddress, out DeviceBase foundDevice)
+        public bool FindDevice(string deviceAddress, out SpcDeviceBase foundDevice)
         {
             foundDevice = _Devices.FirstOrDefault(device => device.FullAddress == deviceAddress);
 
             return (foundDevice != null);
         }
 
-        public void GoToDevice(DeviceBase device)
+        public void GoToDevice(SpcDeviceBase device)
         {
             var devIndex = _Devices.IndexOf(device);
             if (devIndex < 0)

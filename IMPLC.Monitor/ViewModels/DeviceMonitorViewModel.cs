@@ -55,7 +55,7 @@ namespace IMPLC.Monitor
                     var deviceAddress = DeviceHelper.ConvertDeviceText(TargetDevice);
                     if (deviceAddress != null)
                     {
-                        DeviceBase findDevice = null;
+                        SpcDeviceBase findDevice = null;
                         var foundTab = DeviceTabs.FirstOrDefault(tab => tab.FindDevice(deviceAddress, out findDevice));
                         if (foundTab != null)
                         {
@@ -87,7 +87,7 @@ namespace IMPLC.Monitor
 
 
         #region Event Callback
-        private void ServiceClient_Connected(DeviceManager devManager)
+        private void ServiceClient_Connected(SpcDeviceManager devManager)
         {
             DeviceTabs.Clear();
 

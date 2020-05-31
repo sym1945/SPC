@@ -2,7 +2,7 @@
 
 namespace SPC.Core
 {
-    public class Implc : PlcComm
+    public class Implc : SpcCommunication
     {
 
         private readonly IPLCServiceClient _Client;
@@ -31,19 +31,19 @@ namespace SPC.Core
             return (short)(_Client.Disconnect() ? 0 : 99);
         }
 
-        public override short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf)
+        public override short BlockRead(EDevice device, int deviceNo, int size, ref short[] buf)
         {
-            return ServiceObject?.ReadBlock((short)device, deviceNo, size, ref buf) ?? 99;
+            return ServiceObject?.ReadBlock((short)device, (short)deviceNo, (short)size, ref buf) ?? 99;
         }
 
-        public override short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf)
+        public override short BlockWrite(EDevice device, int deviceNo, int size, ref short[] buf)
         {
-            return ServiceObject?.WriteBlock((short)device, deviceNo, size, ref buf) ?? 99;
+            return ServiceObject?.WriteBlock((short)device, (short)deviceNo, (short)size, ref buf) ?? 99;
         }
 
-        public override short SetBit(eDevice device, short devno, bool set)
+        public override short SetBit(EDevice device, int devno, bool set)
         {
-            return ServiceObject?.SetBit((short)device, devno, set) ?? 99;
+            return ServiceObject?.SetBit((short)device, (short)devno, set) ?? 99;
         }
     }
 }

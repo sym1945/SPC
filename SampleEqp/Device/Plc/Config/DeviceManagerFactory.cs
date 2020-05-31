@@ -5,11 +5,11 @@ namespace SampleEqp
     public static class DeviceManagerFactory
     {
 
-        public static DeviceManager Make()
+        public static SpcDeviceManager Make()
         {
-            return new DeviceManager
+            return new SpcDeviceManager
             {
-                new BitDeviceContainer(eDevice.B, 0x0400, "PLC_COMMAND", 2)
+                new BitDeviceContainer(EDevice.B, 0x0400, "PLC_COMMAND", 2)
                 {
                     new BitDevice { Offset = 0x000A, Key = "GlassInspLoadStart" },
                     new BitDevice { Offset = 0x000B, Key = "GlassInspLoadPause" },
@@ -20,7 +20,7 @@ namespace SampleEqp
                     new BitDevice { Offset = 0x002C, Key = "UnloadEnd" },
                 },
 
-                new BitDeviceContainer(eDevice.B, 0x0300, "CIM_REPLY", 1)
+                new BitDeviceContainer(EDevice.B, 0x0300, "CIM_REPLY", 1)
                 {
                     new BitDevice { Offset = 0x003A, Key = "GlassInspLoadStartReply" },
                     new BitDevice { Offset = 0x003B, Key = "GlassInspLoadPauseReply" },
@@ -31,14 +31,14 @@ namespace SampleEqp
                     new BitDevice { Offset = 0x004C, Key = "UnloadEndReply" },
                 },
 
-                new WordDeviceContainer(eDevice.W, 0x0400, "EQP_STATUS", 3)
+                new WordDeviceContainer(EDevice.W, 0x0400, "EQP_STATUS", 3)
                 {
                     new WordUShortDevice { Offset = 0x0001, Length = 1, Key = "ProcessState" }
                 },
 
-                new A3GlassDataContainer(eDevice.W, 0x0420, "LOAD_GLASS_DATA", 3),
+                new A3GlassDataContainer(EDevice.W, 0x0420, "LOAD_GLASS_DATA", 3),
 
-                new A3GlassDataContainer(eDevice.W, 0x0588, "UNLOAD_GLASS_DATA", 3),
+                new A3GlassDataContainer(EDevice.W, 0x0588, "UNLOAD_GLASS_DATA", 3),
 
             };
         }

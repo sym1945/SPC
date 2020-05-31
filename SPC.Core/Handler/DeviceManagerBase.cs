@@ -4,15 +4,15 @@ using System.Linq;
 
 namespace SPC.Core
 {
-    public class DeviceManagerBase : ICollection<DeviceContainerBase>
+    public class DeviceManagerBase : ICollection<SpcDeviceContainerBase>
     {
-        private readonly List<DeviceContainerBase> _DeviceContainers;
+        private readonly List<SpcDeviceContainerBase> _DeviceContainers;
 
         protected PlcReadWriter _PlcReadWriter;
 
 
-        private PlcComm _Comm;
-        internal PlcComm Comm
+        private SpcCommunication _Comm;
+        internal SpcCommunication Comm
         {
             get => _Comm;
             set
@@ -39,13 +39,13 @@ namespace SPC.Core
 
         public DeviceManagerBase()
         {
-            _DeviceContainers = new List<DeviceContainerBase>();
+            _DeviceContainers = new List<SpcDeviceContainerBase>();
         }
 
         #endregion
 
 
-        public void Add(DeviceContainerBase item)
+        public void Add(SpcDeviceContainerBase item)
         {
             lock (_DeviceContainers)
             {
@@ -53,7 +53,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Remove(DeviceContainerBase item)
+        public bool Remove(SpcDeviceContainerBase item)
         {
             lock (_DeviceContainers)
             {
@@ -77,7 +77,7 @@ namespace SPC.Core
             }
         }
 
-        public bool Contains(DeviceContainerBase item)
+        public bool Contains(SpcDeviceContainerBase item)
         {
             lock (_DeviceContainers)
             {
@@ -85,7 +85,7 @@ namespace SPC.Core
             }
         }
 
-        public void CopyTo(DeviceContainerBase[] array, int arrayIndex)
+        public void CopyTo(SpcDeviceContainerBase[] array, int arrayIndex)
         {
             lock (_DeviceContainers)
             {
@@ -93,7 +93,7 @@ namespace SPC.Core
             }
         }
 
-        public IEnumerator<DeviceContainerBase> GetEnumerator()
+        public IEnumerator<SpcDeviceContainerBase> GetEnumerator()
         {
             return _DeviceContainers.GetEnumerator();
         }
@@ -105,12 +105,12 @@ namespace SPC.Core
         }
 
         public T GetDeviceContainer<T>(string key)
-            where T : DeviceContainerBase
+            where T : SpcDeviceContainerBase
         {
             return GetDeviceContainer(key) as T;
         }
 
-        public DeviceContainerBase GetDeviceContainer(string key)
+        public SpcDeviceContainerBase GetDeviceContainer(string key)
         {
             return this.FirstOrDefault(container => container.Key == key);
         }

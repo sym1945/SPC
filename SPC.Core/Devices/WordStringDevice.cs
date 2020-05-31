@@ -4,7 +4,7 @@
     {
         public override string Value
         {
-            get => Functions.WordToString_Swap(RawData);
+            get => ReadBufferData.ToAscii();
             set => WriteValue(value);
         }
 

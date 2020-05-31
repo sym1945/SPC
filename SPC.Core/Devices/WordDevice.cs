@@ -3,45 +3,53 @@ using System.Collections.Generic;
 
 namespace SPC.Core
 {
-    public abstract class WordDevice : DeviceBase
+    public abstract class WordDevice : SpcDeviceBase
     {
         #region Protected Members
 
-        protected short _Length = 0;
-        protected WordDeviceValue _ReadValue = null;
-        protected WordDeviceValue _WriteValue = null;
+        protected int _Length = 0;
+        protected WordDeviceValue _ReadBuffer = null;
+        protected WordDeviceValue _WriteBuffer = null;
 
         #endregion
 
 
         #region Public Properties
 
-        public short Length
+        public int Length
         {
             get => _Length;
             set
             {
-                if (_Length < 0)
-                    return;
                 if (_Length == value)
                     return;
 
                 _Length = value;
-                _ReadValue = new WordDeviceValue(_Length);
-                _WriteValue = new WordDeviceValue(_Length);
+                _ReadBuffer = new WordDeviceValue(_Length);
+                _WriteBuffer = new WordDeviceValue(_Length);
             }
         }
 
 
-        public short[] RawData
+        public short[] ReadBufferData
         {
-            get => _ReadValue.RawData;
+            get => _ReadBuffer.RawData;
         }
 
-        public short[] WriteData
+        public short[] WriteBufferData
         {
-            get => _WriteValue.RawData;
+            get => _WriteBuffer.RawData;
         }
+        #endregion
+
+
+        #region Constructor
+
+        public WordDevice()
+        {
+            DeviceType = EDeviceType.Word;
+        }
+
         #endregion
 
 
@@ -62,9 +70,9 @@ namespace SPC.Core
             var isChanged = false;
             for (int i = 0; i < Length; i++)
             {
-                if (_ReadValue.RawData[i] != readInfo.Value[i])
+                if (_ReadBuffer.RawData[i] != readInfo.Value[i])
                 {
-                    Array.Copy(readInfo.Value, 0, _ReadValue.RawData, 0, Length);
+                    Array.Copy(readInfo.Value, 0, _ReadBuffer.RawData, 0, Length);
                     isChanged = true;
                     break;
                 }
@@ -74,19 +82,19 @@ namespace SPC.Core
             {
                 OnRawDataChanged();
             }
-        } 
+        }
+
+        public void WriteValue(IEnumerable<short> value)
+        {
+            _WriteBuffer.SetValue(value);
+
+            WriteValue();
+        }
 
         #endregion
 
 
         #region Protected Methods
-
-        protected void WriteValue(IEnumerable<short> value)
-        {
-            _WriteValue.SetValue(value);
-
-            WriteValue();
-        }
 
         protected void WriteValue()
         {
@@ -95,17 +103,16 @@ namespace SPC.Core
                 Device = Device,
                 Address = Address,
                 Size = Length,
-                Value = _WriteValue.RawData
+                Value = _WriteBuffer.RawData
             });
         }
-    
 
         #endregion
 
 
         #region Internal Methods
 
-        internal abstract void OnRawDataChanged(); 
+        internal abstract void OnRawDataChanged();
 
         #endregion
     }
@@ -115,7 +122,7 @@ namespace SPC.Core
     {
         #region Protected Members
 
-        protected T _Value = default(T);
+        protected T _Value = default;
 
         #endregion
 
@@ -144,7 +151,7 @@ namespace SPC.Core
             {
                 //TODO: Write Log
             }
-        } 
+        }
 
         #endregion
 
@@ -154,7 +161,7 @@ namespace SPC.Core
         internal override void OnRawDataChanged()
         {
             OnPropertyChanged(nameof(Value));
-        } 
+        }
 
         #endregion
     }

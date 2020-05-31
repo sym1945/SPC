@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace SPC.Core
 {
     public class WordDeviceValue
     {
-        private short[] _Buffer;
+        private readonly short[] _Buffer;
 
         public short[] RawData => _Buffer;
 
-        public WordDeviceValue(short length)
+        public WordDeviceValue(int length)
         {
             _Buffer = new short[length];
         }
@@ -18,44 +18,17 @@ namespace SPC.Core
 
         public string ToAscii()
         {
-            return Functions.WordToString_Swap(_Buffer);
+            return _Buffer.ToAscii();
         }
-
 
         public string ToDec()
         {
-            var len = _Buffer.Length;
-            var sb = new StringBuilder();
-
-            for (int i = 0; i < len; i++)
-            {
-                sb.Append($"{_Buffer[i]} ");
-            }
-
-            if (sb.Length > 0)
-            {
-                sb.Remove(sb.Length - 1, 1);
-            }
-
-            return sb.ToString();
+            return string.Join(" ", _Buffer);
         }
 
         public string ToHex()
         {
-            var len = _Buffer.Length;
-            var sb = new StringBuilder();
-
-            for (int i = 0; i < len; i++)
-            {
-                sb.Append($"{_Buffer[i]:X4} ");
-            }
-
-            if (sb.Length > 0)
-            {
-                sb.Remove(sb.Length - 1, 1);
-            }
-
-            return sb.ToString();
+            return string.Join(" ", _Buffer.Select(d=>d.ToString("X4")));
         }
 
         public void SetValue(IEnumerable<short> values)
@@ -72,16 +45,10 @@ namespace SPC.Core
             }
         }
 
-        public void SetValue(string value)
-        {
-            SetValue(Functions.StringToWord_Swap(value));
-        }
-
         public void Clear()
         {
             Array.Clear(_Buffer, 0, _Buffer.Length);
         }
-
 
     }
 }
