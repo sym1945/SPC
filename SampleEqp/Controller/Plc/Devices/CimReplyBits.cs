@@ -3,7 +3,7 @@
 namespace SampleEqp
 {
 
-    [SpcDeviceContainer(EDevice.B, EDeviceType.Bit, 0x0300, "CIM_REPLY", "1")]
+    [SpcDeviceContainer(EDevice.B, EDeviceType.Bit, "1", StartAddress = 0x0300)]
     public class CimReplyBits : BitDeviceContainer
     {
         [SpcDevice(0x003A)]

@@ -7,16 +7,17 @@ namespace SPC.Core
     {
         public EDevice Device { get; private set; }
         public EDeviceType DeviceType { get; private set; }
-        public int StartAddress { get; private set; }
-        public string Key { get; private set; }
+        public int StartAddress { get; set; }
+        public string Key { get; set; }
         public string ReadBlockKey { get; private set; }
 
-        public SpcDeviceContainerAttribute(EDevice device, EDeviceType deviceType, int startAddress, string key, string readBlockKey)
+
+        public SpcDeviceContainerAttribute(EDevice device, EDeviceType deviceType, string readBlockKey)
         {
             Device = device;
             DeviceType = deviceType;
-            StartAddress = startAddress;
-            Key = key;
+            StartAddress = 0x0000;
+            Key = null;
             ReadBlockKey = readBlockKey;
         }
     }

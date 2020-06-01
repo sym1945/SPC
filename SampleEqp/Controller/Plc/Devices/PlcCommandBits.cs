@@ -3,7 +3,7 @@
 namespace SampleEqp
 {
 
-    [SpcDeviceContainer(EDevice.B, EDeviceType.Bit, 0x0400, "PLC_COMMAND", "2")]
+    [SpcDeviceContainer(EDevice.B, EDeviceType.Bit, "2", StartAddress = 0x0400)]
     public class PlcCommandBits : BitDeviceContainer
     {
         [SpcDevice(0x000A)]

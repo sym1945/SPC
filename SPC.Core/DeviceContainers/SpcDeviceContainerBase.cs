@@ -91,7 +91,7 @@ namespace SPC.Core
                 InitialDeviceContainerInfo(devContainerAttribute);
                 InitialDeviceProperties(devContainerType);
             }
-           
+
             var devArrayContainerAttribute = (SpcDeviceArrayContainerAttribute)Attribute.GetCustomAttribute(devContainerType, typeof(SpcDeviceArrayContainerAttribute));
             if (devArrayContainerAttribute != null)
             {
@@ -177,9 +177,9 @@ namespace SPC.Core
         {
             Device = devContainerAttribute.Device;
             DeviceType = devContainerAttribute.DeviceType;
-            StartAddress = devContainerAttribute.StartAddress;
-            Key = devContainerAttribute.Key;
             ReadBlockKey = devContainerAttribute.ReadBlockKey;
+            StartAddress = devContainerAttribute.StartAddress;
+            Key = devContainerAttribute.Key ?? GetType().Name;
         }
 
         private void InitialDeviceProperties(Type devContainerType)
@@ -278,13 +278,13 @@ namespace SPC.Core
     }
 
 
-    [SpcDeviceArrayContainer(EDevice.W, EDeviceType.Word, 0x0000, 10, "ARRAY_WRODS", "2")]
+    [SpcDeviceArrayContainer(EDevice.W, EDeviceType.Word, 10, "2")]
     public class WordDeviceArrayContainer2 : SpcDeviceContainer<WordDevice>
     {
     }
 
 
-    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, 0x0010, "SAMPLE_WORDS", "1")]
+    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, "1", StartAddress = 0x0010)]
     public class SampleDeviceContainer : SpcDeviceContainer<WordDevice>
     {
         [SpcDevice(0x0000, length: 4)]

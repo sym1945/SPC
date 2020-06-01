@@ -2,7 +2,7 @@
 
 namespace SampleEqp
 {
-    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, 0x0400, "EQP_STATUS", "3")]
+    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, "3", StartAddress = 0x0400)]
     public class PlcStatusWords : WordDeviceContainer
     {
         [SpcDevice(0x0001)]

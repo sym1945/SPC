@@ -2,7 +2,7 @@
 
 namespace SampleEqp
 {
-    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, 0x0588, "UNLOAD_GLASS_DATA", "3")]
+    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, "3", StartAddress = 0x0588)]
     public class PlcUnloadGlassData : A3GlassDataContainer
     {
     }
