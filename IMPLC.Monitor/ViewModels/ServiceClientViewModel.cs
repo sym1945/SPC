@@ -20,13 +20,13 @@ namespace IMPLC.Monitor
                 {
                     // TODO: URI parsing and Select Service Type
 
-                    _SpcHandler = new SpcHandler(new Implc(Uri));
+                    _SpcHandler = new SpcHandler(Uri);
                     _SpcHandler.SetUp();
 
                     if (_SpcHandler.Start())
                     {
                         IsRunning = true;
-                        OnConnected(_SpcHandler.DeviceManager);
+                        OnConnected(_SpcHandler.Devices);
                     }
                     else
                     {

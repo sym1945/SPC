@@ -14,18 +14,18 @@ namespace SPC.Test
             var spcB = new SpcB();
             var spcA2 = new SpcA();
 
-            Assert.AreEqual(spcA2, SPCContainer.GetSPC<SpcA>());
-            Assert.AreEqual(spcB, SPCContainer.GetSPC<SpcB>());
+            Assert.AreEqual(spcA2, SpcContainer.GetSPC<SpcA>());
+            Assert.AreEqual(spcB, SpcContainer.GetSPC<SpcB>());
         }
     }
 
 
-    public class SpcA : SPCBase
+    public class SpcA : SpcBase
     {
         
     }
 
-    public class SpcB : SPCBase
+    public class SpcB : SpcBase
     {
         
     }

@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class PlcCommandParameter
+    public class SpcCommandParameter
     {
     }
 }

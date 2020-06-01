@@ -3,7 +3,7 @@
 namespace SPC.Core
 {
     public abstract class RecvHandshake<T> : RecvBitOn<T>
-        where T : SPCBase
+        where T : SpcBase
     {
         private readonly object _Locker = new object();
 

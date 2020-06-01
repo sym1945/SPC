@@ -1,7 +1,7 @@
 ﻿namespace SPC.Core
 {
-    public abstract class RecvBitOn<T> : RecvPlcCommand<T>
-        where T: SPCBase
+    public abstract class RecvBitOn<T> : RecvCommandBase<T>
+        where T: SpcBase
     {
         public abstract BitDevice TriggerBit { get; }
 

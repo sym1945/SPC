@@ -122,7 +122,7 @@ namespace SPC.Core
     {
         #region Protected Members
 
-        protected T _Value = default;
+        protected T _Value = default(T);
 
         #endregion
 

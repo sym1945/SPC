@@ -62,17 +62,17 @@
     <Compile Include="Attributes\SpcDeviceAttribute.cs" />
     <Compile Include="Attributes\SpcDeviceContainerAttribute.cs" />
     <Compile Include="Builder\PlcCommandFactory.cs" />
-    <Compile Include="Command\IPlcCommand.cs" />
-    <Compile Include="Command\IRecvPlcCommand.cs" />
-    <Compile Include="Command\ISendPlcCommand.cs" />
-    <Compile Include="Command\PlcCommandParameter.cs" />
+    <Compile Include="Command\ISpcCommand.cs" />
+    <Compile Include="Command\ISpcRecvCommand.cs" />
+    <Compile Include="Command\ISpcSendCommand.cs" />
+    <Compile Include="Command\SpcCommandParameter.cs" />
     <Compile Include="Command\RecvBitChange.cs" />
     <Compile Include="Command\RecvBitOff.cs" />
     <Compile Include="Command\RecvBitOn.cs" />
     <Compile Include="Command\RecvHandshake.cs" />
-    <Compile Include="Command\RecvPlcCommand.cs" />
+    <Compile Include="Command\RecvCommandBase.cs" />
     <Compile Include="Command\SendHandshake.cs" />
-    <Compile Include="Command\SendPlcCommand.cs" />
+    <Compile Include="Command\SendCommandBase.cs" />
     <Compile Include="Communication\IMPLC\Implc.cs" />
     <Compile Include="Communication\IPlcReadWriter.cs" />
     <Compile Include="Communication\PlcReadWriter.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="DeviceContainers\WordDeviceArrayContainer.cs" />
     <Compile Include="DeviceContainers\BitDeviceArrayContainer.cs" />
     <Compile Include="Devices\SpcDeviceBase.cs" />
-    <Compile Include="Command\PlcCommandBase.cs" />
+    <Compile Include="Command\SpcCommandBase.cs" />
     <Compile Include="Devices\WordBoolArrayDevice.cs" />
     <Compile Include="Devices\WordByteArrayDevice.cs" />
     <Compile Include="Devices\WordDoubleDevice.cs" />
@@ -118,11 +118,10 @@
     <Compile Include="Handler\DeviceManagerBase.cs" />
     <Compile Include="Handler\SpcDeviceWatcher.cs" />
     <Compile Include="Helper\DeviceContainerHelper.cs" />
-    <Compile Include="Extension\WordDeviceHelper.cs" />
+    <Compile Include="Extension\DeviceExtension.cs" />
     <Compile Include="IoC\SPCContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spc.cs" />
-    <Compile Include="SPCBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

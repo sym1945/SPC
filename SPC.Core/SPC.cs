@@ -3,10 +3,7 @@ using System.Linq;
 
 namespace SPC.Core
 {
-
-    public abstract class Spc<TConfiguration, TDeviceManager>
-        where TDeviceManager : SpcDeviceManager
-        where TConfiguration : SpcConfiguration<TDeviceManager>, new()
+    public abstract class SpcBase
     {
         public SpcCommunication Commnunication { get; private set; }
 
@@ -14,15 +11,21 @@ namespace SPC.Core
 
         public SpcCommandManager Commands { get; private set; }
 
-        public TDeviceManager Devices { get; private set; }
+        public SpcDeviceManager Devices { get; private set; }
 
-        public TConfiguration Configuration { get; private set; }
+        public SpcConfiguration Configuration { get; private set; }
 
 
-        public Spc()
+        public SpcBase()
         {
-            Configuration = new TConfiguration();
+            // TODO: Find Configuration
+            SpcContainer.SetSPC(this);
         }
+        public SpcBase(SpcConfiguration configuration) : this()
+        {
+            Configuration = configuration;
+        }
+
 
         public void SetUp()
         {
@@ -38,7 +41,7 @@ namespace SPC.Core
         {
             Commnunication = comm;
             Watcher = watcher;
-            Devices = (TDeviceManager)devManager;
+            Devices = devManager;
             Commands = commandManager;
 
             if (Commnunication == null)
@@ -110,7 +113,7 @@ namespace SPC.Core
         {
             if (Commands != null)
             {
-                foreach (var command in Commands.OfType<IRecvPlcCommand>())
+                foreach (var command in Commands.OfType<ISpcRecvCommand>())
                 {
                     if (command.CanExecute())
                         command.Execute();
@@ -136,16 +139,55 @@ namespace SPC.Core
         }
 
 
-        public void SendCommand(string commandName, PlcCommandParameter commandParameter)
+        public void SendCommand(string commandName, SpcCommandParameter commandParameter)
         {
             var command = Commands
-                .OfType<ISendPlcCommand>()
+                .OfType<ISpcSendCommand>()
                 .FirstOrDefault(d => d.GetType().Name == commandName);
 
             if (command != null)
                 command.AddCommandParameter(commandParameter);
         }
 
+        public TDeviceManager GetDevices<TDeviceManager>()
+            where TDeviceManager : SpcDeviceManager
+        {
+            return (TDeviceManager)Devices;
+        }
+
+        public TConfiguration GetConfiguration<TConfiguration>()
+            where TConfiguration : SpcConfiguration
+        {
+            return (TConfiguration)Configuration;
+        }
+    }
+
+
+    public abstract class Spc<TDeviceManager> : SpcBase
+        where TDeviceManager : SpcDeviceManager
+    {
+        public new TDeviceManager Devices => GetDevices<TDeviceManager>();
+
+
+        public Spc(SpcConfiguration configuration) : base(configuration)
+        {
+
+        }
+    }
+
+
+
+    public abstract class Spc<TConfiguration, TDeviceManager> : Spc<TDeviceManager>
+        where TDeviceManager : SpcDeviceManager
+        where TConfiguration : SpcConfiguration, new()
+    {
+        public new TConfiguration Configuration => GetConfiguration<TConfiguration>();
+
+
+        public Spc() : base(new TConfiguration())
+        {
+
+        }
     }
 
 
@@ -155,8 +197,7 @@ namespace SPC.Core
     {
     }
 
-    public abstract class SpcConfiguration<TDeviceManager>
-        where TDeviceManager : SpcDeviceManager
+    public abstract class SpcConfiguration
     {
         public SpcConfiguration()
         {
@@ -167,7 +208,7 @@ namespace SPC.Core
 
         public abstract SpcDeviceWatcher BuildDeviceWatcher();
 
-        public abstract TDeviceManager BuildDeviceManager();
+        public abstract SpcDeviceManager BuildDeviceManager();
 
         public virtual SpcCommandManager BuildCommandManager()
         {
@@ -176,14 +217,14 @@ namespace SPC.Core
     }
 
 
-    public class SpcConfigurationSample : SpcConfiguration<SpcDeviceManagerSample>
+    public class SpcConfigurationSample : SpcConfiguration
     {
         public override SpcCommunication BuildCommunication()
         {
             return new Melsec();
         }
 
-        public override SpcDeviceManagerSample BuildDeviceManager()
+        public override SpcDeviceManager BuildDeviceManager()
         {
             return new SpcDeviceManagerSample();
         }

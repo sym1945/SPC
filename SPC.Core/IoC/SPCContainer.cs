@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Documents;
 
 namespace SPC.Core
 {
-    public static class SPCContainer
+    public static class SpcContainer
     {
-        private static readonly Dictionary<Type, SPCBase> _SPCs = new Dictionary<Type, SPCBase>();
+        private static readonly Dictionary<Type, SpcBase> _SPCs = new Dictionary<Type, SpcBase>();
 
         private static readonly Dictionary<Type, object> _Sigletons = new Dictionary<Type, object>();
         
 
         public static T GetSPC<T>()
-            where T : SPCBase
+            where T : SpcBase
         {
             lock (_SPCs)
             {
                 var spcType = typeof(T);
-                if (_SPCs.TryGetValue(spcType, out SPCBase spc))
+                if (_SPCs.TryGetValue(spcType, out SpcBase spc))
                     return (T)spc;
                 else
                     return null;
             }
         }
 
-        public static void SetSPC(SPCBase spc)
+        public static void SetSPC(SpcBase spc)
         {
             lock (_SPCs)
             {

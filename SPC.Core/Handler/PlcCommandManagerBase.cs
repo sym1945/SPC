@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace SPC.Core
 {
-    public abstract class PlcCommandManagerBase : ICollection<IPlcCommand>
+    public abstract class PlcCommandManagerBase : ICollection<ISpcCommand>
     {
-        private readonly List<IPlcCommand> _PlcCommands = new List<IPlcCommand>();
+        private readonly List<ISpcCommand> _PlcCommands = new List<ISpcCommand>();
 
         public int Count => _PlcCommands.Count;
 
         public bool IsReadOnly => true;
 
-        public void Add(IPlcCommand item)
+        public void Add(ISpcCommand item)
         {
             _PlcCommands.Add(item);
         }
@@ -21,22 +21,22 @@ namespace SPC.Core
             _PlcCommands.Clear();
         }
 
-        public bool Contains(IPlcCommand item)
+        public bool Contains(ISpcCommand item)
         {
             return _PlcCommands.Contains(item);
         }
 
-        public void CopyTo(IPlcCommand[] array, int arrayIndex)
+        public void CopyTo(ISpcCommand[] array, int arrayIndex)
         {
             _PlcCommands.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<IPlcCommand> GetEnumerator()
+        public IEnumerator<ISpcCommand> GetEnumerator()
         {
             return _PlcCommands.GetEnumerator();
         }
 
-        public bool Remove(IPlcCommand item)
+        public bool Remove(ISpcCommand item)
         {
             return _PlcCommands.Remove(item);
         }

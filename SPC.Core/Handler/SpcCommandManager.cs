@@ -12,7 +12,7 @@ namespace SPC.Core
             var commandTypes = (
                 assembly
                 .GetExportedTypes()
-                .Where(d => d.IsSubclassOf(typeof(IPlcCommand)))
+                .Where(d => d.IsSubclassOf(typeof(ISpcCommand)))
                 .ToList()
             );
 

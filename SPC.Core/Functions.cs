@@ -309,7 +309,7 @@ namespace SPC.Core
         {
             if (words.Count() < 2)
             {
-                return default;
+                return default(Int32);
             }
 
             return BitConverter.ToInt32(WordToBytes(words), 0);
@@ -318,7 +318,7 @@ namespace SPC.Core
         {
             if (words.Count() < 2)
             {
-                return default;
+                return default(UInt32);
             }
 
             return BitConverter.ToUInt32(WordToBytes(words), 0);
@@ -328,7 +328,7 @@ namespace SPC.Core
         {
             if (words.Count() < 4)
             {
-                return default;
+                return default(Int64);
             }
 
             return BitConverter.ToInt64(WordToBytes(words), 0);
@@ -337,7 +337,7 @@ namespace SPC.Core
         {
             if (words.Count() < 4)
             {
-                return default;
+                return default(UInt64);
             }
 
             return BitConverter.ToUInt64(WordToBytes(words), 0);
@@ -347,7 +347,7 @@ namespace SPC.Core
         {
             if (words.Count() < 2)
             {
-                return default;
+                return default(Single);
             }
 
             return BitConverter.ToSingle(WordToBytes(words), 0);
@@ -356,7 +356,7 @@ namespace SPC.Core
         {
             if (words.Count() < 4)
             {
-                return default;
+                return default(Double);
             }
 
             return BitConverter.ToDouble(WordToBytes(words), 0);

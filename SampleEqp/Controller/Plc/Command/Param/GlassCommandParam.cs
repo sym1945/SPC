@@ -2,7 +2,7 @@
 
 namespace SampleEqp
 {
-    public class GlassCommandParam : PlcCommandParameter
+    public class GlassCommandParam : SpcCommandParameter
     {
         public GlassData GlassData { get; }
 

@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public interface IRecvPlcCommand
+    public interface ISpcRecvCommand
     {
         bool CanExecute();
 

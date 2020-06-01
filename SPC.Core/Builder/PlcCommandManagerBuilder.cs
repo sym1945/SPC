@@ -14,7 +14,7 @@ namespace SPC.Core
         }
 
         public PlcCommandManagerBuilder AddPlcCommand<T>()
-            where T : IPlcCommand
+            where T : ISpcCommand
         {
             _PlcCommandTypes.Add(typeof(T));
             return this;

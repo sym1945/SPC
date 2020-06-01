@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace SPC.Core
 {
-    public abstract class SendHandshake<T> : SendHandshake<PlcCommandParameter, T>
-        where T : SPCBase
+    public abstract class SendHandshake<T> : SendHandshake<SpcCommandParameter, T>
+        where T : SpcBase
     {
         
     }
 
-    public abstract class SendHandshake<TParam, TSpc> : SendPlcCommand<TSpc>
-        where TParam : PlcCommandParameter
-        where TSpc : SPCBase
+    public abstract class SendHandshake<TParam, TSpc> : SendCommandBase<TSpc>
+        where TParam : SpcCommandParameter
+        where TSpc : SpcBase
     {
         private readonly object _Locker = new object();
 
-        private readonly Queue<PlcCommandParameter> _CommandParameterQueue = new Queue<PlcCommandParameter>();
+        private readonly Queue<SpcCommandParameter> _CommandParameterQueue = new Queue<SpcCommandParameter>();
 
 
         public abstract BitDevice CommandBit { get; }
@@ -28,7 +28,7 @@ namespace SPC.Core
         public bool IsRunning { get; private set; }
 
 
-        public override void AddCommandParameter(PlcCommandParameter commandParameter)
+        public override void AddCommandParameter(SpcCommandParameter commandParameter)
         {
             if (CommandBit == null || ReplyBit == null)
                 return;
@@ -45,7 +45,7 @@ namespace SPC.Core
             }
         }
 
-        private PlcCommandParameter GetCommandParameter()
+        private SpcCommandParameter GetCommandParameter()
         {
             lock (_Locker)
             {
@@ -59,7 +59,7 @@ namespace SPC.Core
 
         public async Task DoHandshake()
         {
-            PlcCommandParameter commandParam = null;
+            SpcCommandParameter commandParam = null;
 
             while (true)
             {

@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\TextBoxAttachexProperties.cs" />
     <Compile Include="Business\Helpers.cs" />
+    <Compile Include="Business\SpcHandleConfiguration.cs" />
     <Compile Include="Business\SpcHandler.cs" />
     <Compile Include="Controls\BitDeviceMonitor.xaml.cs">
       <DependentUpon>BitDeviceMonitor.xaml</DependentUpon>
