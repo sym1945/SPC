@@ -25,7 +25,7 @@ namespace SPC.Core
 
         public TDevice GetDevice(int index)
         {
-            return this.Skip(index).Take(1) as TDevice;
+            return this.Skip(index).FirstOrDefault() as TDevice;
         }
 
     }
