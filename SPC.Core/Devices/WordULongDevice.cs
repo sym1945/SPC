@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class WordULongDevice : WordDevice<ulong>
+    public class WordULongDevice : WordDevice<ulong>, IValueDevice
     {
         public override ulong Value
         {

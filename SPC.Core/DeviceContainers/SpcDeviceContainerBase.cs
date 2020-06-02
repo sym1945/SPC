@@ -8,6 +8,8 @@ namespace SPC.Core
     public abstract class SpcDeviceContainer<TDevice> : SpcDeviceContainerBase
         where TDevice : SpcDeviceBase
     {
+        #region Public Properties
+
         new public TDevice this[string key]
         {
             get
@@ -21,12 +23,68 @@ namespace SPC.Core
                     return null;
                 }
             }
+        } 
+
+        #endregion
+
+
+        #region Constructor
+
+        public SpcDeviceContainer() : base()
+        {
+            
         }
+
+        public SpcDeviceContainer(EDevice device, EDeviceType type, string readBlockKey)
+           : this(device, type, 0x0000, readBlockKey)
+        {
+
+        }
+
+        public SpcDeviceContainer(EDevice device, EDeviceType type, string key, string readBlockKey)
+            : base(device, type, 0x0000, key, readBlockKey)
+        {
+
+        }
+
+        public SpcDeviceContainer(EDevice device, EDeviceType type, int startAddress, string readBlockKey)
+            : base(device, type, startAddress, string.Empty, readBlockKey)
+        {
+            Key = GetType().Name;
+        }
+
+        #endregion
+
+
+        #region Public Methods
 
         public TDevice GetDevice(int index)
         {
             return this.Skip(index).FirstOrDefault() as TDevice;
         }
+
+        #endregion
+
+
+        #region Protected Methods
+
+        protected void InitialDeviceArray(Type devType, SpcDeviceArrayContainerAttribute devArrayContainerAttribute)
+        {
+            var count = devArrayContainerAttribute.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                var dev = (SpcDeviceBase)Activator.CreateInstance(devType);
+                dev.Key = $"{Key}{i}";
+                dev.Offset = i;
+                if ((dev is WordDevice wordDev))
+                    wordDev.Length = GetDeviceLength(devType);
+
+                Add(dev);
+            }
+        } 
+
+        #endregion
 
     }
 
@@ -42,15 +100,15 @@ namespace SPC.Core
 
         #region Public Properties
 
-        public EDevice Device { get; set; }
+        public EDevice Device { get; protected set; }
 
-        public EDeviceType DeviceType { get; set; }
+        public EDeviceType DeviceType { get; protected  set; }
 
-        public int StartAddress { get; set; }
+        public int StartAddress { get; protected  set; }
 
-        public string Key { get; set; }
+        public string Key { get; protected  set; }
 
-        public string ReadBlockKey { get; set; }
+        public string ReadBlockKey { get; protected set; }
 
         public int Count => _Devices.Count;
 
@@ -86,17 +144,24 @@ namespace SPC.Core
             var devContainerType = GetType();
 
             var devContainerAttribute = (SpcDeviceContainerAttribute)Attribute.GetCustomAttribute(devContainerType, typeof(SpcDeviceContainerAttribute));
-            if (devContainerAttribute != null)
-            {
-                InitialDeviceContainerInfo(devContainerAttribute);
-                InitialDeviceProperties(devContainerType);
-            }
+            if (devContainerAttribute == null)
+                throw new Exception("SpcDeviceContainerAttribute Not Found");
+            
+            InitialDeviceContainerInfo(devContainerAttribute);
+            InitialDeviceProperties(devContainerType);
+        }
 
-            var devArrayContainerAttribute = (SpcDeviceArrayContainerAttribute)Attribute.GetCustomAttribute(devContainerType, typeof(SpcDeviceArrayContainerAttribute));
-            if (devArrayContainerAttribute != null)
-            {
-                InitialDeviceArray(devContainerType, devArrayContainerAttribute);
-            }
+        public SpcDeviceContainerBase(EDevice device, EDeviceType type, int startAddress, string key, string readBlockKey)
+        {
+            _Devices = new Dictionary<string, SpcDeviceBase>();
+
+            Device = device;
+            DeviceType = type;
+            StartAddress = startAddress;
+            Key = key;
+            ReadBlockKey = readBlockKey;
+
+            InitialDeviceProperties(GetType());
         }
 
         #endregion
@@ -205,25 +270,7 @@ namespace SPC.Core
             }
         }
 
-        private void InitialDeviceArray(Type devContainerType, SpcDeviceArrayContainerAttribute devArrayContainerAttribute)
-        {
-            var count = devArrayContainerAttribute.Count;
-
-            int length = 0;
-            for (int i = 0; i < count; i++)
-            {
-                var devType = devContainerType;
-                var dev = (SpcDeviceBase)Activator.CreateInstance(devType);
-                dev.Key = $"{Key}{i}";
-                dev.Offset = i;
-                if ((dev is WordDevice wordDev))
-                    wordDev.Length = length;
-
-                Add(dev);
-            }
-        }
-
-        private int GetDeviceLength(Type devType, int defaultValue = 1)
+        protected int GetDeviceLength(Type devType, int defaultValue = 1)
         {
             int length = defaultValue;
 
@@ -276,23 +323,5 @@ namespace SPC.Core
         #endregion
 
     }
-
-
-    [SpcDeviceArrayContainer(EDevice.W, EDeviceType.Word, 10, "2")]
-    public class WordDeviceArrayContainer2 : SpcDeviceContainer<WordDevice>
-    {
-    }
-
-
-    [SpcDeviceContainer(EDevice.W, EDeviceType.Word, "1", StartAddress = 0x0010)]
-    public class SampleDeviceContainer : SpcDeviceContainer<WordDevice>
-    {
-        [SpcDevice(0x0000, length: 4)]
-        public WordStringDevice StringDev { get; private set; }
-
-        [SpcDevice(0x0004)]
-        public WordIntDevice IntDev { get; private set; }
-    }
-
 
 }

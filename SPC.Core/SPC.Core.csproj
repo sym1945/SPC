@@ -79,6 +79,7 @@
     <Compile Include="DataModel\BitReadWriteInfo.cs" />
     <Compile Include="DeviceContainers\WordDeviceArrayContainer.cs" />
     <Compile Include="DeviceContainers\BitDeviceArrayContainer.cs" />
+    <Compile Include="Devices\IValueDevice.cs" />
     <Compile Include="Devices\SpcDeviceBase.cs" />
     <Compile Include="Command\SpcCommandBase.cs" />
     <Compile Include="Devices\WordBoolArrayDevice.cs" />

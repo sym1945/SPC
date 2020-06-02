@@ -12,6 +12,22 @@ namespace SPC.Core
             DeviceType = EDeviceType.Word;
         }
 
+        public WordDeviceContainer(EDevice device, string readBlockKey)
+          : base(device, EDeviceType.Word, 0x0000, readBlockKey)
+        {
+        }
+
+        public WordDeviceContainer(EDevice device, string key, string readBlockKey)
+            : base(device, EDeviceType.Word, key, readBlockKey)
+        {
+        }
+
+        public WordDeviceContainer(EDevice device, int startAddress, string readBlockKey)
+            : base(device, EDeviceType.Word, startAddress, readBlockKey)
+        {
+        }
+
+
         #endregion
 
 

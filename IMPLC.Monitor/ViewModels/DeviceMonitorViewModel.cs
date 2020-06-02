@@ -95,13 +95,13 @@ namespace IMPLC.Monitor
             {
                 switch (deviceContainer)
                 {
-                    case BitDeviceArrayContainer b:
+                    case BitDeviceContainer b:
                         {
                             var tab = new DeviceMonitorTabViewModel(b.Device.ToString(), b);
                             DeviceTabs.Add(tab);
                             break;
                         }
-                    case WordDeviceArrayContainer w:
+                    case WordDeviceContainer w:
                         {
                             var tab = new DeviceMonitorTabViewModel(w.Device.ToString(), w);
                             DeviceTabs.Add(tab);

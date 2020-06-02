@@ -9,6 +9,21 @@
             DeviceType = EDeviceType.Bit;
         }
 
+        public BitDeviceContainer(EDevice device, string readBlockKey)
+          : base(device, EDeviceType.Bit, 0x0000, readBlockKey)
+        {
+        }
+
+        public BitDeviceContainer(EDevice device, string key, string readBlockKey)
+            : base(device, EDeviceType.Bit, key, readBlockKey)
+        {
+        }
+
+        public BitDeviceContainer(EDevice device, int startAddress, string readBlockKey)
+            : base(device, EDeviceType.Bit, startAddress, readBlockKey)
+        {
+        }
+
         #endregion
 
 

@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class WordUIntDevice : WordDevice<uint>
+    public class WordUIntDevice : WordDevice<uint>, IValueDevice
     {
         public override uint Value
         {

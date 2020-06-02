@@ -45,11 +45,11 @@ namespace IMPLC.Monitor
 
                     if (serviceDevice.Device.IsBitDevice())
                     {
-                        devManager.Add(new BitDeviceArrayContainer(device, 0, serviceDevice.Length, device.ToString(), device.ToString()));
+                        devManager.Add(new BitDeviceArrayContainer(device, serviceDevice.Length, device.ToString(), device.ToString()));
                     }
                     else
                     {
-                        devManager.Add(new WordDeviceArrayContainer(device, 0, serviceDevice.Length, device.ToString(), device.ToString()));
+                        devManager.Add(new WordDeviceArrayContainer<WordShortDevice>(device, serviceDevice.Length, device.ToString(), device.ToString()));
                     }
                 }
 

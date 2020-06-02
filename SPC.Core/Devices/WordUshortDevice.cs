@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class WordUShortDevice : WordDevice<ushort>
+    public class WordUShortDevice : WordDevice<ushort>, IValueDevice
     {
         public override ushort Value
         {

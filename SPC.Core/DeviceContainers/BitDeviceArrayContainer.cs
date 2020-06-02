@@ -1,20 +1,50 @@
-﻿namespace SPC.Core
+﻿using System;
+
+namespace SPC.Core
 {
     public class BitDeviceArrayContainer : BitDeviceContainer
     {
         #region Constructor
 
-        public BitDeviceArrayContainer(EDevice device, int startAddress, int count, string key, string readBlockKey)
+        public BitDeviceArrayContainer() : base()
         {
-            Device = device;
-            StartAddress = startAddress;
-            Key = key;
-            ReadBlockKey = readBlockKey;
+            var devArrayContainerAttribute = (SpcDeviceArrayContainerAttribute)Attribute.GetCustomAttribute(GetType(), typeof(SpcDeviceArrayContainerAttribute));
+            if (devArrayContainerAttribute != null)
+            {
+                InitialDeviceArray(typeof(BitDevice), devArrayContainerAttribute);
+            }
+        }
 
+        public BitDeviceArrayContainer(EDevice device, int count, string readBlockKey)
+          : base(device, 0x0000, readBlockKey)
+        {
+            CreateDevices(count);
+        }
+
+        public BitDeviceArrayContainer(EDevice device, int count, string key, string readBlockKey)
+            : base(device, key, readBlockKey)
+        {
+            CreateDevices(count);
+        }
+
+        public BitDeviceArrayContainer(EDevice device, int count, int startAddress, string readBlockKey)
+            : base(device, startAddress, readBlockKey)
+        {
+            CreateDevices(count);
+        }
+
+        #endregion
+
+
+        #region Private Methods
+
+        private void CreateDevices(int count)
+        {
             for (int i = 0; i < count; i++)
                 Add(new BitDevice { Offset = i, Key = $"{Key}{i}" });
         }
 
         #endregion
+
     }
 }

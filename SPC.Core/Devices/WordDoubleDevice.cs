@@ -1,6 +1,6 @@
 ﻿namespace SPC.Core
 {
-    public class WordDoubleDevice : WordDevice<double>
+    public class WordDoubleDevice : WordDevice<double>, IValueDevice
     {
         public override double Value
         {
