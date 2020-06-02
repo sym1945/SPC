@@ -42,15 +42,20 @@ namespace SPC.Core
         }
 
         public SpcDeviceContainer(EDevice device, EDeviceType type, string key, string readBlockKey)
-            : base(device, type, 0x0000, key, readBlockKey)
+            : this(device, type, 0x0000, key, readBlockKey)
         {
 
         }
 
         public SpcDeviceContainer(EDevice device, EDeviceType type, int startAddress, string readBlockKey)
-            : base(device, type, startAddress, string.Empty, readBlockKey)
+            : this(device, type, startAddress, string.Empty, readBlockKey)
         {
             Key = GetType().Name;
+        }
+
+        public SpcDeviceContainer(EDevice device, EDeviceType type, int startAddress, string key, string readBlockKey)
+            : base(device, type, startAddress, key, readBlockKey)
+        {
         }
 
         #endregion

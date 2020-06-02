@@ -24,6 +24,11 @@
         {
         }
 
+        public BitDeviceContainer(EDevice device, int startAddress, string key, string readBlockKey)
+            : base(device, EDeviceType.Bit, startAddress, key, readBlockKey)
+        {
+        }
+
         #endregion
 
 

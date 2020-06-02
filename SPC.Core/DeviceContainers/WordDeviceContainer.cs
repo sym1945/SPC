@@ -27,6 +27,10 @@ namespace SPC.Core
         {
         }
 
+        public WordDeviceContainer(EDevice device, int startAddress, string key, string readBlockKey)
+            : base(device, EDeviceType.Word, startAddress, key, readBlockKey)
+        {
+        }
 
         #endregion
 

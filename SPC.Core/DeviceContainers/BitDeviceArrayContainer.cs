@@ -33,6 +33,12 @@ namespace SPC.Core
             CreateDevices(count);
         }
 
+        public BitDeviceArrayContainer(EDevice device, int count, int startAddress, string key, string readBlockKey)
+           : base(device, startAddress, key, readBlockKey)
+        {
+            CreateDevices(count);
+        }
+
         #endregion
 
 
