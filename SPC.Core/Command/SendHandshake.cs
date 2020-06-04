@@ -40,8 +40,12 @@ namespace SPC.Core
                 if (IsRunning)
                     return;
 
-                IsRunning = true;
-                DoHandshake().DoNotAwait();
+                Task.Run(async () =>
+                {
+                    IsRunning = true;
+                    await DoHandshake();
+                    IsRunning = false;
+                });
             }
         }
 
@@ -101,23 +105,26 @@ namespace SPC.Core
                 }
 
                 Console.WriteLine("Handshake Done");
+                AfterHandshakeDone();
             }
         }
 
 
         public virtual void BeforeCommandBitOn(TParam commandParam)
         {
-
         }
 
         public virtual void TimeOutReplyBitOn()
         {
-
         }
 
         public virtual void TimeOutReplyBitOff()
         {
-
         }
+
+        public virtual void AfterHandshakeDone()
+        {
+        }
+
     }
 }
