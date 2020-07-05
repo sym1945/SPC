@@ -6,7 +6,7 @@ namespace SPC.Core
     {
         #region Private Members
 
-        private short _Size = 0;
+        private int _Size = 0;
 
         #endregion
 
@@ -17,9 +17,9 @@ namespace SPC.Core
 
         public EDevice Device { get; set; } = EDevice.B;
 
-        public short StartAddress { get; set; } = 0;
+        public int StartAddress { get; set; } = 0;
 
-        public short Size
+        public int Size
         {
             get => _Size;
             set
@@ -39,7 +39,7 @@ namespace SPC.Core
 
         #region Constructor
 
-        public DeviceReadBlock(short size = 1024)
+        public DeviceReadBlock(int size = 1024)
         {
             Size = size;
         }

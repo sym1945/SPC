@@ -27,7 +27,7 @@ namespace IMPLC.Monitor
             var device = value.Substring(0, 1).ToUpper();
             var address = int.Parse(value.Substring(1, value.Length - 1), NumberStyles.HexNumber);
 
-            return $"{device}{address:X4}";
+            return $"{device}{address:X5}";
         }
 
     }

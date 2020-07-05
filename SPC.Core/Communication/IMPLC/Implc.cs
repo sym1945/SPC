@@ -33,17 +33,17 @@ namespace SPC.Core
 
         public override short BlockRead(EDevice device, int deviceNo, int size, ref short[] buf)
         {
-            return ServiceObject?.ReadBlock((short)device, (short)deviceNo, (short)size, ref buf) ?? 99;
+            return (short)(ServiceObject?.ReadBlock((int)device, deviceNo, size, ref buf) ?? 99);
         }
 
         public override short BlockWrite(EDevice device, int deviceNo, int size, ref short[] buf)
         {
-            return ServiceObject?.WriteBlock((short)device, (short)deviceNo, (short)size, ref buf) ?? 99;
+            return (short)(ServiceObject?.WriteBlock((int)device, deviceNo, size, ref buf) ?? 99);
         }
 
         public override short SetBit(EDevice device, int devno, bool set)
         {
-            return ServiceObject?.SetBit((short)device, (short)devno, set) ?? 99;
+            return (short)(ServiceObject?.SetBit((int)device, devno, set) ?? 99);
         }
     }
 }

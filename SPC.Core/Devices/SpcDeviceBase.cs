@@ -12,10 +12,7 @@ namespace SPC.Core
         {
             get
             {
-                if (Address > ushort.MaxValue)
-                    return $"{Device}{Address:X8}";
-                else
-                    return $"{Device}{Address:X4}";
+                return $"{Device}{Address:X5}";
             }
         }
 

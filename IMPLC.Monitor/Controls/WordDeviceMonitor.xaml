@@ -32,6 +32,7 @@
                 BorderThickness="0"
                 VerticalAlignment="Center"
                 local:SelectAllProperty.Value="{Binding IsFocused, RelativeSource={RelativeSource Self}}"
+                local:LoseFoucsWhenTypeEnterProperty.Value="True"
                 Text="{Binding Value, FallbackValue=0}">
             </TextBox>
 
